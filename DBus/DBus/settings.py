@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from DBus.credentials import Password_DB_SSH as pw
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DBus',
         'USER': 'root',
-        'PASSWORD': '!bBt8-2022**',
+        'PASSWORD': pw,
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
