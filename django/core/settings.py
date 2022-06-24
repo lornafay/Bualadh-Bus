@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from DBus.credentials import Password_DB_SSH as pw
-from DBus.credentials import SECRET_KEY as sk
+from core.credentials import Password_DB_SSH as pw
+from core.credentials import SECRET_KEY as sk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
