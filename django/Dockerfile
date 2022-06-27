@@ -2,7 +2,7 @@ FROM python:3.9
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /DBus
+WORKDIR /django
 
 RUN apt-get install -y default-libmysqlclient-dev
 
