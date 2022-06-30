@@ -1,0 +1,23 @@
+#home {
+    background-color: aqua;
+    height: 500px;
+    text-align: center;
+}
+
+#sec1 {
+    background-color: brown;
+    height: 75%;
+    font-size: 50px;
+}
+
+#sec2 {
+    background-color: sandybrown;
+    height: 20%;
+    font-size: 25px;
+}
+
+#sec3 {
+    background-color: indianred;
+    height:500px;
+    font-size: 100px;
+}
