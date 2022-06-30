@@ -1,42 +1,19 @@
-#Adapted from Breakfast Bagels Spring 2022 weather scraper
+# Adapted from Breakfast Bagels Spring 2022 weather scraper
+
+# DATABASE DETAILS NEED TO BE CORRECTED LEXIE!!!
 
 import json
 import time
-import datetime
-import getJson as gJ
-import errors
+import requests
 from sqlalchemy import create_engine
 
-# Open keys file to access API key
-with open("keys.json", "r") as keys_file:
-    keys_handle = json.load(keys_file)
-
+with open('keys.json', 'r') as API_weather_file:
+    API_keys = json.load(API_weather_file)
 
 def weather_scraper():
-    """Function to return data from weather data"""
-    dublin_weather = gJ.GetJson('weather')
-
-    # Try and except block for handling potential errors in server response
-    try:
-        dublin_weather_json = dublin_weather.get_weather_data()
-    except errors.Error400:
-        print(errors.Error400())
-    except errors.Error401:
-        print(errors.Error401())
-    except errors.Error403:
-        print(errors.Error403())
-    except errors.Error404:
-        print(errors.Error404)
-    except errors.Error408:
-        print(errors.Error408())
-    except errors.Error429:
-        print(errors.Error429())
-    except errors.Error500:
-        print(errors.Error500())
-    except errors.Error511:
-        print(errors.Error511())
-    else:
-        return dublin_weather_json
+    dublin_weather_data = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat=53.3497645&lon=-6.2602732&exclude=minutely&appid=' + API_keys['weather'])
+    dublin_weather_dynamic_json = json.loads(dublin_weather_data.content)
+    return dublin_weather_dynamic_json
 
 
 def post_weather_to_table(json):
@@ -44,11 +21,11 @@ def post_weather_to_table(json):
     No return value."""
 
     # Connects to remote database
-    user = keys_handle['DB']['user']
-    password = keys_handle['DB']['password']
-    host = keys_handle['DB']['host']
-    port = keys_handle['DB']['port']
-    db = keys_handle['DB']['db']
+    user = API_keys['DB']['user']
+    password = API_keys['DB']['password']
+    host = API_keys['DB']['host']
+    port = API_keys['DB']['port']
+    db = API_keys['DB']['db']
 
     # Connection
     conn_weather = f"mysql+mysqlconnector://{user}:{password}@{host}:{port}/{db}"
@@ -76,9 +53,9 @@ def post_weather_to_table(json):
     # Cast strings now added to SQL query passed into database connection
     sql_weather = f'''TRUNCATE `DBus.main_currentweather`; INSERT INTO `DBus.main_currentweather` (id, description,
       temp, feels, min, max, pressure, tag, humidity, visibility, wind_speed, wind_dir, clouds, date, rain) 
-     VALUES ({current_id}, {current_description}, {current_tempt}, 
-    {feels_like}, {min_weather}, {max_weather}, {pressure}, {humidity}, {visibility}, {wind_speed}, {wind_dir}
-    {wind_dir}, {clouds}, {date}, {rain});'''
+     VALUES ({current_id}, {current_description}, {current_temp}, 
+    {feels_like}, {min_weather}, {max_weather}, {pressure}, {current_tag} {humidity}, {visibility}, {wind_speed}, {wind_dir},
+    {clouds}, {time}, {rain});'''
     weather_engine.execute(sql_weather)
 
 if __name__ == "__main__":
