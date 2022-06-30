@@ -1,6 +1,24 @@
 #timetables {
-    background-color: firebrick;
+    background-color: #FFFFFF;
     height: 650px;
     text-align: center;
-    font-size: 250px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#timetables-title {
+    color: #363062;
+    text-align: center;
+}
+
+#timetables-select {
+    width: 15%;
+    margin-left: 100px;
+}
+
+#timetables-img {
+    width: 1200px;
+    height: 500px;
+    border-style: solid;
+    margin-top: 20px;
 }

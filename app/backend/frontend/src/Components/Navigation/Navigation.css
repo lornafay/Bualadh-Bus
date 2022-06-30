@@ -1,3 +1,11 @@
-.bg-backgroundcolor{
-    background-color: crimson;
+.bg-backgroundcolor {
+    background-color: #FFFFFF;
+}
+
+#nav-brand {
+    color: #1F4690;
+}
+
+#nav-item {
+    color: #000000;
 }

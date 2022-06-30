@@ -1,6 +1,40 @@
 #aboutus {
-    background-color: darkblue;
-    height: 650px;
+    background-color: #B8F1B0;
+    height: 700px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#aboutus-title {
+    color: #363062;
     text-align: center;
-    font-size: 250px;
+    margin-bottom: 30px;
+}
+
+#person-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 150px;
+}
+
+#person1 {
+    text-align: left;
+    margin-left: 50px;
+    margin-right: 600px;
+}
+
+#person1-info {
+    padding-left: 30px;
+    padding-bottom: 130px;
+}
+
+#person2 {
+    text-align: right;
+    margin-left: 600px;
+    margin-right: 50px;
+}
+
+#person2-info {
+    padding-right: 30px;
+    padding-bottom: 130px;
 }

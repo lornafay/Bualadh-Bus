@@ -1,23 +1,75 @@
 #home {
-    background-color: aqua;
-    height: 500px;
+    height: 800px;
+    background-color: #FFFFFF;
+}
+
+#home-section1 {
+    background-color: #DCDCDC;
+    height: 75%;
+    width: 450px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-style: solid;
+}
+
+#home-section-title {
+    background-color: #B8F1B0;
+    border-bottom: solid;
     text-align: center;
 }
 
-#sec1 {
-    background-color: brown;
-    height: 75%;
-    font-size: 50px;
+#home-section1-buttongroup {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#sec2 {
-    background-color: sandybrown;
+#home-section1-date {
+    margin-left: 10px;
+    width: 170px;
+}
+
+#home-section1-input{
+    width:400px;
+    margin: 10px 10px;
+}
+
+#home-section1-error {
+    background-color: #FBC5C5;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#home-section1-tableitem {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#home-section1-content{
+    margin-top: 10px;
+    padding-left:10px;
+}
+
+#home-section2 {
+    background-color: #DCDCDC;
+    width: 450px;
     height: 20%;
-    font-size: 25px;
+    /* font-size: 25px; */
+    border-style: solid;
+    text-align: center;
 }
 
-#sec3 {
+#home-section2-table {
+    margin-left: 125px;
+}
+
+#home-section2-weathericon {
+    font-size: 5em;
+}
+
+#home-section3 {
     background-color: indianred;
-    height:500px;
+    height: 650px;
+    width: 600px;
     font-size: 100px;
+    margin-top: 50px;
 }

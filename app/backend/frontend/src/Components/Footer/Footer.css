@@ -1,6 +1,19 @@
 #footer {
-    background-color: rgb(255, 0, 183);
-    height: 150px;
-    text-align: center;
-    font-size: 100px;
+    background-color: #FFFFFF;
+    height: 100px;
+}
+
+#footer-icon-group {
+    font-size: 30px;
+    padding-top: 50px;
+    margin-left: 50px;
+}
+
+#footer-icon {
+    padding-right: 30px;
+}
+
+#footer-text {
+    font-size: 15px;
+    padding-left: 900px;
 }
