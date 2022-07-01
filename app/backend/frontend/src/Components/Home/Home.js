@@ -1,12 +1,13 @@
-import './Home.css'
+import './Home.css';
 import React from 'react';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun } from '@fortawesome/free-solid-svg-icons'
-import ToggleButton from './ArrivalDeparture'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun } from '@fortawesome/free-solid-svg-icons';
+import ToggleButton from './ArrivalDeparture';
+import Maps from './Maps'
 
 export default function Home() {
     return (
@@ -57,7 +58,36 @@ export default function Home() {
                     </Col>
                     <Col>
                         <section id='home-section3'>
-                            <p>Map</p>
+                            <Maps />
+                            <table id='map-table'>
+                                <tr>
+                                    <td id='map-table-col'>
+                                        <Form.Check
+                                            reverse
+                                            label="Attractions"
+                                            name="group"
+                                            type='radio'
+                                            id='map-check'
+                                        />
+                                    </td>
+                                    <td id='map-table-col'>
+                                        <Form.Check
+                                            label="Activities"
+                                            name="group"
+                                            type='radio'
+                                            id='map-check'
+                                        />
+                                    </td>
+                                    <td id='map-table-col'>
+                                        <Form.Check
+                                            label="Accomodation"
+                                            name="group"
+                                            type='radio'
+                                            id='map-check'
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
                         </section>
                     </Col>
                 </Row>
