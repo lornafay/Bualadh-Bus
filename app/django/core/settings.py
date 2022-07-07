@@ -8,20 +8,28 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from backend.credentials import Password_DB_SSH as pw
-from backend.credentials import SECRET_KEY as sk
-
+import json
 import os
+
+# create string of path to credentials file (in Bualadh-Bus/ directory)
+cwd = os.getcwd()
+ind = cwd.index("-Bus") + 5
+path_to_credentails = cwd[:ind]
+print(path_to_credentails)
+
+# open credentials.json with path just created
+with open(f'{path_to_credentails}credentials.json', 'r') as credentials_file:
+    credentials = json.load(credentials_file)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = sk
+SECRET_KEY = credentials["djangoSecretKey"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,16 +83,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # At the moment, comment the database connection since there is an issue.
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'DBus',
-#         'USER': 'root',
-#         'PASSWORD': pw,
-#         'HOST': 'database',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'HOST': credentials["db"]["host"],
+       'PORT': credentials["db"]["port"],
+       'NAME': credentials["db"]["name"],
+       'USER': credentials["db"]["user"],
+       'PASSWORD': credentials["db"]["pwd"]
+   }
+}
+
 
 
 # Password validation
