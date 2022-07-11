@@ -1,8 +1,14 @@
 #faq {
     background-color: #B8F1B0;
-    height: 500px;
+    color: #535353;
+    /* height: 500px; */
     padding-top: 25px;
     padding-bottom: 25px;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
+    max-width: 95%
 }
 
 #faq-title {

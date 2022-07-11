@@ -1,8 +1,13 @@
 #cover {
     background-color: #B8F1B0;
-    color: #8E3200;
-    height: 500px;
+    color: #535353;
+    /* height: 500px; */
     font-size: 150px;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
+    max-width: 95%
 }
 
 #cover-section {
@@ -18,5 +23,7 @@
 }
 
 #cover-img {
-    padding-top: 50px;
+    width: 50%;
+    height: 50%;
+    margin-top: 20px;
 }
