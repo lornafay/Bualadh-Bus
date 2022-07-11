@@ -8,10 +8,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
 import ToggleButton from './ArrivalDeparture';
 import Maps from './Maps'
+import {useState, useEffect} from 'react';
 
 export default function Home() {
+    // receive the current_weather from django
+    const [weather, setWeather] = useState([]);
+    useEffect(()=>{
+      fetch('http://127.0.0.1:8000/api/current_weather/', {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json"
+        }
+      }).then(resp=>resp.json())
+        .then(resp=>setWeather(resp))
+        .catch(error=>console.log(error))
+    })
+
+
     return (
         <div id='home'>
+            {/* print out the api data */}
+            {weather.map(w =>{
+                return <h1>time: {w.time}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>temp: {w.temperature}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind speed: {w.wind_speed}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind dir: {w.wind_dir}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind cloud: {w.clouds}</h1>
+            })}
             <Container>
                 <Row>
                     <Col>
