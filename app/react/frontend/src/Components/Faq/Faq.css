@@ -1,0 +1,21 @@
+#faq {
+    background-color: #B8F1B0;
+    height: 500px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#faq-title {
+    color: #363062;
+    text-align: center;
+}
+
+#faq-accordion {
+    padding-left: 250px;
+}
+
+#faq-collapse {
+    width: 80%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
