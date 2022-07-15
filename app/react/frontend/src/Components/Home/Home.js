@@ -74,7 +74,7 @@ export default function Home() {
                                 <Form.Control type="time" name="time" placeholder="time" id='home-section1-date' onChange={(e) => setTime(e.target.value)}/>
                                 <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)}/>
                                 <Form.Control placeholder="Destination" name='destination' id='home-section1-input' onChange={(e) => setDestination(e.target.value)}/>
-                                <Button variant="primary" type="submit" onClick={postData}>
+                                <Button variant="primary" type="submit" onClick={postData} disabled={date.length === 0 || time.length === 0 || location.length === 0 || destination.length === 0}>
                                     Submit
                                 </Button>
                             </Form> 
