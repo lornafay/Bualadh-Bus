@@ -1,9 +1,7 @@
 // modified from https://react-bootstrap.netlify.app/components/buttons/#rb-docs-content
-
 import React, { useState } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import Form from 'react-bootstrap/Form'
 
 export default function ArrivalDeparture() {
   const [radioValue, setRadioValue] = useState('1');
@@ -30,7 +28,6 @@ export default function ArrivalDeparture() {
             {radio.name}
           </ToggleButton>
         ))}
-        <Form.Control type="date" name="dob" placeholder="Date of Birth" id='home-section1-date'/>
       </ButtonGroup>
     </>
   );

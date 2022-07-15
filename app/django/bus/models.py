@@ -8,15 +8,9 @@ class current_weather(models.Model):
     wind_dir = models.FloatField()
     clouds = models.FloatField()
     rain = models.FloatField()
-    id = models.FloatField()
-    icon = models.CharField(max_length=45)
-    description = models.CharField(max_length=45)
-    feels_like = models.FloatField()
-    day_max_temp = models.FloatField()
-    day_min_temp = models.FloatField()
     pressure = models.FloatField()
     humidity = models.FloatField()
-    visibility = models.FloatField()
+    dew_point = models.FloatField()
 
     class Meta:
         db_table = "current_weather"

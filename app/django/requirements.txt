@@ -7,3 +7,5 @@ protobuf==3.19.4
 sqlparse==0.4.2
 gevent
 djangorestframework
+pickle
+scikit-learn

@@ -5,8 +5,11 @@ from .serializers import Weather_Serializer
 
 @api_view(['GET'])
 def get_current_weather(request):
-    # person = {'test', 'test1'}
-    # return Response(person)
     weather = current_weather.objects.all()
     serializer = Weather_Serializer(weather, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def user_input(request):
+    print(request.data)
+    return Response({'status':'successful'})
