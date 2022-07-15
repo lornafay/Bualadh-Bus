@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-import ArrivalDeparture from './ArrivalDeparture';
 import Maps from './Maps'
 import {useState, useEffect} from 'react';
 import Axios from 'axios';
@@ -71,7 +70,6 @@ export default function Home() {
                         <section id='home-section1'>
                             <h3 id='home-section-title'>Container</h3>
                             <Form>
-                                <ArrivalDeparture />
                                 <Form.Control type="date" name="date" placeholder="Date" id='home-section1-date' onChange={(e) => setDate(e.target.value)}/>
                                 <Form.Control type="time" name="time" placeholder="time" id='home-section1-date' onChange={(e) => setTime(e.target.value)}/>
                                 <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)}/>
