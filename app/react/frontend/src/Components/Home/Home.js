@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-import Maps from './Maps'
+import GoogleMaps from "simple-react-google-maps";
 import {useState, useEffect} from 'react';
 import Axios from 'axios';
 
@@ -114,7 +114,15 @@ export default function Home() {
                     </Col>
                     <Col>
                         <section id='home-section3'>
-                            <Maps />
+                            <GoogleMaps 
+                                apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
+                                style={{ height: "550px", width: "600px"}}
+                                zoom={12}
+                                center={{
+                                lat: 53.350140,
+                                lng: -6.266155
+                                }}
+                            />
                             <table id='map-table'>
                                 <tr>
                                     <td id='map-table-col'>
