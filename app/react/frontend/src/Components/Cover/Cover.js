@@ -15,7 +15,6 @@ export default function Cover() {
                         <section id='cover-section'>
                             <h1>BUALADH BUS</h1>
                             <h2>Dublin Bus</h2>
-                            <Button variant="primary" id='cover-button'>ABOUT THE APP</Button>
                         </section>
                     </Col>
                     <Col>

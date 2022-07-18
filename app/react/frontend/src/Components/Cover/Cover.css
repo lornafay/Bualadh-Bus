@@ -11,19 +11,19 @@
 }
 
 #cover-section {
-    padding-top: 150px;
+    padding-top: 5px;
     padding-left: 100px;
 }
 
-#cover-button {
+/* #cover-button {
     width: 200px;
     height: 45px;
     font-size: 20px;
     margin-bottom: 50px;
-}
+} */
 
 #cover-img {
-    width: 50%;
-    height: 50%;
-    margin-top: 20px;
+    width: 20%;
+    height: auto;
+    padding-top: 5px;
 }

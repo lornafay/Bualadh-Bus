@@ -46,23 +46,6 @@ export default function Home() {
                         )
                     } 
             })()}
-            
-            {/* print out the api data */}
-            {/* {weather.map(w =>{
-                return <h1>time: {w.time}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>temp: {w.temperature}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind speed: {w.wind_speed}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind dir: {w.wind_dir}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind cloud: {w.clouds}</h1>
-            })} */}
         
             <Container>
                 <Row>
@@ -94,20 +77,18 @@ export default function Home() {
                             <h3 id='home-section-title'>Current Weather</h3>
                             <table id='home-section2-table'>
                                 <tr>
-                                    <td>
-                                        <FontAwesomeIcon icon={faSun} id='home-section2-weathericon'/>
-                                    </td>
-                                    <td>
-                                        <tr>
-                                            Sunny
-                                        </tr>
-                                        <tr>
-                                            Current 16°
-                                        </tr>
-                                        <tr>
-                                            H:17° L:13°
-                                        </tr>
-                                    </td>
+                                    <p>clouds</p>
+                                    {weather.map(w =>{
+                                        return <h1>Cloud coverage: {w.clouds}%</h1>
+                                    })} 
+                                    <p>clouds</p>
+                                    {weather.map(w =>{
+                                        return <h1>Temperature: {w.temperature}</h1>
+                                    })}
+                                    <p>clouds</p>
+                                    {weather.map(w =>{
+                                        return <h1>Wind speed: {w.wind_speed}</h1>
+                                    })}
                                 </tr>
                             </table>
                         </section>
