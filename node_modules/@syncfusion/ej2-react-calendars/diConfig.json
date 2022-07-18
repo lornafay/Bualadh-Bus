@@ -1,0 +1,333 @@
+{
+    "name": "Calendars",
+    "description": "Calendar Components",
+    "keywords": {
+        "common": ["ej2", "syncfusion", "web-components", "calendar", "date", "time", "datetime", "daterange", "culture", "month", "year", "decade", "timepicker", "strict-mode", "step", "interval", "min", "max", "globalization", "datepicker", "daterangepicker", "datetimepicker", "enable-persistence", "locale", "value", "format", "week-number", "enable-rtl", "presets", "min-days", "max-days", "start-date", "end-date", "time-format", "rangepicker", "month-picker"],
+        "angular": ["angular", "ng", "ng-calendars", "ej2-ng-calendars"],
+        "react": ["react", "react-calendars", "ej2-react-calendars"],
+        "vue": ["vue", "vue-calendars", "ej2-vue-calendars"]
+    },
+    "eventInterfaces": ["ChangedEventArgs", "RangePopupEventArgs", "NavigatedEventArgs", "RenderDayCellEventArgs", "BlurEventArgs", "PreventableEventArgs", "PopupObjectArgs", "FocusEventArgs", "RangeEventArgs", "PopupEventArgs", "ItemEventArgs"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/syncfusion/ej2-calendars.git"
+    },
+    "components": [{
+        "baseClass": "Calendar",
+        "directoryName": "calendar",
+        "type": "form",
+        "defaultTag": "<div id='calendar'></div>",
+        "twoWays": ["value","values"],
+        "blazorPlaceholder": "calendar",
+		  "dynamicModules": [
+            "Islamic"
+        ],
+        "diModuleFiles": [{
+            "fileName": "islamic"
+        }],
+        "comment": [
+            "/**",
+            " * Represents the Essential JS 2 Angular Calendar Component.",
+            " * ```html",
+            " * <ejs-calendar [value]='date'></ejs-calendar>",
+            " * ```",
+            " */"
+        ],
+        "reactComment": [
+            "/**",
+            " * Represents the Essential JS 2 React Calendar Component.",
+            " * ```ts",
+            " * <CalendarComponent value={date}></CalendarComponent>",
+            " * ```",
+            " */"
+        ],
+        "vueComment": [
+            "/**",
+            " * Represents the Essential JS 2  VueJS Calendar Component.",
+            " * ```html",
+            " * <ejs-calendar v-bind:value='date'></ejs-calendar>",
+            " * ```",
+            " */"
+        ],
+        "isGenericClass": true,
+        "blazorType": "native",
+        "blazorCustomBaseComponent": "CalendarBase<TValue>",
+        "blazorDependency": [
+            "ej2-base",
+            "../blazor/CalendarBase"
+        ]
+    }, {
+        "baseClass": "DatePicker",
+        "directoryName": "datepicker",
+        "type": "form",
+        "defaultTag": "<input id='datepicker'></input>",
+        "preferredTag": "input",
+        "skipEventPropagation": true,
+        "twoWays": ["value"],
+        "isGenericClass": true,
+        "blazorType": "native",
+		"blazorCustomBaseComponent": "CalendarBase<TValue>",
+        "blazorPlaceholder": "datepicker",
+        "blazorDependency": [
+            "ej2-base",
+            "ej2-popups/popup"
+        ],
+		  "dynamicModules": [
+            "Islamic",
+            "MaskedDateTime"
+        ],
+        "blazorDynamicModules": [],
+        "diModuleFiles": [
+        {
+            "fileName": "islamic" 
+        },
+        {
+            "fileName": "masked-date-time"
+        }
+        ],
+        "comment": [
+            "/**",
+            " * Represents the Essential JS 2 Angular DatePicker Component.",
+            " * ```html",
+            " * <ejs-datepicker [value]='date'></ejs-datepicker>",
+            " * ```",
+            " */"
+        ],
+        "reactComment": [
+            "/**",
+            " * Represents the Essential JS 2 React DatePicker Component.",
+            " * ```ts",
+            " * <DatePickerComponent value={date}></DatePickerComponent>",
+            " * ```",
+            " */"
+        ],
+        "vueComment": [
+            "/**",
+            " * Represents the Essential JS 2 VueJS DatePicker Component.",
+            " * ```html",
+            " * <ejs-datepicker v-bind:value='date'></ejs-datepicker>",
+            " * ```",
+            " */"
+        ],
+        "complexDirective": [
+            {
+                "propertyName" : "maskPlaceholder",
+                "baseClass" : "MaskPlaceholder"
+            }
+        ]
+    }, {
+        "baseClass": "TimePicker",
+        "directoryName": "timepicker",
+        "type": "form",
+        "defaultTag": "<input id='timepicker'></input>",
+        "preferredTag": "input",
+        "skipEventPropagation": true,
+        "twoWays": ["value"],
+		"isGenericClass": true,
+        "blazorType": "native",
+        "blazorPlaceholder": "timepicker",
+        "blazorDependency": [
+            "ej2-base",
+            "ej2-popups/popup"
+        ],
+        "dynamicModules": [
+            "MaskedDateTime"
+        ],
+        "diModuleFiles": [{
+            "fileName": "masked-date-time"
+        }],
+        "comment": [
+            "/**",
+            " * Represents the Essential JS 2 Angular TimePicker Component.",
+            " * ```html",
+            " * <ejs-timepicker [value]='dateTime'></ejs-timepicker>",
+            " * ```",
+            " */"
+        ],
+        "reactComment": [
+            "/**",
+            " * Represents the Essential JS 2 React TimePicker Component.",
+            " * ```html",
+            " * <TimePickerComponent value={value}></TimePickerComponent>",
+            " * ```",
+            " */"
+        ],
+        "vueComment": [
+            "/**",
+            " * Represents the Essential JS 2 VueJS TimePicker Component.",
+            " * ```html",
+            " * <ejs-timepicker v-bind:value='value'></ejs-timepicker>",
+            " * ```",
+            " */"
+        ],
+        "complexDirective": [
+            {
+                "propertyName" : "maskPlaceholder",
+                "baseClass" : "MaskPlaceholder"
+            }
+        ]
+
+    }, {
+        "baseClass": "DateRangePicker",
+        "directoryName": "daterangepicker",
+        "type": "form",
+        "defaultTag": "<input id='daterangepicker'></input>",
+        "preferredTag": "input",
+        "blazorPlaceholder": "daterangepicker",
+        "skipEventPropagation": true,
+        "blazorType": "native",
+        "blazorDependency": [
+            "ej2-base",
+            "ej2-popups/popup",
+            "../blazor/sf-daterangepicker"
+        ],
+
+        "twoWays": [
+            "startDate",
+            "endDate",
+            "value"
+        ],
+        "comment": [
+            "/**",
+            " * Represents the Essential JS 2 Angular DateRangePicker Component.",
+            " * ```html",
+            " * <ejs-daterangepicker [startDate]='date' [endDate]='date'></ejs-daterangepicker>",
+            " * ```",
+            " */"
+        ],
+        "reactComment": [
+            "/**",
+            " * Represents the Essential JS 2 React DateRangePicker Component.",
+            " * ```ts",
+            " * <DateRangePickerComponent startDate={date} endDate={date}></DateRangePickerComponent>",
+            " * ```",
+            " */"
+        ],
+        "vueComment": [
+            "/**",
+            " * Represents the Essential JS 2 VueJS DateRangePicker Component.",
+            " * ```html",
+            " * <ejs-daterangepicker v-bind:startDate='date' v-bind:endDate='date'></ejs-daterangepicker>",
+            " * ```",
+            " */"
+        ],
+        "templateProperties": ["start", "end"],
+        "complexDirective": [
+            {
+                "propertyName" : "value",
+                "baseClass" : "DateRange",
+                "SelectorName": "e-value"
+            }
+        ],
+        "tagDirective": [{
+            "arrayDirectiveClassName": "presets",
+            "directiveClassName": "preset",
+            "propertyName": "presets",
+            "directoryName": "daterangepicker",
+            "baseClass": "Presets",
+            "comment": [
+                "/**",
+                " * 'e-presets' directive represent a presets of angular daterangepicker ",
+                " * It must be contained in a daterangepicker component(`ej-daterangepicker`). ",
+                " * ```html",
+                " * <ejs-daterangepicker id='range'> ",
+                " *   <e-presets>",
+                " *    <e-preset label='Last Week' [start]=new Date('06/07/2018') [end]= new Date('06/01/2018')></e-preset>",
+                " *    <e-preset label='Last Month' [start]=new Date('06/07/2018') [end]= new Date('05/07/2018')></e-preset>",
+                " *   </e-presets>",
+                " * </ejs-daterangepicker>",
+                " * ```",
+                " */"
+            ],
+            "reactComment": [
+                "/**",
+                " * `PresetsDirective` represent a presets of the react daterangepicker. ",
+                " * It must be contained in a daterangepicker component(`DateRangePickerComponent`). ",
+                " * ```tsx",
+                " * <DateRangePickerComponent id='range'> ",
+                " * <PresetsDirective>",
+                " * <PresetDirective label='Last Week' start={new Date('06/07/2018')} end= {new Date('06/01/2018')}></PresetDirective>",
+                " * <PresetDirective label='Last Month' start={new Date('06/07/2018')} end= {new Date('05/07/2018')]></PresetDirective>",
+                " * </PresetsDirective>",
+                " * </DateRangePickerComponent>",
+                " * ```",
+                " */"
+            ],
+            "vueComment": [
+                "/**",
+                " * 'e-presets' directive represent a presets of VueJS daterangepicker ",
+                " * It must be contained in a daterangepicker component(`ej-daterangepicker`). ",
+                " * ```html",
+                " * <ejs-daterangepicker id='range'> ",
+                " *   <e-presets>",
+                " *   <e-preset label='Last Week' v-bind:start='startValue' v-bind:end='endValue'></e-preset>",
+                " *   <e-preset label='Last Month' v-bind:start='startValue' v-bind:end='endValue'></e-preset>",
+                " *   </e-presets>",
+                " * </ejs-daterangepicker>",
+                " * ```",
+                " */"
+            ]
+        }]
+    }, {
+        "baseClass": "DateTimePicker",
+        "directoryName": "datetimepicker",
+        "type": "form",
+        "defaultTag": "<input id='datetimepicker'></input>",
+        "preferredTag": "input",
+        "skipEventPropagation": true,
+        "blazorPlaceholder": "datetimepicker",
+        "isGenericClass": true,
+        "blazorType": "native",
+        "blazorDependency": [
+            "ej2-base",
+            "ej2-popups/popup",
+            "../blazor/sf-datepicker"
+        ],
+        "twoWays": [
+            "value"
+        ],
+		  "dynamicModules": [
+            "Islamic",
+            "MaskedDateTime"
+        ],
+        "blazorDynamicModules": [],
+        "diModuleFiles": [
+        {
+            "fileName": "islamic"
+        },
+        {
+            "fileName": "masked-date-time"
+        }
+        ],
+        "comment": [
+            "/**",
+            " * Represents the Essential JS 2 Angular DateTimePicker Component.",
+            " * ```html",
+            " * <ejs-datetimepicker [value]='dateTime'></ejs-datetimepicker>",
+            " * ```",
+            " */"
+        ],
+        "reactComment": [
+            "/**",
+            " * Represents the Essential JS 2 React DateTimePicker Component.",
+            " * ```ts",
+            " * <DateTimePickerComponent value={dateTime}></DateTimePickerComponent>",
+            " * ```",
+            " */"
+        ],
+        "vueComment": [
+            "/**",
+            " * Represents the Essential JS 2 VueJS DateTimePicker Component.",
+            " * ```html",
+            " * <ejs-datetimepicker v-bind:value='dateTime'></ejs-datetimepicker>",
+            " * ```",
+            " */"
+        ],
+        "complexDirective": [
+            {
+                "propertyName" : "maskPlaceholder",
+                "baseClass" : "MaskPlaceholder"
+            }
+        ]
+    }]
+}

@@ -4,6 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+import addWeeks from "date-fns/addWeeks";
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
@@ -18,17 +23,16 @@ export default function Home() {
         Axios.get('http://127.0.0.1:8000/api/current_weather/')
         .then(res => setWeather(res.data).catch(err => console.log(err)))
     }, [])
-
-    const [date, setDate] = useState([]);
-    const [time, setTime] = useState([]);
+    
+    // user input
+    const [time, setTime] = useState(new Date());
     const [location, setLocation] = useState([]);
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
-
+    
     const postData = (e) => {
         e.preventDefault();
         Axios.post('http://127.0.0.1:8000/api/user_input/',{
-            date,
             time,
             location,
             destination
@@ -70,11 +74,18 @@ export default function Home() {
                         <section id='home-section1'>
                             <h3 id='home-section-title'>Container</h3>
                             <Form>
-                                <Form.Control type="date" name="date" placeholder="Date" id='home-section1-date' onChange={(e) => setDate(e.target.value)}/>
-                                <Form.Control type="time" name="time" placeholder="time" id='home-section1-date' onChange={(e) => setTime(e.target.value)}/>
+                                <DatePicker
+                                selected={time}
+                                onChange={(date) => setTime(date)}
+                                showTimeSelect
+                                minDate={new Date()}
+                                maxDate={addWeeks(new Date(), 1)}
+                                timeFormat="HH:mm"
+                                dateFormat="MMMM d, yyyy h:mm aa"
+                                />
                                 <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)}/>
                                 <Form.Control placeholder="Destination" name='destination' id='home-section1-input' onChange={(e) => setDestination(e.target.value)}/>
-                                <Button variant="primary" type="submit" onClick={postData} disabled={date.length === 0 || time.length === 0 || location.length === 0 || destination.length === 0}>
+                                <Button variant="primary" type="submit" onClick={postData} disabled={time.length === 0 || location.length === 0 || destination.length === 0}>
                                     Submit
                                 </Button>
                             </Form> 

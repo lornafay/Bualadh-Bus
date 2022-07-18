@@ -1,0 +1,645 @@
+.e-checkbox-wrapper .e-check::before,
+.e-css.e-checkbox-wrapper .e-check::before {
+  content: "\e774";
+}
+
+.e-checkbox-wrapper .e-stop::before,
+.e-css.e-checkbox-wrapper .e-stop::before {
+  content: "\e87f";
+}
+
+/*! checkbox layout */
+.e-checkbox-wrapper,
+.e-css.e-checkbox-wrapper {
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  outline: none;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  border: 1px solid transparent;
+  padding: 3px;
+}
+.e-checkbox-wrapper label,
+.e-css.e-checkbox-wrapper label {
+  cursor: pointer;
+  display: inline-block;
+  line-height: 0;
+  margin: 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.e-checkbox-wrapper:focus, .e-checkbox-wrapper.e-focus,
+.e-css.e-checkbox-wrapper:focus,
+.e-css.e-checkbox-wrapper.e-focus {
+  border: 1px solid #d2d0ce;
+  padding: 3px;
+}
+.e-checkbox-wrapper:focus .e-frame, .e-checkbox-wrapper.e-focus .e-frame,
+.e-css.e-checkbox-wrapper:focus .e-frame,
+.e-css.e-checkbox-wrapper.e-focus .e-frame {
+  box-shadow: none;
+}
+
+.e-checkbox-wrapper .e-ripple-container,
+.e-css.e-checkbox-wrapper .e-ripple-container {
+  border-radius: 50%;
+  bottom: -9px;
+  height: 36px;
+  left: -9px;
+  pointer-events: none;
+  position: absolute;
+  right: -9px;
+  top: -9px;
+  width: 36px;
+  z-index: 1;
+}
+
+.e-checkbox-wrapper .e-label,
+.e-css.e-checkbox-wrapper .e-label {
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 20px;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+.e-checkbox-wrapper .e-checkbox,
+.e-css.e-checkbox-wrapper .e-checkbox {
+  height: 1px;
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+}
+.e-checkbox-wrapper .e-checkbox + .e-label,
+.e-css.e-checkbox-wrapper .e-checkbox + .e-label {
+  margin-right: 8px;
+}
+
+.e-checkbox-wrapper .e-frame,
+.e-css.e-checkbox-wrapper .e-frame {
+  border: 1px solid;
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "e-icons";
+  height: 20px;
+  line-height: 18px;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  width: 20px;
+}
+.e-checkbox-wrapper .e-frame + .e-label,
+.e-css.e-checkbox-wrapper .e-frame + .e-label {
+  margin-left: 8px;
+}
+.e-checkbox-wrapper .e-frame + .e-ripple-container,
+.e-css.e-checkbox-wrapper .e-frame + .e-ripple-container {
+  left: auto;
+}
+
+.e-checkbox-wrapper .e-check,
+.e-css.e-checkbox-wrapper .e-check {
+  font-size: 16px;
+}
+
+.e-checkbox-wrapper .e-stop,
+.e-css.e-checkbox-wrapper .e-stop {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.e-checkbox-wrapper.e-checkbox-disabled,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled {
+  cursor: default;
+  pointer-events: none;
+}
+.e-checkbox-wrapper.e-checkbox-disabled .e-frame,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-frame {
+  cursor: default;
+}
+.e-checkbox-wrapper.e-checkbox-disabled .e-label,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-label {
+  cursor: default;
+}
+
+.e-checkbox-wrapper.e-rtl .e-ripple-container,
+.e-css.e-checkbox-wrapper.e-rtl .e-ripple-container {
+  right: -9px;
+}
+.e-checkbox-wrapper.e-rtl .e-frame,
+.e-css.e-checkbox-wrapper.e-rtl .e-frame {
+  margin: 0;
+}
+.e-checkbox-wrapper.e-rtl .e-frame:hover,
+.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+}
+.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check), .e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before,
+.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check),
+.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before {
+  content: "\e774";
+  font-size: 16px;
+}
+.e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container,
+.e-css.e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container {
+  left: -9px;
+  right: auto;
+}
+.e-checkbox-wrapper.e-rtl .e-label,
+.e-css.e-checkbox-wrapper.e-rtl .e-label {
+  margin-left: 0;
+  margin-right: 8px;
+}
+.e-checkbox-wrapper.e-rtl .e-label + .e-frame,
+.e-css.e-checkbox-wrapper.e-rtl .e-label + .e-frame {
+  margin: 0;
+}
+.e-checkbox-wrapper.e-rtl .e-checkbox + .e-label,
+.e-css.e-checkbox-wrapper.e-rtl .e-checkbox + .e-label {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+.e-checkbox-wrapper.e-small .e-frame,
+.e-css.e-checkbox-wrapper.e-small .e-frame {
+  height: 16px;
+  line-height: 14px;
+  width: 16px;
+}
+.e-checkbox-wrapper.e-small .e-check,
+.e-css.e-checkbox-wrapper.e-small .e-check {
+  font-size: 10px;
+}
+.e-checkbox-wrapper.e-small .e-stop,
+.e-css.e-checkbox-wrapper.e-small .e-stop {
+  font-size: 10px;
+  line-height: 16px;
+}
+.e-checkbox-wrapper.e-small .e-label,
+.e-css.e-checkbox-wrapper.e-small .e-label {
+  font-size: 12px;
+  line-height: 16px;
+}
+.e-checkbox-wrapper.e-small .e-ripple-container,
+.e-css.e-checkbox-wrapper.e-small .e-ripple-container {
+  bottom: -13px;
+  height: 30px;
+  left: -13px;
+  right: -13px;
+  top: -13px;
+  width: 30px;
+}
+
+.e-small .e-checkbox-wrapper .e-frame,
+.e-small.e-checkbox-wrapper .e-frame,
+.e-small .e-css.e-checkbox-wrapper .e-frame,
+.e-small.e-css.e-checkbox-wrapper .e-frame {
+  height: 16px;
+  line-height: 14px;
+  width: 16px;
+}
+.e-small .e-checkbox-wrapper .e-frame:hover,
+.e-small.e-checkbox-wrapper .e-frame:hover,
+.e-small .e-css.e-checkbox-wrapper .e-frame:hover,
+.e-small.e-css.e-checkbox-wrapper .e-frame:hover {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+}
+.e-small .e-checkbox-wrapper .e-frame:hover:not(.e-check), .e-small .e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-small.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-small.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-small .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-small .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-small.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-small.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before {
+  content: "\e774";
+  font-size: 10px;
+}
+.e-small .e-checkbox-wrapper .e-check,
+.e-small.e-checkbox-wrapper .e-check,
+.e-small .e-css.e-checkbox-wrapper .e-check,
+.e-small.e-css.e-checkbox-wrapper .e-check {
+  font-size: 10px;
+}
+.e-small .e-checkbox-wrapper .e-stop,
+.e-small.e-checkbox-wrapper .e-stop,
+.e-small .e-css.e-checkbox-wrapper .e-stop,
+.e-small.e-css.e-checkbox-wrapper .e-stop {
+  font-size: 10px;
+  line-height: 16px;
+}
+.e-small .e-checkbox-wrapper .e-label,
+.e-small.e-checkbox-wrapper .e-label,
+.e-small .e-css.e-checkbox-wrapper .e-label,
+.e-small.e-css.e-checkbox-wrapper .e-label {
+  font-size: 12px;
+  line-height: 16px;
+}
+.e-small .e-checkbox-wrapper .e-ripple-container,
+.e-small.e-checkbox-wrapper .e-ripple-container,
+.e-small .e-css.e-checkbox-wrapper .e-ripple-container,
+.e-small.e-css.e-checkbox-wrapper .e-ripple-container {
+  bottom: -13px;
+  height: 30px;
+  left: -13px;
+  right: -13px;
+  top: -13px;
+  width: 30px;
+}
+
+.e-bigger.e-small .e-checkbox-wrapper .e-frame,
+.e-bigger.e-small.e-checkbox-wrapper .e-frame,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-frame,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-frame {
+  height: 22px;
+  line-height: 21px;
+  width: 22px;
+}
+.e-bigger.e-small .e-checkbox-wrapper .e-frame:hover:not(.e-check), .e-bigger.e-small .e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-small.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger.e-small.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before {
+  content: "\e774";
+  font-size: 16px;
+}
+.e-bigger.e-small .e-checkbox-wrapper .e-check,
+.e-bigger.e-small.e-checkbox-wrapper .e-check,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-check,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-check {
+  font-size: 16px;
+}
+.e-bigger.e-small .e-checkbox-wrapper .e-stop,
+.e-bigger.e-small.e-checkbox-wrapper .e-stop,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-stop,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-stop {
+  font-size: 16px;
+  line-height: 21px;
+}
+.e-bigger.e-small .e-checkbox-wrapper .e-label,
+.e-bigger.e-small.e-checkbox-wrapper .e-label,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-label,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-label {
+  font-size: 16px;
+  line-height: 22px;
+}
+.e-bigger.e-small .e-checkbox-wrapper .e-ripple-container,
+.e-bigger.e-small.e-checkbox-wrapper .e-ripple-container,
+.e-bigger.e-small .e-css.e-checkbox-wrapper .e-ripple-container,
+.e-bigger.e-small.e-css.e-checkbox-wrapper .e-ripple-container {
+  bottom: -16px;
+  height: 38px;
+  left: -16px;
+  right: -16px;
+  top: -16px;
+  width: 38px;
+}
+
+.e-bigger .e-checkbox-wrapper .e-frame,
+.e-bigger.e-checkbox-wrapper .e-frame,
+.e-bigger .e-css.e-checkbox-wrapper .e-frame,
+.e-bigger.e-css.e-checkbox-wrapper .e-frame {
+  height: 24px;
+  line-height: 22px;
+  width: 24px;
+}
+.e-bigger .e-checkbox-wrapper .e-frame:hover,
+.e-bigger.e-checkbox-wrapper .e-frame:hover,
+.e-bigger .e-css.e-checkbox-wrapper .e-frame:hover,
+.e-bigger.e-css.e-checkbox-wrapper .e-frame:hover {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+}
+.e-bigger .e-checkbox-wrapper .e-frame:hover:not(.e-check), .e-bigger .e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger .e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-check),
+.e-bigger.e-css.e-checkbox-wrapper .e-frame:hover:not(.e-stop)::before {
+  content: "\e774";
+  font-size: 18px;
+}
+.e-bigger .e-checkbox-wrapper .e-frame + .e-label,
+.e-bigger.e-checkbox-wrapper .e-frame + .e-label,
+.e-bigger .e-css.e-checkbox-wrapper .e-frame + .e-label,
+.e-bigger.e-css.e-checkbox-wrapper .e-frame + .e-label {
+  font-size: 18px;
+  line-height: 24px;
+  margin-left: 12px;
+}
+.e-bigger .e-checkbox-wrapper .e-check,
+.e-bigger.e-checkbox-wrapper .e-check,
+.e-bigger .e-css.e-checkbox-wrapper .e-check,
+.e-bigger.e-css.e-checkbox-wrapper .e-check {
+  font-size: 18px;
+}
+.e-bigger .e-checkbox-wrapper .e-stop,
+.e-bigger.e-checkbox-wrapper .e-stop,
+.e-bigger .e-css.e-checkbox-wrapper .e-stop,
+.e-bigger.e-css.e-checkbox-wrapper .e-stop {
+  font-size: 20px;
+  line-height: 23px;
+}
+.e-bigger .e-checkbox-wrapper .e-label,
+.e-bigger.e-checkbox-wrapper .e-label,
+.e-bigger .e-css.e-checkbox-wrapper .e-label,
+.e-bigger.e-css.e-checkbox-wrapper .e-label {
+  font-size: 18px;
+}
+.e-bigger .e-checkbox-wrapper .e-ripple-container,
+.e-bigger.e-checkbox-wrapper .e-ripple-container,
+.e-bigger .e-css.e-checkbox-wrapper .e-ripple-container,
+.e-bigger.e-css.e-checkbox-wrapper .e-ripple-container {
+  bottom: -15px;
+  height: 38px;
+  left: -15px;
+  right: -15px;
+  top: -15px;
+  width: 38px;
+}
+.e-bigger .e-checkbox-wrapper.e-rtl .e-frame,
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame,
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame,
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame {
+  margin: 0;
+}
+.e-bigger .e-checkbox-wrapper.e-rtl .e-frame:hover,
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame:hover,
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame:hover,
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+}
+.e-bigger .e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check), .e-bigger .e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check),
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before,
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check),
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before,
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-check),
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame:hover:not(.e-stop)::before {
+  content: "\e774";
+  font-size: 18px;
+}
+.e-bigger .e-checkbox-wrapper.e-rtl .e-frame + .e-label,
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame + .e-label,
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame + .e-label,
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame + .e-label {
+  margin-left: 0;
+  margin-right: 12px;
+}
+.e-bigger .e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container,
+.e-bigger.e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container,
+.e-bigger .e-css.e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container,
+.e-bigger.e-css.e-checkbox-wrapper.e-rtl .e-frame + .e-ripple-container {
+  right: auto;
+}
+.e-bigger .e-checkbox-wrapper.e-small .e-frame,
+.e-bigger.e-checkbox-wrapper.e-small .e-frame,
+.e-bigger .e-css.e-checkbox-wrapper.e-small .e-frame,
+.e-bigger.e-css.e-checkbox-wrapper.e-small .e-frame {
+  height: 22px;
+  line-height: 21px;
+  width: 22px;
+}
+.e-bigger .e-checkbox-wrapper.e-small .e-check,
+.e-bigger.e-checkbox-wrapper.e-small .e-check,
+.e-bigger .e-css.e-checkbox-wrapper.e-small .e-check,
+.e-bigger.e-css.e-checkbox-wrapper.e-small .e-check {
+  font-size: 16px;
+}
+.e-bigger .e-checkbox-wrapper.e-small .e-stop,
+.e-bigger.e-checkbox-wrapper.e-small .e-stop,
+.e-bigger .e-css.e-checkbox-wrapper.e-small .e-stop,
+.e-bigger.e-css.e-checkbox-wrapper.e-small .e-stop {
+  font-size: 16px;
+  line-height: 21px;
+}
+.e-bigger .e-checkbox-wrapper.e-small .e-label,
+.e-bigger.e-checkbox-wrapper.e-small .e-label,
+.e-bigger .e-css.e-checkbox-wrapper.e-small .e-label,
+.e-bigger.e-css.e-checkbox-wrapper.e-small .e-label {
+  font-size: 16px;
+  line-height: 22px;
+}
+.e-bigger .e-checkbox-wrapper.e-small .e-ripple-container,
+.e-bigger.e-checkbox-wrapper.e-small .e-ripple-container,
+.e-bigger .e-css.e-checkbox-wrapper.e-small .e-ripple-container,
+.e-bigger.e-css.e-checkbox-wrapper.e-small .e-ripple-container {
+  bottom: -16px;
+  height: 38px;
+  left: -16px;
+  right: -16px;
+  top: -16px;
+  width: 38px;
+}
+
+/*! checkbox theme */
+.e-checkbox-wrapper,
+.e-css.e-checkbox-wrapper {
+  -webkit-tap-highlight-color: transparent;
+}
+.e-checkbox-wrapper .e-frame,
+.e-css.e-checkbox-wrapper .e-frame {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+}
+.e-checkbox-wrapper .e-frame.e-check,
+.e-css.e-checkbox-wrapper .e-frame.e-check {
+  background-color: #0078d4;
+  border-color: #0078d4;
+  color: #1b1a19;
+}
+.e-checkbox-wrapper .e-frame.e-stop,
+.e-css.e-checkbox-wrapper .e-frame.e-stop {
+  background-color: #1b1a19;
+  border-color: #0078d4;
+  color: #0078d4;
+}
+
+.e-checkbox-wrapper .e-ripple-element,
+.e-css.e-checkbox-wrapper .e-ripple-element {
+  background: transparent;
+}
+
+.e-checkbox-wrapper .e-ripple-check .e-ripple-element,
+.e-css.e-checkbox-wrapper .e-ripple-check .e-ripple-element {
+  background: transparent;
+}
+
+.e-checkbox-wrapper:active .e-ripple-element,
+.e-css.e-checkbox-wrapper:active .e-ripple-element {
+  background: transparent;
+}
+.e-checkbox-wrapper:active .e-ripple-check .e-ripple-element,
+.e-css.e-checkbox-wrapper:active .e-ripple-check .e-ripple-element {
+  background: transparent;
+}
+
+.e-checkbox-wrapper .e-label,
+.e-css.e-checkbox-wrapper .e-label {
+  color: #f3f2f1;
+}
+
+.e-checkbox-wrapper .e-checkbox:focus + .e-frame,
+.e-css.e-checkbox-wrapper .e-checkbox:focus + .e-frame {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+  box-shadow: none;
+}
+.e-checkbox-wrapper .e-checkbox:focus + .e-frame.e-check,
+.e-css.e-checkbox-wrapper .e-checkbox:focus + .e-frame.e-check {
+  background-color: #0078d4;
+  border-color: #0078d4;
+  box-shadow: none;
+  color: #1b1a19;
+}
+.e-checkbox-wrapper .e-checkbox:focus + .e-frame.e-stop,
+.e-css.e-checkbox-wrapper .e-checkbox:focus + .e-frame.e-stop {
+  box-shadow: none;
+  color: #005a9e;
+}
+
+.e-checkbox-wrapper .e-checkbox:active + .e-frame,
+.e-css.e-checkbox-wrapper .e-checkbox:active + .e-frame {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+  box-shadow: none;
+}
+.e-checkbox-wrapper .e-checkbox:active + .e-frame.e-check,
+.e-css.e-checkbox-wrapper .e-checkbox:active + .e-frame.e-check {
+  background-color: #0078d4;
+  border-color: #0078d4;
+  box-shadow: none;
+  color: #1b1a19;
+}
+.e-checkbox-wrapper .e-checkbox:active + .e-frame.e-stop,
+.e-css.e-checkbox-wrapper .e-checkbox:active + .e-frame.e-stop {
+  box-shadow: none;
+  color: #005a9e;
+}
+
+.e-checkbox-wrapper:hover .e-frame,
+.e-css.e-checkbox-wrapper:hover .e-frame {
+  background-color: #1b1a19;
+  border-color: #d2d0ce;
+  font-size: 16px;
+}
+.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop) {
+  color: #a19f9d;
+}
+.e-checkbox-wrapper:hover .e-frame:not(.e-check), .e-checkbox-wrapper:hover .e-frame:not(.e-stop)::before,
+.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check),
+.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-stop)::before {
+  content: "\e774";
+}
+.e-checkbox-wrapper:hover .e-frame.e-check,
+.e-css.e-checkbox-wrapper:hover .e-frame.e-check {
+  background-color: #005a9e;
+  border-color: #005a9e;
+  color: #1b1a19;
+}
+.e-checkbox-wrapper:hover .e-frame.e-stop,
+.e-css.e-checkbox-wrapper:hover .e-frame.e-stop {
+  border-color: #005a9e;
+}
+.e-checkbox-wrapper:hover .e-label,
+.e-css.e-checkbox-wrapper:hover .e-label {
+  color: #f3f2f1;
+}
+
+.e-checkbox-wrapper.e-checkbox-disabled .e-frame,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-frame {
+  background-color: #1b1a19;
+  border-color: #292827;
+  color: #484644;
+}
+.e-checkbox-wrapper.e-checkbox-disabled .e-frame.e-check,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-frame.e-check {
+  background-color: #484644;
+  border-color: #484644;
+  color: #1b1a19;
+}
+.e-checkbox-wrapper.e-checkbox-disabled .e-frame.e-stop,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-frame.e-stop {
+  background-color: #1b1a19;
+  border-color: #797775;
+  color: #484644;
+}
+.e-checkbox-wrapper.e-checkbox-disabled .e-label,
+.e-css.e-checkbox-wrapper.e-checkbox-disabled .e-label {
+  color: #484644;
+}
+
+.e-checkbox-wrapper.e-focus .e-ripple-container,
+.e-css.e-checkbox-wrapper.e-focus .e-ripple-container {
+  background-color: transparent;
+}
+.e-checkbox-wrapper.e-focus .e-ripple-container.e-ripple-check,
+.e-css.e-checkbox-wrapper.e-focus .e-ripple-container.e-ripple-check {
+  background-color: transparent;
+}
+.e-checkbox-wrapper.e-focus .e-frame,
+.e-css.e-checkbox-wrapper.e-focus .e-frame {
+  outline: rgba(0, 120, 212, 0.25);
+  outline-offset: 0;
+}
+.e-checkbox-wrapper.e-focus .e-frame.e-check,
+.e-css.e-checkbox-wrapper.e-focus .e-frame.e-check {
+  outline: rgba(0, 120, 212, 0.25);
+  outline-offset: 0;
+}
+
+.e-bigger .e-checkbox-wrapper:hover .e-frame,
+.e-bigger.e-checkbox-wrapper:hover .e-frame,
+.e-bigger .e-css.e-checkbox-wrapper:hover .e-frame,
+.e-bigger.e-css.e-checkbox-wrapper:hover .e-frame {
+  font-size: 18px;
+}
+.e-bigger .e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger .e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop) {
+  color: #a19f9d;
+}
+
+.e-small .e-checkbox-wrapper:hover .e-frame,
+.e-small.e-checkbox-wrapper:hover .e-frame,
+.e-small .e-css.e-checkbox-wrapper:hover .e-frame,
+.e-small.e-css.e-checkbox-wrapper:hover .e-frame {
+  font-size: 10px;
+}
+.e-small .e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-small.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-small .e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-small.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop) {
+  color: #a19f9d;
+}
+
+.e-bigger.e-small .e-checkbox-wrapper:hover .e-frame,
+.e-bigger.e-small.e-checkbox-wrapper:hover .e-frame,
+.e-bigger.e-small .e-css.e-checkbox-wrapper:hover .e-frame,
+.e-bigger.e-small.e-css.e-checkbox-wrapper:hover .e-frame {
+  font-size: 16px;
+}
+.e-bigger.e-small .e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger.e-small.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger.e-small .e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop),
+.e-bigger.e-small.e-css.e-checkbox-wrapper:hover .e-frame:not(.e-check):not(.e-stop) {
+  color: #a19f9d;
+}
