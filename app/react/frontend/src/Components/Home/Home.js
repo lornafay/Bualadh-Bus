@@ -8,6 +8,8 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+import setSeconds from "date-fns/setSeconds";
+import setMilliseconds from "date-fns/setMilliseconds";
 import addWeeks from "date-fns/addWeeks";
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,7 +27,7 @@ export default function Home() {
     }, [])
     
     // user input
-    const [time, setTime] = useState(new Date());
+    const [time, setTime] = useState(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0));
     const [location, setLocation] = useState([]);
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
