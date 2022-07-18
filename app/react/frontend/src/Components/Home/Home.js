@@ -4,23 +4,79 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun } from '@fortawesome/free-solid-svg-icons';
-import ToggleButton from './ArrivalDeparture';
-import Maps from './Maps'
+import GoogleMaps from "simple-react-google-maps";
+import {useState, useEffect} from 'react';
+import Axios from 'axios';
 
 export default function Home() {
+    // receive the current_weather from django
+    const [weather, setWeather] = useState([]);
+    useEffect(() => {
+        Axios.get('http://127.0.0.1:8000/api/current_weather/')
+        .then(res => setWeather(res.data).catch(err => console.log(err)))
+    }, [])
+
+    const [date, setDate] = useState([]);
+    const [time, setTime] = useState([]);
+    const [location, setLocation] = useState([]);
+    const [destination, setDestination] = useState([]);
+    const [receivedData, setReceivedData] = useState([]);
+
+    const postData = (e) => {
+        e.preventDefault();
+        Axios.post('http://127.0.0.1:8000/api/user_input/',{
+            date,
+            time,
+            location,
+            destination
+        }).then(res => setReceivedData(res.data).catch(err => console.log(err)))
+    }
+
     return (
         <div id='home'>
+            {(() => {
+                    if (receivedData.status !== undefined) {
+                        return (
+                            <>
+                            <h1>Status: {receivedData.status}</h1>
+                            </>
+                        )
+                    } 
+            })()}
+            
+            {/* print out the api data */}
+            {/* {weather.map(w =>{
+                return <h1>time: {w.time}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>temp: {w.temperature}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind speed: {w.wind_speed}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind dir: {w.wind_dir}</h1>
+            })}
+            {weather.map(w =>{
+                return <h1>wind cloud: {w.clouds}</h1>
+            })} */}
+        
             <Container>
                 <Row>
                     <Col>
                         <section id='home-section1'>
                             <h3 id='home-section-title'>Container</h3>
                             <Form>
-                                <ToggleButton />
-                                <Form.Control placeholder="Your Location" id='home-section1-input'/>
-                                <Form.Control placeholder="Destination" id='home-section1-input'/>
+                                <Form.Control type="date" name="date" placeholder="Date" id='home-section1-date' onChange={(e) => setDate(e.target.value)}/>
+                                <Form.Control type="time" name="time" placeholder="time" id='home-section1-date' onChange={(e) => setTime(e.target.value)}/>
+                                <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)}/>
+                                <Form.Control placeholder="Destination" name='destination' id='home-section1-input' onChange={(e) => setDestination(e.target.value)}/>
+                                <Button variant="primary" type="submit" onClick={postData} disabled={date.length === 0 || time.length === 0 || location.length === 0 || destination.length === 0}>
+                                    Submit
+                                </Button>
                             </Form> 
                             <p id='home-section1-error'>Error message</p>
                             <table>
@@ -58,7 +114,15 @@ export default function Home() {
                     </Col>
                     <Col>
                         <section id='home-section3'>
-                            <Maps />
+                            <GoogleMaps 
+                                apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
+                                style={{ height: "550px", width: "600px"}}
+                                zoom={12}
+                                center={{
+                                lat: 53.350140,
+                                lng: -6.266155
+                                }}
+                            />
                             <table id='map-table'>
                                 <tr>
                                     <td id='map-table-col'>

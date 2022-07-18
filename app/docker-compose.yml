@@ -5,7 +5,7 @@ services:
   backend:
     build:
       context: ./django
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000 --preload
     ports:
       - "8000:8000"
     container_name: django-container
