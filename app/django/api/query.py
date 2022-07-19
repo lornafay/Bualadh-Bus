@@ -7,11 +7,12 @@ import os
 class Query:
     def __init__(self):
         # create string of path to credentials file (in Bualadh-Bus/ directory)
-        home_path=os.path.normpath(os.getcwd() + os.sep + os.pardir)
-        path_to_credentails= home_path+"\\BUALADH-BUS\\app\\django\\core\\"
+        base = os.path.abspath('.')
+        path_to_credentails=os.path.join(base ,"app","django","core","credentials.json")
+        
 
         # open credentials.json with path just created
-        with open(f'{path_to_credentails}credentials.json', 'r', encoding="utf8") as credentials_file:
+        with open(path_to_credentails, 'r', encoding="utf8") as credentials_file:
             credentials = json.load(credentials_file)
 
         # Connects to remote database
