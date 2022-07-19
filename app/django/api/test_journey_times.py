@@ -73,8 +73,8 @@ class TestQuery(unittest.TestCase):
  
         self.assertTrue(type(result) == dict)
         self.assertTrue(list(result.keys()) == ['77A', '42'])
-        self.assertTrue(type(result['77A']) == str)
-        self.assertTrue(type(result['42']) == str)
+        self.assertTrue(type(list(result.keys())[0]) == str)
+        self.assertTrue(type(list(result.keys())[1]) == str)
 
 
 if __name__== '__main__':
