@@ -9,18 +9,18 @@ import pandas as pd
 StopID = '365'
 Day = 'Saturday'
 
-class Display_timetables:
+class DisplayTimetables:
     """ Class to display timetables to user.
-    Contains three methods for extracting routeID, getting timetable, and returning timetable"""
+    Contains three methods for extracting routeID, getting timetable, and returning timetable """
 
     def extract_route_ID(StopID):
-        """Method to extract_route_ID and append to LineID
-        Returns dataframe for line and route IDs"""
+        """ Method to extract_route_ID and append to LineID
+        Returns dataframe for line and route IDs """
         
-        #Get line id from django after user input
+        # Get line id from django after user input
         # ParseArguements.LineID()
 
-        #get line and route id together and possibly drop result
+        # Get line and route id together and possibly drop result
         # PredictJourneyTimes.Get_LineID_RouteID_Groups()
 
         dictionary = {
@@ -30,18 +30,18 @@ class Display_timetables:
 
         df = pd.DataFrame(dictionary)
         
-        #return route ID list
+        # Return route ID list
         return df
     
     def get_timetable(Day):
-        """Method to get day of week from user input
+        """ Method to get day of week from user input
         Will query database for planned departure times for line
-        Returns dataframe containing routeID, day of week, planned departure times"""
+        Returns dataframe containing routeID, day of week, planned departure times """
         
-        #takes day of week from user
+        # Takes day of week from user
         day_of_week = 'Saturday'
         
-        #after querying DB with SELECT ROUTEID, DAY_OF_WEEK, PLANNEDTIME_DEP_R_M5 FROM static_tables.timetables Where ROUTEID = '77A_30'and DAY_OF_WEEK = "Tuesday" order by PLANNEDTIME_DEP_R_M5
+        # After querying DB with SELECT ROUTEID, DAY_OF_WEEK, PLANNEDTIME_DEP_R_M5 FROM static_tables.timetables Where ROUTEID = '77A_30'and DAY_OF_WEEK = "Tuesday" order by PLANNEDTIME_DEP_R_M5
         
         dictionary = {
             'ROUTEID' : ['77A_30', '77A_30', '77A_29', '46_5'],
@@ -55,19 +55,19 @@ class Display_timetables:
         return df
     
     def return_timetable(self):
-        """Method to finalize dataframe to display to user
-        returns dataframe containing only times of departure for that line"""
+        """ Method to finalize dataframe to display to user
+        returns dataframe containing only times of departure for that line """
     
         df = Display_timetables.get_timetable(self)
         
-        #drop columns don't want to display and any duplicates
+        # Drop columns don't want to display and any duplicates
         df = df.drop('DAY_OF_WEEK', axis=1)
         df = df.drop('ROUTEID', axis=1)
         df = df.drop_duplicates(subset=['PLANNED_DEP_R_M5'])
         
         return df
 
-time = Display_timetables()
+time = DisplayTimetables()
 print(time.extract_route_ID())
 print(time.get_timetable())
 print(time.return_timetable())
