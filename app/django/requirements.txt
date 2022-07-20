@@ -12,3 +12,4 @@ scikit-learn
 pymysql
 django-cors-headers
 pandas==1.4.3
+sqlalchemy==1.4.39
