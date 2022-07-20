@@ -1,7 +1,8 @@
 # from .query import Query
 import pandas as pd
+from query import Query
 
-class Parse_arguments():
+class Parse_arguments(Query):
     def __init__(self, date_time, beginningstop, endingstop):
         self.date_time = date_time
         self.beginningstop = beginningstop
