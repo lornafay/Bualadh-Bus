@@ -8,6 +8,8 @@ services:
     command: gunicorn core.wsgi --bind 0.0.0.0:8000 --preload
     ports:
       - "8000:8000"
+    volumes:
+      - ./django:/django
     container_name: django-container
 
   frontend:
