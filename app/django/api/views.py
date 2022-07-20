@@ -26,5 +26,5 @@ def user_input(request):
 def get_timetable(request):
     item = DisplayTimetables.return_timetable('365')
     # df = TimetableSerializer(item, many=True)
-    df = {'LINEID' : ['77A', '77A', '46A'], 'PLANNED_DEP_R_M5' : ['08:00', '08:10', '08:20']}
+    df = [{'LINEID' : '77A', 'PLANNED_DEP_R_M5' : '08:00'}, {'LINEID' : '46A', 'PLANNED_DEP_R_M5' : '08:00'}]
     return Response(df)

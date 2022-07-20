@@ -14,3 +14,10 @@ class current_weather(models.Model):
 
     class Meta:
         db_table = "current_weather"
+
+class Timetables(models.Model):
+    LINEID = models.CharField(max_length=10)
+    PLANNED_DEP_R_M5 = models.CharField(max_length = 20)
+
+    # class Meta:
+    #     db_timetable = 'timetables'
