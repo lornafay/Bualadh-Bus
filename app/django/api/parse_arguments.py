@@ -15,41 +15,33 @@ class Parse_arguments():
         # return df.date_time
 
         # dummy value
-        df = pd.DataFrame()
-        df['date_time'] = pd.to_datetime(pd.Series(['2022-07-19T23:00:00.000Z']))
-        dummy_value = df.date_time
+        dummy_value = pd.to_datetime('2022-07-23T12:00:00.000Z')
         return dummy_value
     
     def extract_day_of_week(self):
-        # 0-Modnay 6-Sunday etc
-        # return str(self.parse_date().dt.weekday[0])
-
         # dummy value
-        dummy_value = str(1)
+        dummy_value = str('Saturday')
         return dummy_value
     
     def transform_to_forecast_date(self):
         # dummy value
-        df = pd.DataFrame()
-        df['date_time'] = pd.to_datetime(pd.Series(['2022-07-19T23:00:00.000Z']))
-        dummy_value = df.date_time
+        dummy_value = pd.to_datetime('2022-07-23T06:00:00.000Z')
         return dummy_value
         
     def get_beginningstop(self):
-        # return str(self.beginningstop)
-
         # dummy value
-        return str('4359')
+        dummy_value = str('395')
+        return dummy_value
 
-    
     def get_endingstop(self):
-        # return str(self.endingstop)
-
         # dummy value
-        return str('4360')
+        dummy_value = str('4662')
+        return dummy_value
     
     def get_lineid(self):
         # dummy value
-        return str('1')
+        # There are 77A and 27, but only return 77A
+        dummy_value = str('77A')
+        return dummy_value
 
     
