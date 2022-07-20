@@ -24,7 +24,7 @@ class ModelQuerries:
     def get_beginning_stop_time_percent(self):
         """Query timetables table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for user's chosen Beginning_stop 
         at user's chosen day of week of each route, return a ROUTEID Beginning_stop TRIPS_TIME_PROPORTION_v2 dataframe"""
-        data= [['77A_29','395', 0.011934000463333328],['77A_30','395', 0.002347018]]
+        data= [['77A_29','395', 0.011934000463333328],['77A_30','395', 0.010810588674565217]]
         df= pd.DataFrame(data, columns=['ROUTEID','STOPPOINTID','TRIPS_TIME_PROPORTION_v2'])
         return df
 
