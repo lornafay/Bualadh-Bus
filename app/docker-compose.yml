@@ -1,4 +1,4 @@
-# composition file configs sourced from https://github.com/veryacademy/docker-mastery-with-django/tree/main/Part-6%20Nginx%20React%20and%20Django%20Gunicorn/Final
+# file configs adapted from https://github.com/veryacademy/docker-mastery-with-django/tree/main/Part-6%20Nginx%20React%20and%20Django%20Gunicorn/Final
 version: '3'
 
 services:
