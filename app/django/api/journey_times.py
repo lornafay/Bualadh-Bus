@@ -1,30 +1,49 @@
-#from model_queries import ModelQuery as mq
+from model_querries import ModelQuerries
+from model_querries import ModelQuerries as mq
 import pandas as pd
+import pickle
+import numpy as np
 
+item = ModelQuerries()
+print(item.get_pmodel_values)
 
-class JourneyTimes():
+class JourneyTimes(ModelQuerries):
 
-    def predict_total_journey_time(cls):
-        # call Get_PModel_Values in super()
+    def __init__(self):
+        pass
+    
+    def predict_total_journey_time():
+        # call Get_PModel_Values in super() to get dictionary of routeID and feature selection df
+        route_feature_dict = super().get_pmodel_values()
+        routes = route_feature_dict.keys()
+
+        result_dict = {}
 
         # for each routeid in routeid key of dict
             # read in pickle
             # input model/value into dict and append to result df
+        for route in routes:
+            with open(f'../../../Best_Perf_Model_Pickle_Mix/{route}.pkl', 'rb') as file:
+                model = pickle.load(file)
+
+                inputs = routes[route].to_numpy() # PICK UP HERE, ACCESSING DF ROW AS NP ARRAY TO INPUT TO PICKLE
+                prediction = model.predict(inputs)
+                result_dict[route] = [prediction]
 
         # return routeid/result df
         # dummy variable
-        df_dict = {
+        """df_dict = {
             'ROUTEID' : ['77A_3','77A_4','42_7', '42_8'],
             'result' : [3954, 3694, 2346, 3200]
-        }
+        }"""
 
-        df = pd.DataFrame(df_dict)
+        df = pd.DataFrame(result_dict)
 
         return df
 
 
     def get_user_journey_time(cls):
-        # call Get_BeginningStop_TimePercentage in super()
+        # call get_time_per in super()
         # call Get_EndingStop_TimePercentage in super()
         # call predict_total_journey_times
         
@@ -119,3 +138,6 @@ class JourneyTimes():
         }
         
         return results_dict
+
+
+print(JourneyTimes.predict_total_journey_time())
