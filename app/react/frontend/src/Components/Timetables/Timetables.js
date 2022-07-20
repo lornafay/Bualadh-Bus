@@ -11,6 +11,9 @@ export default function Timetables() {
                 <option>Select Bus Route</option>
             </Form.Select>
             <img src={ example } id='timetables-img'></img>
+            <body>
+                {{df}}
+            </body>
         </div>
     )
 }

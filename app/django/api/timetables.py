@@ -1,7 +1,7 @@
 # from sqlalchemy import create_engine
 import json
 import os
-from query import Query
+# from query import Query
 import pandas as pd
 #import ParseArguments
 #import PredictJourneyTimes
@@ -10,12 +10,16 @@ StopID = '365'
 Day = 'Saturday'
 
 class DisplayTimetables:
-    """ Class to display timetables to user.
-    Contains three methods for extracting routeID, getting timetable, and returning timetable """
+    """Class to display timetables to user.
+    
+    Contains three methods for extracting routeID, getting timetable, and returning timetable.
+    """
 
     def extract_route_ID(StopID):
-        """ Method to extract_route_ID and append to LineID
-        Returns dataframe for line and route IDs """
+        """Method to extract_route_ID and append to LineID.
+        
+        Returns dataframe for line and route IDs.
+        """
         
         # Get line id from django after user input
         # ParseArguements.LineID()
@@ -34,9 +38,11 @@ class DisplayTimetables:
         return df
     
     def get_timetable(Day):
-        """ Method to get day of week from user input
-        Will query database for planned departure times for line
-        Returns dataframe containing routeID, day of week, planned departure times """
+        """Method to get day of week from user input.
+        
+        Will query database for planned departure times for line.
+        Returns dataframe containing routeID, day of week, planned departure times.
+        """
         
         # Takes day of week from user
         day_of_week = 'Saturday'
@@ -55,16 +61,21 @@ class DisplayTimetables:
         return df
     
     def return_timetable(self):
-        """ Method to finalize dataframe to display to user
-        returns dataframe containing only times of departure for that line """
+        """Method to finalize dataframe to display to user.
+
+        Returns dataframe containing only times of departure for that line.
+        """
     
-        df = Display_timetables.get_timetable(self)
+        df = DisplayTimetables.get_timetable(StopID)
         
         # Drop columns don't want to display and any duplicates
         df = df.drop('DAY_OF_WEEK', axis=1)
         df = df.drop('ROUTEID', axis=1)
         df = df.drop_duplicates(subset=['PLANNED_DEP_R_M5'])
         
+        #prep dataframe for return as dictionary for frontend use
+        # df = df.set_index('PLANNED_DEP_R_M5').T.to_dict('index_names')
+
         return df
 
 time = DisplayTimetables()
