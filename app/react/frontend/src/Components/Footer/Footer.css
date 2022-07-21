@@ -1,6 +1,7 @@
 #footer {
     background-color: #FFFFFF;
     height: 100px;
+    max-width: 95%;
 }
 
 #footer-icon-group {

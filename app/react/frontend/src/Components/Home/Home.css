@@ -1,6 +1,11 @@
 #home {
     height: 800px;
     background-color: #FFFFFF;
+    max-width: 95%;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
 }
 
 #home-section1 {
@@ -16,6 +21,16 @@
     background-color: #B8F1B0;
     border-bottom: solid;
     text-align: center;
+}
+
+#home-section1-buttongroup {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#home-section1-date {
+    margin-left: 10px;
+    width: 170px;
 }
 
 #home-section1-input{

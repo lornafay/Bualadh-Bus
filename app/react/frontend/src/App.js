@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       {/* web sections */}
       <Navigation />
-      <Cover />
+      {/* <Cover /> */}
       <Home />
       <Faq />
       <Timetables />
