@@ -1,49 +1,47 @@
 from model_querries import ModelQuerries
-from model_querries import ModelQuerries as mq
 import pandas as pd
 import pickle
 import numpy as np
 
-item = ModelQuerries()
-print(item.get_pmodel_values)
+#item = ModelQuerries()
+#print(item.get_pmodel_values)
 
 class JourneyTimes(ModelQuerries):
+#class JourneyTimes():
 
     def __init__(self):
+        super().__init__()
         pass
     
-    def predict_total_journey_time():
+    def predict_total_journey_time(self):
         # call Get_PModel_Values in super() to get dictionary of routeID and feature selection df
         route_feature_dict = super().get_pmodel_values()
         routes = route_feature_dict.keys()
-
+        
         result_dict = {}
 
-        # for each routeid in routeid key of dict
-            # read in pickle
-            # input model/value into dict and append to result df
+        # read pickle file for each routeid of dict
         for route in routes:
-            with open(f'../../../Best_Perf_Model_Pickle_Mix/{route}.pkl', 'rb') as file:
+            with open(f'../Best_Perf_Model_Pickle_Mix/{route}.pkl', 'rb') as file:
                 model = pickle.load(file)
 
-                inputs = routes[route].to_numpy() # PICK UP HERE, ACCESSING DF ROW AS NP ARRAY TO INPUT TO PICKLE
+                # generate prediction
+                #inputs = route_feature_dict[route].to_numpy() 
+                inputs = route_feature_dict[route]
                 prediction = model.predict(inputs)
                 result_dict[route] = [prediction]
 
         # return routeid/result df
-        # dummy variable
-        """df_dict = {
-            'ROUTEID' : ['77A_3','77A_4','42_7', '42_8'],
-            'result' : [3954, 3694, 2346, 3200]
-        }"""
 
         df = pd.DataFrame(result_dict)
 
         return df
 
 
-    def get_user_journey_time(cls):
+    def get_user_journey_time(self):
         # call get_time_per in super()
+        beginning_stop_prop = super().get_beginning_stop_time_percent
+        end_stop_prop = super().get_ending_stop_timepercent
         # call Get_EndingStop_TimePercentage in super()
         # call predict_total_journey_times
         
@@ -65,7 +63,7 @@ class JourneyTimes(ModelQuerries):
         return df
 
 
-    def parse_routeID_lineID(cls):
+    def parse_routeID_lineID(self):
         # call get_user_journey_time
         # parse the lineIDs from the routeIDs
         # append lineIDs to routeid/result df
@@ -84,7 +82,7 @@ class JourneyTimes(ModelQuerries):
         return df
 
 
-    def normalise_routeID_weights(cls):
+    def normalise_routeID_weights(self):
         # call routeID_weights from super()
         # call parse_routeID_lineID to get lineID/routeID/results df
         # find sum of routeID weights in same lineID to get lineID global weight
@@ -106,7 +104,7 @@ class JourneyTimes(ModelQuerries):
         return df
 
 
-    def get_user_journey_time_lineID(cls):
+    def get_user_journey_time_lineID(self):
         # call normalise_routeID_weights
         # for each lineID take weighted average time
 
@@ -123,7 +121,7 @@ class JourneyTimes(ModelQuerries):
         return df
 
 
-    def return_user_journey_time_lineID(cls):
+    def return_user_journey_time_lineID(self):
         # call get_user_journey_time_lineID
         # convert to datetime obj
         # extract H:M:S and append to dataframe
@@ -140,4 +138,5 @@ class JourneyTimes(ModelQuerries):
         return results_dict
 
 
-print(JourneyTimes.predict_total_journey_time())
+obj = JourneyTimes()
+print(obj.predict_total_journey_time())
