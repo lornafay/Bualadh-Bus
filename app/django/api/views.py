@@ -3,25 +3,23 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
-from datetime import datetime
-import pytz
 from api.timetables import DisplayTimetables
 import pandas as pd
 
 @api_view(['GET'])
 def get_current_weather(request):
-    weather = current_weather.objects.all()
-    serializer = Weather_Serializer(weather, many=True)
-    return Response(serializer.data)
+    # The credential is updated, so the function is not working now
+    # weather = current_weather.objects.all()
+    # serializer = Weather_Serializer(weather, many=True)
+    # return Response(serializer.data)
+    return Response({'status':'successful'})
+
 
 @api_view(['POST'])
 def user_input(request):
     print(request.data)
-    # parse time into standard  Dublin time
-    time = datetime.strptime(request.data['time'], "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Europe/Dublin'))
-    print(time)
     return Response({'status':'successful'})
-
+   
 @api_view(['GET'])
 def get_timetable(request):
     item = DisplayTimetables.return_timetable('365')
