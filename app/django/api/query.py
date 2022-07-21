@@ -8,8 +8,8 @@ class Query:
     def __init__(self):
         # create string of path to credentials file (in Bualadh-Bus/ directory)
         base = os.path.abspath('.')
-        path_to_credentails=os.path.join(base ,"app","django","core","credentials.json")
-        
+        path_to_credentails=os.path.join(base ,"app","django","credentials.json")
+        print("test:  ", path_to_credentails)
 
         # open credentials.json with path just created
         with open(path_to_credentails, 'r', encoding="utf8") as credentials_file:
