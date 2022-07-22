@@ -15,7 +15,10 @@ class JourneyTimes(ModelQuerries):
         route_feature_dict = super().get_pmodel_values()
         routes = route_feature_dict.keys()
         
-        result_dict = {}
+        result_dict = pd.DataFrame()
+
+        routeid_list = []
+        total_list = []
 
         # read pickle file for each routeid of dict
         for route in routes:
@@ -26,39 +29,49 @@ class JourneyTimes(ModelQuerries):
                 #inputs = route_feature_dict[route].to_numpy() 
                 inputs = route_feature_dict[route]
                 prediction = model.predict(inputs)
-                result_dict[route] = [prediction]
+                routeid_list.append(route)
+                total_list.append(prediction)
 
         # return routeid/result df
 
         df = pd.DataFrame(result_dict)
+        result_dict['ROUTID'] = routeid_list
+        result_dict['TOTAL_TIME_PREDICTION'] = total_list
 
         return df
 
 
-    def get_user_journey_time(self):
-        # call methods in super() to get stop proportions
-        beginning_stop_prop = super().get_time_percent()
-        end_stop_prop = super().get_time_percent()
-        
+    def get_user_journey_time(self, beg_stop: str, end_stop: str):
+        # call methods in super() to get stop proportion dataframes for stops
+        beginning_df = super().get_time_percent("beginning")
+        end_df = super().get_time_percent("ending")
+
         # call predict_total_journey_times
         total_times_df = self.predict_total_journey_time()
+        routes = list(total_times_df['ROUTEID'])
         
-        # for each routeid in routeid 
+        # initilise empty df and columns
+        user_props_df = pd.DataFrame()
+        routeid_list = []
+        user_time_list = []
+
+        # for each routeid in total times
+        for route in routes:
             # ending_time - beginning_time%s x total_jt
-            # append to routed/result df
+            beg_prop = beginning_df[beginning_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2']
+            end_prop = end_df[end_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2']
+            total_time = total_times_df[total_times_df['ROUTEID'] == route]['TOTAL_TIME_PREDICTION']
+
+            # apply formula and append results to df lists
+            user_time = (end_prop - beg_prop) * total_time
+            routeid_list.append(route)
+            user_time_list.append(user_time)
        
-
-        # return routeid/result df
-        # dummy variable
-
-        df_dict = {
-            'ROUTEID' : ['77A_3','77A_4','42_7', '42_8'],
-            'result' : [1050, 928, 1078, 902]
-        }
+        # build df and return
+        user_props_df['ROUTEID'] = routeid_list
+        user_props_df['USER_JOURNEY_TIME'] = user_time_list
         
-        df = pd.DataFrame(df_dict)
-
-        return df
+        return user_props_df
 
 
     def parse_routeID_lineID(self):
