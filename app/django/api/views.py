@@ -5,6 +5,7 @@ from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
 from api.timetables import DisplayTimetables
 import pandas as pd
+import json
 
 @api_view(['GET'])
 def get_current_weather(request):
@@ -22,7 +23,5 @@ def user_input(request):
    
 @api_view(['GET'])
 def get_timetable(request):
-    item = DisplayTimetables.return_timetable('365')
-    # df = TimetableSerializer(item, many=True)
-    df = [{'LINEID' : '77A', 'PLANNED_DEP_R_M5' : '08:00'}, {'LINEID' : '46A', 'PLANNED_DEP_R_M5' : '08:00'}]
+    df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
     return Response(df)

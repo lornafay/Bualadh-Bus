@@ -9,5 +9,5 @@ class Weather_Serializer(serializers.ModelSerializer):
 
 class TimetableSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DisplayTimetables.return_timetable('365')
+        model = DisplayTimetables.return_timetable('395', '395', 'Saturday')
         fields = '__all__'

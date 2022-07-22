@@ -21,7 +21,7 @@ export default function Timetables() {
         return (
             <tr>
                 <td>{data.LINEID}</td>
-                <td>{data.PLANNED_DEP_R_M5}</td>
+                <td>{data.TIME_OF_DAY}</td>
             </tr>
         )
     })
@@ -32,6 +32,7 @@ export default function Timetables() {
             <Form.Select size="sm" id='timetables-select'>
                 <option>Select Bus Route</option>
             </Form.Select>
+            <div id='table-scroll'>
             <table>
                 <tr>
                     <th>Line</th>
@@ -42,6 +43,7 @@ export default function Timetables() {
                 </tr>
                 {array}
             </table>
+            </div>
         </div>
     )
 }
