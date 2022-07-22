@@ -1,8 +1,16 @@
 #aboutus {
     background-color: #B8F1B0;
-    height: 700px;
+    color: #535353;
+    /* height: 700px; */
     padding-top: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding-top: 1rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    max-width: 95%;
 }
 
 #aboutus-title {
@@ -12,15 +20,15 @@
 }
 
 #person-img {
-    width: 200px;
+    width: auto;
     height: 200px;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
 }
 
 #person1 {
     text-align: left;
-    margin-left: 50px;
-    margin-right: 600px;
+    /* margin-left: 50px;
+    margin-right: 600px; */
 }
 
 #person1-info {
@@ -30,8 +38,8 @@
 
 #person2 {
     text-align: right;
-    margin-left: 600px;
-    margin-right: 50px;
+    /* margin-left: 600px;
+    margin-right: 50px; */
 }
 
 #person2-info {

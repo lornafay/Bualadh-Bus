@@ -1,5 +1,9 @@
 import './Aboutus.css'
 import React from 'react';
+import Pelin from './Pelin.png';
+import Lorna from './Lorna.png';
+import Allen from './Allen.png';
+import Lexie from './Lexie.png';
 
 export default function Aboutus() {
     return (
@@ -8,20 +12,15 @@ export default function Aboutus() {
             <table id='person1'>
                 <tr>
                     <td>
-                        <img src='https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg' id='person-img'></img>
+                        <img src={ Pelin } id='person-img'></img>  
                     </td>
                     <td id='person1-info'>
                         <tr>
-                            <h3>PERSON 1</h3>
+                            <h3>Pelin</h3>
                         </tr>
                         <tr>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                            culpa qui officia deserunt mollit anim id est laborum.
+                            Pelin coordinates our meetings and guides our group.
+                            Her strengths include predictive modeling and supply/production planning from her 6 years of experience in her former career.
                         </tr>
                     </td>
                 </tr>
@@ -30,20 +29,48 @@ export default function Aboutus() {
                 <tr>
                     <td id='person2-info'>
                         <tr>
-                            <h3>PERSON 2</h3>
+                            <h3>Lorna</h3>
                         </tr>
                         <tr>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                            culpa qui officia deserunt mollit anim id est laborum.
+                            Lorna maintains and simplifies our codebase, and leads testing + integration.
+                            Her strengths include backend development is her forte, and she's now assisting testing research in UCD’s Complex Software Lab.
+
                         </tr>
                     </td>
                     <td>
-                        <img src='https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg' id='person-img'></img>
+                    <img src={ Lorna } id='person-img'></img>
+                    </td>
+                </tr>
+            </table>
+            <table id='person1'>
+                <tr>
+                    <td>
+                        <img src={ Allen } id='person-img'></img>  
+                    </td>
+                    <td id='person1-info'>
+                        <tr>
+                            <h3>Allen</h3>
+                        </tr>
+                        <tr>
+                            Allen formulates presentations and leads in our documentation and code standards.
+                            His strengths include database theory, as well as backend development with experience in previous applications.
+                        </tr>
+                    </td>
+                </tr>
+            </table>
+            <table id='person2'>
+                <tr>
+                    <td id='person2-info'>
+                        <tr>
+                            <h3>Lexie</h3>
+                        </tr>
+                        <tr>
+                            Lexie is responsible for user evaluation and stories, and facilitates the user interface.
+                            Her strengths include: data analysis and database management, as well as report writing.
+                        </tr>
+                    </td>
+                    <td>
+                    <img src={ Lexie } id='person-img'></img>
                     </td>
                 </tr>
             </table>

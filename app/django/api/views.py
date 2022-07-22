@@ -9,11 +9,9 @@ import pandas as pd
 @api_view(['GET'])
 def get_current_weather(request):
     # The credential is updated, so the function is not working now
-    # weather = current_weather.objects.all()
-    # serializer = Weather_Serializer(weather, many=True)
-    # return Response(serializer.data)
-    return Response({'status':'successful'})
-
+    weather = current_weather.objects.all()
+    serializer = Weather_Serializer(weather, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def user_input(request):

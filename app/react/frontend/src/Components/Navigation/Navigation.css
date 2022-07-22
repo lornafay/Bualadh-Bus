@@ -1,5 +1,10 @@
 .bg-backgroundcolor {
-    background-color: #FFFFFF;
+    background-color: #B8F1B0;
+    max-width: 95%;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
 }
 
 #nav-brand {
