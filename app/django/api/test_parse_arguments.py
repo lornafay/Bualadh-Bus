@@ -49,7 +49,7 @@ class TestQuery(unittest.TestCase):
     def test_get_lineid(self):
 
         parse_arguments = Parse_arguments('2022-07-23T12:00:00.000Z', '395', '4662')
-        result = parse_arguments.get_lineid()
+        result = parse_arguments.get_lineid('77A')
 
         self.assertTrue(type(result) == str)
 
