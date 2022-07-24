@@ -20,3 +20,7 @@ class Timetables(models.Model):
 
     # class Meta:
     #     db_timetable = 'timetables'
+
+class TimetableRequest(models.Model):
+    stopID_request = models.CharField(max_length=10, primary_key=True)
+    day_request = models.CharField(max_length=10)
