@@ -7,9 +7,8 @@ import os
 class Query:
     def __init__(self):
         # create string of path to credentials file (in Bualadh-Bus/ directory)
-        base = os.path.abspath('.')
-        path_to_credentails=os.path.join(base ,"app","django","credentials.json")
-        
+        base = os.path.normpath(os.path.dirname(__file__)+ os.sep + os.pardir)
+        path_to_credentails=os.path.join(base,"credentials.json")
 
         # open credentials.json with path just created
         with open(path_to_credentails, 'r', encoding="utf8") as credentials_file:
@@ -25,3 +24,4 @@ class Query:
         db = schema
         # Connection
         return create_engine(f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/{db}", echo=True)
+
