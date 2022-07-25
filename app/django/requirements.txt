@@ -8,7 +8,9 @@ sqlparse==0.4.2
 gevent
 djangorestframework
 pickle-mixin
-scikit-learn
+scikit-learn==1.0.2
 pymysql
 django-cors-headers
 pandas==1.4.3
+sqlalchemy==1.4.39
+typing_extensions==4.3.0
