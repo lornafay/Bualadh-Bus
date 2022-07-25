@@ -1,6 +1,11 @@
 #home {
     height: 800px;
     background-color: #FFFFFF;
+    max-width: 95%;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
 }
 
 #home-section1 {

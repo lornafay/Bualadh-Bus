@@ -1,9 +1,14 @@
 #timetables {
     background-color: #FFFFFF;
-    height: 650px;
+    /* height: 650px; */
     text-align: center;
     padding-top: 25px;
     padding-bottom: 25px;
+    max-width: 95%;
+    border-radius: 5px;
+    box-shadow: 0 1px 8px;
+    margin: .5rem auto;
+    padding: 1rem;
 }
 
 #timetables-title {
@@ -21,4 +26,14 @@
     height: 500px;
     border-style: solid;
     margin-top: 20px;
+}
+
+#table-scroll {
+    margin:4px, 4px;
+    padding:4px;
+    width: 500px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
 }
