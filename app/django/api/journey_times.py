@@ -20,15 +20,34 @@ class JourneyTimes(ModelQuerries):
         # call Get_PModel_Values in super() to get dictionary of routeID and feature selection df
         route_feature_dict = super().get_pmodel_values()
         routes = route_feature_dict.keys()
+
+        for k, value in route_feature_dict.items():
+            for column in value.columns:
+
+                if column == "sea_lvl_pressure":
+                    value.rename(columns={
+                        'sea_lvl_pressure': 'sea_lvl_pressure(hPa)'
+                    }, inplace=True)
+
+                elif column == "humidity":
+                    value.rename(columns={
+                        'humidity': 'humidity(%)'
+                    }, inplace=True)
         
-        result_dict = pd.DataFrame()
+                elif column == "dew_pt_temp":
+                    value.rename(columns={
+                        'dew_pt_temp': 'dew_pt_temp(C)'
+                    }, inplace=True)
+        
+        
+        result_df = pd.DataFrame()
 
         routeid_list = []
         total_list = []
 
         # read pickle file for each routeid of dict
         for route in routes:
-            with open(f'../Best_Perf_Model_Pickle_Mix/{route}.pkl', 'rb') as file:
+            with open(f'Best_Perf_Model_Pickle_Mix/{route}.pkl', 'rb') as file:
                 model = pickle.load(file)
 
                 # generate prediction
@@ -39,17 +58,16 @@ class JourneyTimes(ModelQuerries):
                 total_list.append(prediction)
 
         # build df and return
-        df = pd.DataFrame(result_dict)
-        result_dict['ROUTID'] = routeid_list
-        result_dict['TOTAL_TIME_PREDICTION'] = total_list
+        result_df['ROUTEID'] = routeid_list
+        result_df['TOTAL_TIME_PREDICTION'] = total_list
 
-        return df
+        return result_df
 
 
-    def get_user_journey_time(self, beg_stop: str, end_stop: str):
+    def get_user_journey_time(self):
         # call methods in super() to get stop proportion dataframes for stops
-        beginning_df = super().get_time_percent("beginning")
-        end_df = super().get_time_percent("ending")
+        beginning_df = super().get_time_percent("Beginning_stop")
+        end_df = super().get_time_percent("Ending_stop")
 
         # call predict_total_journey_times
         total_times_df = self.predict_total_journey_time()
@@ -79,9 +97,10 @@ class JourneyTimes(ModelQuerries):
         return user_props_df
 
 
-    def parse_routeID_lineID(self):
+    def parse_routeID_lineID(self, weights_df):
         # call get_user_journey_time
         user_times_df = self.get_user_journey_time()
+        #user_times_df = weights_df
 
         # parse the lineIDs from the routeIDs
         lineIDs = list(user_times_df['ROUTEID'])
@@ -89,7 +108,7 @@ class JourneyTimes(ModelQuerries):
             lineIDs[lineIDs.index(route)] = route.split('_')[0]
 
         # add new lineID column
-        user_times_df['lineIDs'] = lineIDs
+        user_times_df['LINEID'] = lineIDs
 
         # return routeid/result df
         return user_times_df
@@ -97,51 +116,50 @@ class JourneyTimes(ModelQuerries):
 
     def normalise_routeID_weights(self):
         # call routeID_weights from super()
-        weights_df = super().routeid_weights()
+        weights_df = super().routeid_weights() 
+        print("weight DF: \n", weights_df)
         # call parse_routeID_lineID to get lineID/routeID/results df
-        line_weights_df = self.parse_routeID_lineID(weights_df)
+        df = self.parse_routeID_lineID(weights_df)
+        print("DF: \n", df)
+        # get the lineID weight by summing routeID weights for that line
+        line_weights = df.groupby(['LINEID'])['Weight'].sum()
+        line_weight_seq = []
 
-        with line_weights_df as df:
+        # create list of lineID weights in sequence matching df
+        # limimting decimal places so keep number small
+        for line in list(df['LINEID']):
+            line_weight_seq.append(round(line_weights[line], 4))
+        df['normalised_weight'] = line_weight_seq
 
-            # get the lineID weight by summing routeID weights for that line
-            line_weights = df.groupby(['LINEID'])['weight'].sum()
-            line_weight_seq = []
+        print('before normalising:\n', df)
 
-            # create list of lineID weights in sequence matching df
-            # limimting decimal places so keep number small
-            for line in list(df['LINEID']):
-                line_weight_seq.append(round(line_weights[line], 4))
-            df['normalised_weight'] = line_weight_seq
+        # normalised weight is proportion of routeID weight of total lineID weight 
+        normalised_final = []
+        for row in df.index:
+            normalised_final.append(round(df['Weight'][row] / df['normalised_weight'][row], 3))
 
-            print('before normalising:\n', df)
-
-            # normalised weight is proportion of routeID weight of total lineID weight 
-            normalised_final = []
-            for row in df.index:
-                normalised_final.append(round(df['weight'][row] / df['normalised_weight'][row], 3))
-
-            df['normalised_weight'] = normalised_final
-            df.drop('weight', axis=1, inplace=True)
-            
-            # return lineID/routeID/results/normalised_weights df
-            return df
+        df['normalised_weight'] = normalised_final
+        df.drop('Weight', axis=1, inplace=True)
+        
+        # return lineID/routeID/results/normalised_weights df
+        return df
 
 
     def get_user_journey_time_lineID(self):
         # call normalise_routeID_weights
-        routes_df = self.normalise_routeID_weights()
+        df = self.normalise_routeID_weights()
 
-        with routes_df as df:
-            # get weighted average time for each lineID 
-            weighted_time = []
-            for row in df.index:
-                weighted_time.append(df['result'][row] * df['normalised_weight'][row])
-            df['weighted_time'] = weighted_time
+    
+        # get weighted average time for each lineID 
+        weighted_time = []
+        for row in df.index:
+            weighted_time.append(df['result'][row] * df['normalised_weight'][row])
+        df['weighted_time'] = weighted_time
 
-            # construct a lineID/results df 
-            line_time_df = pd.DataFrame(df.groupby(['LINEID'])['weighted_time'].sum().sort_values()).reset_index()
+        # construct a lineID/results df 
+        line_time_df = pd.DataFrame(df.groupby(['LINEID'])['weighted_time'].sum().sort_values()).reset_index()
 
-            return line_time_df
+        return line_time_df
 
 
     def return_user_journey_time_lineID(self):
