@@ -18,14 +18,9 @@ def get_current_weather(request):
 def user_input(request):
     print(request.data)
     return Response({'status':'successful'})
-   
+
 @api_view(['GET'])
 def get_timetable(request):
-    # dictionary = (user_timetable(request)).data
-    # print("get request: ", dictionary)
-    # val = list(dictionary.values())
-    # stopID = val[0]
-    # day = val[1]
     df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
     return Response(df)
 
@@ -33,24 +28,3 @@ def get_timetable(request):
 def user_timetable(request):
     print(request.data)
     return Response({'status' : 'successful'})
-
-# @api_view(['GET'])
-# def get_timetable(stopID, day):
-#     # dictionary = (user_timetable(request)).data
-#     # print("get request: ", dictionary)
-#     # val = list(dictionary.values())
-#     # stopID = val[0]
-#     # day = val[1]
-#     df = DisplayTimetables.return_timetable('395', stopID, day)
-#     return Response(df)
-
-# @api_view(['POST'])
-# def user_timetable(request):
-#     print(request.data)
-#     dictionary = request.data
-#     print("get request: ", dictionary)
-#     val = list(dictionary.values())
-#     stopID = val[0]
-#     day = val[1]
-#     request = (get_timetable(stopID, day))
-#     return Response(request)
