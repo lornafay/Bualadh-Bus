@@ -7,13 +7,16 @@ import numpy as np
 
 class JourneyTimes(ModelQuerries):
 
-    def __init__(self):
+    def __init__(self, lst):
         super(Parse_arguments, self).__init__()
         self.parse_arguments = super(ModelQuerries, self)
-        self.date = self.parse_arguments.__set_date_time__('2022-07-23T12:00:00.000Z')
-        self.beginningstop = self.parse_arguments.__set_beginningstop__('395')
-        self.ending_stop = self.parse_arguments.__set_endingstop__('4662')
+        #cannot be the same
+        self.date = self.parse_arguments.__set_date_time__(lst[0])
+        self.beginning_stop = self.parse_arguments.__set_beginningstop__(lst[1])
+        self.ending_stop = self.parse_arguments.__set_endingstop__(lst[2])
+        
         super(JourneyTimes, self).__init__()
+        print(self.beginning_stop)
 
 
     def predict_total_journey_time(self):
@@ -182,5 +185,5 @@ class JourneyTimes(ModelQuerries):
         return options_dict
 
 
-obj = JourneyTimes()
-print(obj.return_user_journey_time_lineID())
+# obj = JourneyTimes()
+# print(obj.return_user_journey_time_lineID())

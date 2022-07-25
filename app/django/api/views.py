@@ -23,6 +23,6 @@ def user_input(request):
     lst = [time, start, end]
     print('request: ', lst[0], lst[1], lst[2])
     j = JourneyTimes(lst)
-    print(j.predict_total_journey_time())
+    # print(j.predict_total_journey_time())
 
     return Response({'status':'successful'})
