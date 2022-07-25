@@ -31,8 +31,12 @@ class DisplayTimetables:
 
         # Drop duplicates
         df = df.drop_duplicates(subset=['LINEID','TIME_OF_DAY'])
-
-        # Transform dataframe into dictionary in prep for frontend use.
-        df = df.to_dict('records')
         
+        #prep time display
+        df['TIME_OF_DAY'] = df['TIME_OF_DAY'].astype(str)
+        df['TIME_OF_DAY'] = df['TIME_OF_DAY'].str[7:-3]
+
+        #Transform dataframe into dictionary in prep for frontend use.
+        df = df.to_dict('records')
+
         return df
