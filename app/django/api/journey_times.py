@@ -8,8 +8,8 @@ class JourneyTimes(ModelQuerries):
 
     def __init__(self):
         super().__init__()
-        pass
-    
+
+        
     def predict_total_journey_time(self):
         # call Get_PModel_Values in super() to get dictionary of routeID and feature selection df
         route_feature_dict = super().get_pmodel_values()
@@ -32,8 +32,7 @@ class JourneyTimes(ModelQuerries):
                 routeid_list.append(route)
                 total_list.append(prediction)
 
-        # return routeid/result df
-
+        # build df and return
         df = pd.DataFrame(result_dict)
         result_dict['ROUTID'] = routeid_list
         result_dict['TOTAL_TIME_PREDICTION'] = total_list
