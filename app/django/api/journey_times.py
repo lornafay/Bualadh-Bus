@@ -1,4 +1,5 @@
-from model_querries import ModelQuerries
+from .parse_arguments import Parse_arguments
+from .model_querries import ModelQuerries
 import pandas as pd
 import pickle
 import numpy as np
@@ -7,9 +8,14 @@ import numpy as np
 class JourneyTimes(ModelQuerries):
 
     def __init__(self):
-        super().__init__()
+        super(Parse_arguments, self).__init__()
+        self.parse_arguments = super(ModelQuerries, self)
+        self.date = self.parse_arguments.__set_date_time__('2022-07-23T12:00:00.000Z')
+        self.beginningstop = self.parse_arguments.__set_beginningstop__('395')
+        self.ending_stop = self.parse_arguments.__set_endingstop__('4662')
+        super(JourneyTimes, self).__init__()
 
-        
+
     def predict_total_journey_time(self):
         # call Get_PModel_Values in super() to get dictionary of routeID and feature selection df
         route_feature_dict = super().get_pmodel_values()
@@ -159,4 +165,4 @@ class JourneyTimes(ModelQuerries):
 
 
 obj = JourneyTimes()
-print(obj.predict_total_journey_time())
+print(obj.return_user_journey_time_lineID())

@@ -1,14 +1,26 @@
-from query import Query
+from .query import Query
 import pandas as pd
 import pytz
 
 class Parse_arguments(Query):
-    def __init__(self, date_time, beginningstop, endingstop):
+    def __init__(self, lst):
         Query.__init__(self)
-        self.date_time = date_time
-        self.beginningstop = beginningstop
-        self.endingstop = endingstop
+        time = lst[0]
+        start = lst[1]
+        end = lst[2]
+        self.date_time = time
+        self.beginningstop = start
+        self.endingstop = end
 
+    def __set_date_time__(self, date_time):
+        self.date_time = date_time
+    
+    def __set_beginningstop__(self, a):
+        self.beginningstop = a
+    
+    def __set_endingstop__(self, endingstop):
+        self.endingstop = endingstop
+        
     def parse_date(self):
         return pd.to_datetime(self.date_time)
     

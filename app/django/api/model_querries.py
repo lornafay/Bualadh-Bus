@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-from parse_arguments import Parse_arguments
+from .parse_arguments import Parse_arguments
 import datetime
 
 
