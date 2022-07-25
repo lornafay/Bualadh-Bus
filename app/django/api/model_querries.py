@@ -1,86 +1,290 @@
-# libs for mysql connect
 import json
 import os
-import query as q
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
-#import parse_arguments as pa
+from parse_arguments import Parse_arguments
+import datetime
 
-class ModelQuerries:
+
+class ModelQuerries(Parse_arguments):
     """Class which will return majority of querries from sql for model to function"""
+
     def __init__(self):
-        """initializing date for code maintanence testing"""
-        pass
+        """initializing instance variables"""
+        # creating Parse_arguments object
+        self.parse_arguments = super(ModelQuerries, self)
+        # calling methods on parse_arguments object initializing output as instance variable
+        self.beginning_stop = self.parse_arguments.get_beginningstop()
+        self.ending_stop = self.parse_arguments.get_endingstop()
+        self.date = self.parse_arguments.parse_date()
+        self.day_of_week = self.parse_arguments.extract_day_of_week()
+        self.forecast_date = self.parse_arguments.transform_to_forecast_date()
+        # Inheriting instance variables from Query class.
+        super(Parse_arguments, self).__init__()
+        # creating Query object
+        self.engine = super(Parse_arguments, self)
+        # calling methods on Query object initializing output as instance variable
+        self.engine_static = self.engine.get_engine("static_tables")
+        self.engine_dynamic = self.engine.get_engine("DBus")
+        # calling set_route_id method to initialize its output as instance variable.
+        self.route_id_list = self.set_route_id()
 
-    def get_route_id(self):
+    # Getters and Setters for testing purposes.
+    def __get_beginning_stop__(self):
+        return self.beginning_stop
+
+    def __set_beginning_stop__(self, value):
+        self.beginning_stop = value
+
+    def __get_ending_stop__(self):
+        return self.ending_stop
+
+    def __set_endingstop__(self, value):
+        self.ending_stop = value
+
+    def __get_date__(self):
+        return self.date
+
+    def __set_date__(self, value):
+        self.date = value
+
+    def __get_forecast_date__(self):
+        return self.forecast_date
+
+    def __set_forecast_date__(self, value):
+        self.forecast_date = value
+
+    @staticmethod
+    def route_id_query_string(roueid_list):
+        """Helper method to avoid code repeat. Takes a list and creates a string tagged with
+         'ROUTEID =' and 'Or' and '()' at appropriate places for sql querries, returns a string output"""
+        routeid_query_str = "("
+        for routeid in roueid_list:
+            routeid_query_str += "ROUTEID = '"+routeid+"' OR "
+        routeid_query_str = routeid_query_str[:-4]+")"
+        return routeid_query_str
+
+    def set_route_id(self):
         """Querry STOPPOINTID_pairs_vs_ROUTEID table at static_tables schema 
-        to return a ROUTEID list for user's chosen Beginning_stop and Ending_stop"""
-        #for Beginning_stop: 395 and Ending_stop: 4662 date: 23.07.2022 12:00 reason for choise is 
-        # other days are missing at timetables table at static_tables schema
-        #'27_12' is not operating at 12:00 add a check at this part to find out if route is operating at that hour
-        routeid_list=['77A_29','77A_30']
-        return routeid_list
+        to return a ROUTEID list for user's chosen Beginning_stop and Ending_stop depending on 
+        time of day and day of week"""
+        # obtaining all routeid's matching stoppair
+        df = pd.read_sql("SELECT * FROM static_tables.STOPPOINTID_pairs_vs_ROUTEID where "
+                         " Beginning_stop = "+self.beginning_stop+" AND Ending_stop= " +
+                         self.ending_stop, self.engine_static)
+        raw_routeid_list = df["ROUTEID"].tolist()
 
-    def get_beginning_stop_time_percent(self):
-        """Query timetables table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for user's chosen Beginning_stop 
-        at user's chosen day of week of each route, return a ROUTEID Beginning_stop TRIPS_TIME_PROPORTION_v2 dataframe"""
-        data= [['77A_29','395', 0.011934000463333328],['77A_30','395', 0.010810588674565217]]
-        df= pd.DataFrame(data, columns=['ROUTEID','STOPPOINTID','TRIPS_TIME_PROPORTION_v2'])
-        return df
+        routeid_query_str = ModelQuerries.route_id_query_string(
+            raw_routeid_list)
+        # filtering all routeid's matching stoppair to deduct routeids operating -+30 min of user's date/time input
+        df_date_time_adjust = pd.read_sql("SELECT ROUTEID, TIME_OF_DAY FROM static_tables.timetables where "
+                                          + routeid_query_str + " AND STOPPOINTID = "+self.beginning_stop +
+                                          " AND DAY_OF_WEEK= '"+self.day_of_week+"' AND TIME_OF_DAY between " +
+                                          "SUBTIME('"+str(self.date.hour)+":00:00', '0:30:00') and " +
+                                          " ADDTIME('"+str(self.date.hour)+":00:00', '0:30:00')", self.engine_static)
 
-    def get_ending_stop_timepercent(self):
-        """Query timetables table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for user's chosen Ending_stop 
-        at user's chosen day of week of each route, return a ROUTEID Ending_stop TRIPS_TIME_PROPORTION_v2 dataframe"""
-        data_end= [['77A_29','4662', 0.4397005272340424],['77A_30','4662', 0.44614033923076934]]
-        df_end= pd.DataFrame(data_end, columns=['ROUTEID','STOPPOINTID','TRIPS_TIME_PROPORTION_v2'])
-        return df_end
+        # selecting unique values sorting and returning list output.
+        date_time_adjusted_list = list(
+            set(df_date_time_adjust["ROUTEID"].tolist()))
+        date_time_adjusted_list.sort()
+        return date_time_adjusted_list
+
+    def get_time_percent(self, var):
+        """Query timetables table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for 
+            user's chosen stop at user's chosen day of week of each route,
+            return a ROUTEID stop TRIPS_TIME_PROPORTION_v2 dataframe. Takes one 
+            required argument which can be Beginning_stop or Ending_stop
+            if argument is wrong raises a value error"""
+
+        route_id_list = self.route_id_list
+        routeid_query_str = ModelQuerries.route_id_query_string(route_id_list)
+        # query for desired output by taking average of trips time proportion.
+        if var == "Beginning_stop":
+            df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
+                             "static_tables.timetables where " + routeid_query_str + " AND STOPPOINTID = " +
+                             self.beginning_stop + " AND DAY_OF_WEEK= '"+self.day_of_week +
+                             "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
+            df.rename(columns={
+                      "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
+            return df
+        elif var == "Ending_stop":
+            df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
+                             "static_tables.timetables where " + routeid_query_str + " AND STOPPOINTID = " +
+                             self.ending_stop + " AND DAY_OF_WEEK= '"+self.day_of_week +
+                             "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
+            df.rename(columns={
+                      "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
+            return df
+        else:
+            raise(ValueError)
 
     def get_pmodel_features(self):
-        """Query feature_selection table at static_tables schema to get features for the predictive model of ROUTEID,
-        return ROUTEID(key) vs feature_list(value) dictionary"""
-        features77A_29=['PLANNEDTIME_DEP','humidity(%)','sin_hour_of_day','cos_hour_of_day','friday','saturday','sunday','thursday','tuesday','wednesday']
-        features77A_30=['rain','sin_hour_of_day','cos_hour_of_day','friday','saturday','sunday','thursday','tuesday','wednesday']
-        features_dic={'77A_29':features77A_29,'77A_30':features77A_30}
-        return features_dic
+        """Query feature_selection table at static_tables schema to get features for the predictive model 
+        of ROUTEID, return ROUTEID(key) vs feature_list(value) dictionary"""
+        route_id_list = self.route_id_list
+        routeid_query_str = ModelQuerries.route_id_query_string(route_id_list)
+        # Query database to obtain dataframe for routeid list
+        df = pd.read_sql("SELECT* FROM static_tables.feature_selection where" +
+                         routeid_query_str, self.engine_static)
 
-    def get_pmodel_values (self):
-        """Depending on the condition that PLANNEDTIME_DEP is in ROUTEID(key)'s feature_list(value);
+        features_dict = {}
+        # group dataframe by routeid and create dict with list of dataframe's as values
+        df_dict = dict(list(df.groupby(df['ROUTEID'])))
+        # iterate content of dataframe dictionary
+        for key, value in df_dict.items():
+            # make boolean mask of dataframe as True/False(1/0)
+            check = value.columns[(value == 1).any()]
+            # Add to dictionary by matching routeid key with lists made out of check True column of dataframe
+            if len(check) > 0:
+                features_dict[key] = check.tolist()
+        return features_dict
+
+    def get_pmodel_values(self):
+        """Method to feed features for prediction to predictive models in pickle files:
+        Depending on the condition that PLANNEDTIME_DEP is in ROUTEID(key)'s feature_list(value);
         query timetables table at static_tables schema to get values for PLANNEDTIME_DEP,
-        Depending on the condition that date is current date;
+        depending on the condition that date is current date;
         querry current_weather at DBus schema, depending on the condition that feature is in
         ROUTEID(key)'s feature_list(value) to  get values for  feature.
-        Depending on the condition that date is future date;
-        querry weather_forecast at DBus schema, depending on the condition that feature is in 
-        ROUTEID(key)'s feature_list(value) to to  get values for feature
-        creates dataframe with feature values for each routeid and appends to a dictionary 
-        returns  dictionary of dataframes where keys of dictionary are routeids and values are dataframes
+        depending on the condition that date is future date;
+        querry weather_forecast at DBus schema, depending on the condition that feature is in ROUTEID(key)'s 
+        feature_list(value) to get values for feature creates dataframe with feature values for each routeid and
+        appends to a dictionary returns  dictionary of dataframes where keys of dictionary are routeids and
+        values are dataframes
         """
-        data_77A_29_feature_values= [[42807,73.4,1.2246467991473532e-16,-1,0,1,0,0,0,0]]
-        df_ssp_77A_29_feature_values=pd.DataFrame(data_77A_29_feature_values,columns=['PLANNEDTIME_DEP','humidity(%)','sin_hour_of_day','cos_hour_of_day','friday','saturday','sunday','thursday','tuesday','wednesday'])
-        data_77A_30_feature_values= [[1,1.2246467991473532e-16,-1,0,1,0,0,0,0]]
-        df_ssp_77A_30_feature_values=pd.DataFrame(data_77A_30_feature_values,columns=['rain','sin_hour_of_day','cos_hour_of_day','friday','saturday','sunday','thursday','tuesday','wednesday'])
-        features_dic_val={'77A_29':df_ssp_77A_29_feature_values,'77A_30':df_ssp_77A_30_feature_values}
-        return features_dic_val
+        # call get_pmodel_features method
+        feature_names_dict = self.get_pmodel_features()
+        current_time = datetime.datetime.now().hour
+        current_date = datetime.datetime.now().date()
+
+        # initialize empty dictionary to append dataframes by routeid keys
+        feature_values_dict = {}
+        for key, value in feature_names_dict.items():
+            # initialize empty dataframe to fill with column name and value of features for the routeid
+            df = pd.DataFrame()
+            # If plannedtime departure is in pmodel_features dictionary value,
+            # query for planned time deparure for final stop points
+            # where time is closests to user's time input for hour of day.
+            if 'PLANNEDTIME_DEP' in value:
+                df_plannedtime_dep = pd.read_sql("SELECT PLANNEDTIME_DEP FROM static_tables.timetables " +
+                                                 "where  ROUTEID = '"+key+"'  AND DAY_OF_WEEK= '"+self.day_of_week +
+                                                 "' AND TRIPS_TIME_PROPORTION_v2 = 1 " +
+                                                 "ORDER BY ABS(TIME_TO_SEC(TIMEDIFF(TIME_OF_DAY, '" +
+                                                 str(self.date.hour)+":00:00'))) LIMIT 1", self.engine_static)
+                df = pd.concat([df, df_plannedtime_dep], axis=1)
+
+            # check if weather feature is in feature list if it is append to query string.
+            weather_feature_query_str = ""
+            feature_checker = False
+            if 'rain' in value:
+                weather_feature_query_str += ' rain '
+                feature_checker += True
+            if 'temp' in value:
+                if feature_checker > 0:
+                    weather_feature_query_str += ',temp '
+                else:
+                    weather_feature_query_str += 'temp '
+                feature_checker += True
+            if 'dew_pt_temp' in value:
+                if feature_checker > 0:
+                    weather_feature_query_str += ',dew_pt_temp '
+                else:
+                    weather_feature_query_str += 'dew_pt_temp '
+                feature_checker += True
+            if 'humidity' in value:
+                if feature_checker > 0:
+                    weather_feature_query_str += ',humidity '
+                else:
+                    weather_feature_query_str += 'humidity '
+                feature_checker += True
+            if 'sea_lvl_pressure' in value:
+                if feature_checker > 0:
+                    weather_feature_query_str += ',sea_lvl_pressure '
+                else:
+                    weather_feature_query_str += 'sea_lvl_pressure '
+
+            # If hour of user's time input matches current hour query current weather table
+            # If not query feature weather table.
+            if current_time == self.date.hour and current_date == self.date.date():
+                df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
+                                         self.engine_dynamic)
+                df = pd.concat([df, df_weather], axis=1)
+            else:
+                date = self.forecast_date
+                df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
+                                         " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
+                df = pd.concat([df, df_weather], axis=1)
+
+            # applying cyclical encoding with sine/cosine transformation for hour of day
+            hour_sin_val = np.sin(np.deg2rad((self.date.hour/24)*360))
+            hour_cos_val = np.cos(np.deg2rad((self.date.hour/24)*360))
+            hour_data = [[hour_sin_val, hour_cos_val]]
+            hour_columns = ['sin_hour_of_day', 'cos_hour_of_day']
+            df_hour = pd.DataFrame(hour_data, columns=hour_columns)
+            df = pd.concat([df, df_hour], axis=1)
+
+            # check if day of week in feature list if it is add it as column
+            # apply binary encoding based on user's day of week input for day of week
+            day_columns = []
+            day_data = []
+            if 'friday' in value:
+                day_columns.append('friday')
+                if self.day_of_week == 'Friday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'monday' in value:
+                day_columns.append('monday')
+                if self.day_of_week == 'Monday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'saturday' in value:
+                day_columns.append('saturday')
+                if self.day_of_week == 'Saturday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'sunday' in value:
+                day_columns.append('sunday')
+                if self.day_of_week == 'Sunday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'thursday' in value:
+                day_columns.append('thursday')
+                if self.day_of_week == 'Thursday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'tuesday' in value:
+                day_columns.append('tuesday')
+                if self.day_of_week == 'Tuesday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            if 'wednesday' in value:
+                day_columns.append('wednesday')
+                if self.day_of_week == 'Wednesday':
+                    day_data.append(1)
+                else:
+                    day_data.append(0)
+            df_days = pd.DataFrame([day_data], columns=day_columns)
+            df = pd.concat([df, df_days], axis=1)
+
+            # add final dataframe to routeid/df dictionary
+            feature_values_dict[key] = df
+        return feature_values_dict
 
     def routeid_weights(self):
         """Query STOPPOINTID_pairs_vs_ROUTEID table at static_tables schema to get weights,
         return routeid/weights dataframe"""
-        myquery=q.Query()
-        schema="static_tables"
-        engine_static= myquery.get_engine(schema)
-        df= pd.read_sql("SELECT * FROM static_tables.STOPPOINTID_pairs_vs_ROUTEID where  Beginning_stop = '395'AND Ending_stop= '4662' and (ROUTEID = '77A_29' or ROUTEID = '77A_30' )  ", engine_static);
+        route_id_list = self.route_id_list
+        routeid_query_str = ModelQuerries.route_id_query_string(route_id_list)
+        # query for desired output
+        df = pd.read_sql("SELECT * FROM static_tables.STOPPOINTID_pairs_vs_ROUTEID where "
+                         "Beginning_stop = '"+self.beginning_stop +
+                         "'AND Ending_stop= '"+self.ending_stop + "' AND "
+                         + routeid_query_str, self.engine_static)
         return df
-
-####Quick test will be removed
-checkQuery=ModelQuerries()
-print(checkQuery.get_route_id())
-print(checkQuery.get_beginning_stop_time_percent())
-print(checkQuery.get_ending_stop_timepercent())
-print(checkQuery.get_pmodel_features())
-print(checkQuery.get_pmodel_values())
-print(checkQuery.routeid_weights())
-
-
-
-
-
