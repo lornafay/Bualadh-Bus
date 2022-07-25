@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from bus.models import current_weather
-from api.timetables import DisplayTimetables
+from timetables import DisplayTimetables
 
 class Weather_Serializer(serializers.ModelSerializer):
     class Meta:

@@ -1,4 +1,4 @@
-from api.query import Query
+from query import Query
 import pandas as pd
 
 class DisplayTimetables:

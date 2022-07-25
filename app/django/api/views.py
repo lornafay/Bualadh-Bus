@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
-from api.timetables import DisplayTimetables
+from timetables import DisplayTimetables
 import pandas as pd
 import json
 
@@ -22,18 +22,22 @@ def user_input(request):
     return Response({'status':'successful'})
 
 class Timetables(APIView):
-    """Get timetables
+    """ Method Get and Post timetables to frontend
+
+    Two methods: the Get Request to first display on page,
+    and the Post request that takes user input and updates page.
     """
 
     serializer_class = TimetableSerializer
 
     def get(self, request, format=None):
-        """ Returns timetable """
+        """ Returns timetable that first displays on frontend.
+        """
         df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
         return Response(df)
 
     def post(self, request):
-        """ post user info here """
+        """ Method to take user input and return timetable for that bus stop. """
 
         serializer = TimetableSerializer(data = request.data)
         
