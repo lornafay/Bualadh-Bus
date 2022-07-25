@@ -27,3 +27,13 @@
     border-style: solid;
     margin-top: 20px;
 }
+
+#table-scroll {
+    margin:4px, 4px;
+    padding:4px;
+    width: 500px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+}
