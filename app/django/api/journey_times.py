@@ -7,13 +7,16 @@ import numpy as np
 
 class JourneyTimes(ModelQuerries):
 
-    def __init__(self):
+    def __init__(self, lst):
         super(Parse_arguments, self).__init__()
+        time = lst[0]
+        start = lst[1]
+        end = lst[2]
         self.parse_arguments = super(ModelQuerries, self)
-        self.date = self.parse_arguments.__set_date_time__('2022-07-23T12:00:00.000Z')
-        self.beginning_stop = self.parse_arguments.__set_beginningstop__('395')
-        self.ending_stop = self.parse_arguments.__set_endingstop__('4662')
-        super(JourneyTimes, self).__init__()
+        self.date = self.parse_arguments.__set_date_time__(time)
+        self.beginning_stop = self.parse_arguments.__set_beginningstop__(start)
+        self.ending_stop = self.parse_arguments.__set_endingstop__(end)
+        super(JourneyTimes, self).__init__(lst)
 
 
     def predict_total_journey_time(self):
@@ -51,9 +54,9 @@ class JourneyTimes(ModelQuerries):
                 model = pickle.load(file)
 
                 # generate prediction
-                #inputs = route_feature_dict[route].to_numpy() 
                 inputs = route_feature_dict[route]
-                prediction = model.predict(inputs)
+                print(f"Route {route} features: \n{inputs}")
+                prediction = model.predict(inputs)[0] # prediction returns as a list type
                 routeid_list.append(route)
                 total_list.append(prediction)
 
@@ -69,38 +72,45 @@ class JourneyTimes(ModelQuerries):
         beginning_df = super().get_time_percent("Beginning_stop")
         end_df = super().get_time_percent("Ending_stop")
 
+        print(f"\nbeginning df\n{beginning_df}\n\nending df\n{end_df}\n")
+
         # call predict_total_journey_times
         total_times_df = self.predict_total_journey_time()
         routes = list(total_times_df['ROUTEID'])
+
+        print(f"\ntotal times df\n{total_times_df}\n\nroutes\n{routes}\n")
         
         # initilise empty df and columns
-        user_props_df = pd.DataFrame()
+        user_props_df = pd.DataFrame(columns=['ROUTEID', 'USER_JOURNEY_TIME'])
         routeid_list = []
         user_time_list = []
 
         # for each routeid in total times
         for route in routes:
             # ending_time - beginning_time%s x total_jt
-            beg_prop = beginning_df[beginning_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2']
-            end_prop = end_df[end_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2']
-            total_time = total_times_df[total_times_df['ROUTEID'] == route]['TOTAL_TIME_PREDICTION']
-
+            beg_prop = round(
+                beginning_df[beginning_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2'].unique()[0], 4)
+            end_prop = round(
+                end_df[end_df['ROUTEID'] == route]['TRIPS_TIME_PROPORTION_v2'].unique()[0], 4)
+            total_time = total_times_df[total_times_df['ROUTEID'] == route]['TOTAL_TIME_PREDICTION'].unique()[0]
             # apply formula and append results to df lists
             user_time = (end_prop - beg_prop) * total_time
+            print(f"\n{route}:\nbeg_prop: {beg_prop}\nend_prop: \n{end_prop}\nuser_time: {user_time}\n")
             routeid_list.append(route)
-            user_time_list.append(user_time)
+            user_time_list.append(round(user_time))
        
         # build df and return
         user_props_df['ROUTEID'] = routeid_list
         user_props_df['USER_JOURNEY_TIME'] = user_time_list
+
+        print("User JT df: \n", user_props_df, "\n")
         
         return user_props_df
 
 
-    def parse_routeID_lineID(self, weights_df):
+    def parse_routeID_lineID(self):
         # call get_user_journey_time
         user_times_df = self.get_user_journey_time()
-        #user_times_df = weights_df
 
         # parse the lineIDs from the routeIDs
         lineIDs = list(user_times_df['ROUTEID'])
@@ -116,11 +126,19 @@ class JourneyTimes(ModelQuerries):
 
     def normalise_routeID_weights(self):
         # call routeID_weights from super()
-        weights_df = super().routeid_weights() 
-        print("weight DF: \n", weights_df)
+        weights_df = super().routeid_weights()
+        weights_df.drop(['Beginning_stop', 'Ending_stop'], axis=1, inplace=True)
+        print("\nweight DF: \n", weights_df)
         # call parse_routeID_lineID to get lineID/routeID/results df
-        df = self.parse_routeID_lineID(weights_df)
-        print("DF: \n", df)
+        lineid_df = self.parse_routeID_lineID()
+        print("\nlineID DF: \n", lineid_df)
+
+        # join dfs on routeID
+        df = lineid_df.merge(weights_df, on='ROUTEID')
+
+
+        print(f"\nweight merged DF:\n{df}")
+
         # get the lineID weight by summing routeID weights for that line
         line_weights = df.groupby(['LINEID'])['Weight'].sum()
         line_weight_seq = []
@@ -153,7 +171,7 @@ class JourneyTimes(ModelQuerries):
         # get weighted average time for each lineID 
         weighted_time = []
         for row in df.index:
-            weighted_time.append(df['result'][row] * df['normalised_weight'][row])
+            weighted_time.append(df['USER_JOURNEY_TIME'][row] * df['normalised_weight'][row])
         df['weighted_time'] = weighted_time
 
         # construct a lineID/results df 
