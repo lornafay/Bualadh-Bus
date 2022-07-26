@@ -1,5 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.views import APIView
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
@@ -17,16 +19,6 @@ def get_current_weather(request):
 @api_view(['POST'])
 def user_input(request):
     print(request.data)
-    return Response({'status':'successful'})
-
-@api_view(['GET'])
-def get_timetable(request):
-    df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
-    return Response(df)
-
-@api_view(['POST'])
-def user_timetable(request):
-    print(request.data)
     time = request.data['time']
     start = request.data['location']
     end = request.data['destination']
@@ -36,3 +28,12 @@ def user_timetable(request):
     p=j.predict_total_journey_time()
 
     return Response({'result':p})
+
+@api_view(['GET'])
+def get_timetable(request):
+    df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
+    return Response(df)
+
+@api_view(['POST'])
+def user_timetable(request):
+    pass
