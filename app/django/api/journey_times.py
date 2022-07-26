@@ -154,7 +154,7 @@ class JourneyTimes(ModelQuerries):
         # normalised weight is proportion of routeID weight of total lineID weight 
         normalised_final = []
         for row in df.index:
-            normalised_final.append(round(df['Weight'][row] / df['normalised_weight'][row], 3))
+            normalised_final.append(round(list(df['Weight'])[row] / list(df['normalised_weight'])[row], 3))
 
         df['normalised_weight'] = normalised_final
         df.drop('Weight', axis=1, inplace=True)

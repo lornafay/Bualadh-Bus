@@ -24,9 +24,9 @@ def user_input(request):
     lst = [time, start, end]
     print('request: ', lst[0], lst[1], lst[2])
     j = JourneyTimes(lst)
-    p=j.predict_total_journey_time()
-
-    return Response({'result':p})
+    p=j.return_user_journey_time_lineID()
+    print(p)
+    return Response({'result': p})
 
 
 @api_view(['POST'])
