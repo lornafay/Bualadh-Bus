@@ -27,4 +27,12 @@ def get_timetable(request):
 @api_view(['POST'])
 def user_timetable(request):
     print(request.data)
-    return Response({'status' : 'successful'})
+    time = request.data['time']
+    start = request.data['location']
+    end = request.data['destination']
+    lst = [time, start, end]
+    print('request: ', lst[0], lst[1], lst[2])
+    j = JourneyTimes(lst)
+    p=j.predict_total_journey_time()
+
+    return Response({'result':p})
