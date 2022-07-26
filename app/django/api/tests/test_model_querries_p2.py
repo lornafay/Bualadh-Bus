@@ -1,7 +1,5 @@
-import query as q
 import pandas as pd
-import parse_arguments as pa
-import model_querries as mq
+from api.model_querries import ModelQuerries
 import random
 from random import randint
 import datetime as dt
@@ -12,7 +10,8 @@ import pytest
 
 def param_check_set1():
     """function to set instance variables to test parameters and avoid code repeat"""
-    m_q = mq.ModelQuerries()
+    lst=['2022-07-23T12:00:00.000Z','395','4662']
+    m_q = ModelQuerries(lst)
     m_q.__set_beginning_stop__('395')
     m_q.__set_endingstop__('4662')
     m_q.__set_date__(pd.to_datetime('2022-07-23T12:00:00.000Z'))

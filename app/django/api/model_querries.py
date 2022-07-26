@@ -10,9 +10,10 @@ import datetime
 class ModelQuerries(Parse_arguments):
     """Class which will return majority of querries from sql for model to function"""
 
-    def __init__(self):
+    def __init__(self, lst):
         """initializing instance variables"""
         # creating Parse_arguments object
+        super(ModelQuerries, self).__init__(lst)
         self.parse_arguments = super(ModelQuerries, self)
         # calling methods on parse_arguments object initializing output as instance variable
         self.beginning_stop = self.parse_arguments.get_beginningstop()
