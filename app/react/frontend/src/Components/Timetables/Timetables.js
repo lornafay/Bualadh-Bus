@@ -22,9 +22,12 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
-        Axios.post('http://127.0.0.1:8000/api/user_timetable/', {
+        Axios.post('http://127.0.0.1:8000/api/timetable/', {
             stopID, day
-        }).then(res => console.log('Posting data', res)).catch(err => console.log(err))
+        }).then(res => {
+            console.log('Posting data', res.data)
+            setDate(res.data)
+        }).catch(err => console.log(err))
     }
 
     const array = data.map((data, index) => {
