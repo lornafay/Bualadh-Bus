@@ -29,11 +29,30 @@ def user_input(request):
 
     return Response({'result':p})
 
-@api_view(['GET'])
-def get_timetable(request):
-    df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
-    return Response(df)
+class Timetables(APIView):
+    """ Method Get and Post timetables to frontend
 
-@api_view(['POST'])
-def user_timetable(request):
-    pass
+    Two methods: the Get Request to first display on page,
+    and the Post request that takes user input and updates page.
+    """
+
+    serializer_class = TimetableSerializer
+
+    def get(self, request, format=None):
+        """ Returns timetable that first displays on frontend.
+        """
+        df = DisplayTimetables.return_timetable('395', '395', 'Saturday')
+        return Response(df)
+
+    def post(self, request):
+        """ Method to take user input and return timetable for that bus stop. """
+
+        serializer = TimetableSerializer(data = request.data)
+        
+        if serializer.is_valid():
+            day = serializer.data.get('day')
+            stopID = serializer.data.get('stopID')
+            df_new = DisplayTimetables.return_timetable('395', stopID, day)
+            return Response(df_new)
+        else:
+            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
