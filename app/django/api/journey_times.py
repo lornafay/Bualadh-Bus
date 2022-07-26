@@ -11,7 +11,7 @@ class JourneyTimes(ModelQuerries):
         super(Parse_arguments, self).__init__()
         self.parse_arguments = super(ModelQuerries, self)
         self.date = self.parse_arguments.__set_date_time__('2022-07-23T12:00:00.000Z')
-        self.beginningstop = self.parse_arguments.__set_beginningstop__('395')
+        self.beginning_stop = self.parse_arguments.__set_beginningstop__('395')
         self.ending_stop = self.parse_arguments.__set_endingstop__('4662')
         super(JourneyTimes, self).__init__()
 
@@ -182,5 +182,5 @@ class JourneyTimes(ModelQuerries):
         return options_dict
 
 
-obj = JourneyTimes()
-print(obj.return_user_journey_time_lineID())
+#obj = JourneyTimes()
+#print(obj.return_user_journey_time_lineID())
