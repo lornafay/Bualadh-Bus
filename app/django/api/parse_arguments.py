@@ -5,18 +5,15 @@ import pytz
 class Parse_arguments(Query):
     def __init__(self, lst):
         Query.__init__(self)
-        time = lst[0]
-        start = lst[1]
-        end = lst[2]
-        self.date_time = time
-        self.beginningstop = start
-        self.endingstop = end
+        self.date_time = lst[0]
+        self.beginningstop = lst[1]
+        self.endingstop = lst[2]
 
     def __set_date_time__(self, date_time):
         self.date_time = date_time
     
-    def __set_beginningstop__(self, a):
-        self.beginningstop = a
+    def __set_beginningstop__(self, beginningstop):
+        self.beginningstop = beginningstop
     
     def __set_endingstop__(self, endingstop):
         self.endingstop = endingstop
