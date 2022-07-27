@@ -1,5 +1,6 @@
 from api.query import Query
 import pandas as pd
+import numpy as np
 
 class DisplayTimetables:
     """Class to display timetables to user.
@@ -22,19 +23,25 @@ class DisplayTimetables:
         DBs = ("static_tables")
         retreive_DB = query.get_engine(DBs)
 
-        # Queries the DB timetables table for routeID and departure time from user's stopID/day inputs.
-        df = pd.read_sql("SELECT ROUTEID, TIME_OF_DAY FROM static_tables.timetables Where STOPPOINTID = '{0}' and DAY_OF_WEEK = '{1}' order by ROUTEID, TIME_OF_DAY".format(stopID, day), retreive_DB);
+        day = day.lower()
+        print(day)
 
-        # Splits the ID from routeID to get the LineID, and then drops ROUTEID.
-        df [['LINEID', 'ROUTEID']]= df['ROUTEID'].str.split('_', expand=True)
-        df = df.drop('ROUTEID', axis=1)
+        # Queries the DB timetables table for routeID and departure time from user's stopID/day inputs.
+        df = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, DIRECTION, last_stop FROM static_tables.{0}_timetable where STOPPOINTID = {1} order by LINEID".format(day, stopID), retreive_DB);
 
         # Drop duplicates
-        df = df.drop_duplicates(subset=['LINEID','TIME_OF_DAY'])
+        df = df.drop_duplicates(subset=['ROUTEID', 'LINEID','TIME_OF_DAY', 'DIRECTION', 'last_stop'])
         
-        #prep time display
+        # Prep time display
         df['TIME_OF_DAY'] = df['TIME_OF_DAY'].astype(str)
         df['TIME_OF_DAY'] = df['TIME_OF_DAY'].str[7:-3]
+
+        # Add direction notice for user to see
+        df['DIRECTION'] = np.where(df['DIRECTION']>=1, 'Inbound', 'Outbound')
+
+        # Format last stop for user
+        df['last_stop'] = df['last_stop'].astype('string')
+        df['last_stop'] = df['last_stop'].str[0:-2]
 
         #Transform dataframe into dictionary in prep for frontend use.
         df = df.to_dict('records')

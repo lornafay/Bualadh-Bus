@@ -7,6 +7,7 @@ from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
 from .parse_arguments import Parse_arguments
 from .journey_times import JourneyTimes
+from .timetables import DisplayTimetables
 
 @api_view(['GET'])
 def get_current_weather(request):
