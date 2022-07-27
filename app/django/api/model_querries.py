@@ -6,13 +6,13 @@ from sqlalchemy import create_engine
 from .parse_arguments import Parse_arguments
 import datetime
 
-
 class ModelQuerries(Parse_arguments):
     """Class which will return majority of querries from sql for model to function"""
 
-    def __init__(self):
+    def __init__(self, lst):
         """initializing instance variables"""
         # creating Parse_arguments object
+        super(ModelQuerries, self).__init__(lst)
         self.parse_arguments = super(ModelQuerries, self)
         # calling methods on parse_arguments object initializing output as instance variable
         self.beginning_stop = self.parse_arguments.get_beginningstop()
@@ -74,7 +74,7 @@ class ModelQuerries(Parse_arguments):
                          " Beginning_stop = " + "'395'" + " AND Ending_stop= " +
                          self.ending_stop, self.engine_static)
         raw_routeid_list = df["ROUTEID"].tolist()
-
+        
         routeid_query_str = ModelQuerries.route_id_query_string(
             raw_routeid_list)
         # filtering all routeid's matching stoppair to deduct routeids operating -+30 min of user's date/time input
@@ -83,11 +83,12 @@ class ModelQuerries(Parse_arguments):
                                           " AND DAY_OF_WEEK= '"+self.day_of_week+"' AND TIME_OF_DAY between " +
                                           "SUBTIME('"+str(self.date.hour)+":00:00', '0:30:00') and " +
                                           " ADDTIME('"+str(self.date.hour)+":00:00', '0:30:00')", self.engine_static)
-
+        print("set_route_id df_date_time_adjust: " , df_date_time_adjust)
         # selecting unique values sorting and returning list output.
         date_time_adjusted_list = list(
             set(df_date_time_adjust["ROUTEID"].tolist()))
         date_time_adjusted_list.sort()
+        print("set_route_id date_time_adjusted_list after sort: " , date_time_adjusted_list)
         return date_time_adjusted_list
 
     def get_time_percent(self, var):
@@ -107,6 +108,8 @@ class ModelQuerries(Parse_arguments):
                              "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
             df.rename(columns={
                       "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
+            print("="*66)
+            print("get_time_percent: ",df)
             return df
         elif var == "Ending_stop":
             df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
@@ -115,6 +118,8 @@ class ModelQuerries(Parse_arguments):
                              "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
             df.rename(columns={
                       "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
+            print("="*66)
+            print("get_time_percent: ",df)
             return df
         else:
             raise(ValueError)
@@ -138,6 +143,8 @@ class ModelQuerries(Parse_arguments):
             # Add to dictionary by matching routeid key with lists made out of check True column of dataframe
             if len(check) > 0:
                 features_dict[key] = check.tolist()
+        print("="*66)
+        print("get_pmodel_features: ",features_dict)
         return features_dict
 
     def get_pmodel_values(self):
@@ -157,7 +164,8 @@ class ModelQuerries(Parse_arguments):
         feature_names_dict = self.get_pmodel_features()
         current_time = datetime.datetime.now().hour
         current_date = datetime.datetime.now().date()
-
+        print("get_pmodel_values: self.day_of_week: ", self.day_of_week)
+        print("get_pmodel_values: self.date: ", self.date)
         # initialize empty dictionary to append dataframes by routeid keys
         feature_values_dict = {}
         for key, value in feature_names_dict.items():
@@ -167,9 +175,10 @@ class ModelQuerries(Parse_arguments):
             # query for planned time deparure for final stop points
             # where time is closests to user's time input for hour of day.
             if 'PLANNEDTIME_DEP' in value:
+                #changed TRIPS_TIME_PROPORTION_v2 >0.89 to cover for cases where 
                 df_plannedtime_dep = pd.read_sql("SELECT PLANNEDTIME_DEP FROM static_tables.timetables " +
                                                  "where  ROUTEID = '"+key+"'  AND DAY_OF_WEEK= '"+self.day_of_week +
-                                                 "' AND TRIPS_TIME_PROPORTION_v2 = 1 " +
+                                                 "' AND TRIPS_TIME_PROPORTION_v2 >0.89 " +
                                                  "ORDER BY ABS(TIME_TO_SEC(TIMEDIFF(TIME_OF_DAY, '" +
                                                  str(self.date.hour)+":00:00'))) LIMIT 1", self.engine_static)
                 df = pd.concat([df, df_plannedtime_dep], axis=1)
@@ -207,10 +216,12 @@ class ModelQuerries(Parse_arguments):
             # If hour of user's time input matches current hour query current weather table
             # If not query feature weather table.
             if current_time == self.date.hour and current_date == self.date.date():
+                print("model_querries: get_pmodel_values() current_time: ", current_time)
                 df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
                                          self.engine_dynamic)
                 df = pd.concat([df, df_weather], axis=1)
             else:
+                print("model_querries: get_pmodel_values() self.forecast_date: ", self.forecast_date)
                 date = self.forecast_date
                 df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
                                          " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
@@ -275,6 +286,8 @@ class ModelQuerries(Parse_arguments):
 
             # add final dataframe to routeid/df dictionary
             feature_values_dict[key] = df
+        print("="*66)
+        print("get_pmodel_values: ",feature_values_dict)
         return feature_values_dict
 
     def routeid_weights(self):
@@ -287,4 +300,6 @@ class ModelQuerries(Parse_arguments):
                          "Beginning_stop = '"+"395" +
                          "'AND Ending_stop= '"+self.ending_stop + "' AND "
                          + routeid_query_str, self.engine_static)
+        print("="*66)
+        print("routeid_weights: ",df)
         return df

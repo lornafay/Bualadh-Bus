@@ -5,7 +5,7 @@ services:
   backend:
     build:
       context: ./django
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000 --preload
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000 --preload --timeout 120
     ports:
       - "8000:8000"
     volumes:
