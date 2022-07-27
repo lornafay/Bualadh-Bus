@@ -5,9 +5,8 @@ from rest_framework.views import APIView
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
-from api.timetables import DisplayTimetables
-import pandas as pd
-import json
+from .parse_arguments import Parse_arguments
+from .journey_times import JourneyTimes
 
 @api_view(['GET'])
 def get_current_weather(request):
@@ -25,9 +24,10 @@ def user_input(request):
     lst = [time, start, end]
     print('request: ', lst[0], lst[1], lst[2])
     j = JourneyTimes(lst)
-    p=j.predict_total_journey_time()
+    p=j.return_user_journey_time_lineID()
+    print(p)
+    return Response({'result': p})
 
-    return Response({'result':p})
 
 class Timetables(APIView):
     """ Method Get and Post timetables to frontend

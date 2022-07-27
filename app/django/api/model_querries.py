@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-from parse_arguments import Parse_arguments
+from .parse_arguments import Parse_arguments
 import datetime
 
 
@@ -72,7 +72,7 @@ class ModelQuerries(Parse_arguments):
         time of day and day of week"""
         # obtaining all routeid's matching stoppair
         df = pd.read_sql("SELECT * FROM static_tables.STOPPOINTID_pairs_vs_ROUTEID where "
-                         " Beginning_stop = "+self.beginning_stop+" AND Ending_stop= " +
+                         " Beginning_stop = " + "'395'" + " AND Ending_stop= " +
                          self.ending_stop, self.engine_static)
         raw_routeid_list = df["ROUTEID"].tolist()
 
@@ -80,7 +80,7 @@ class ModelQuerries(Parse_arguments):
             raw_routeid_list)
         # filtering all routeid's matching stoppair to deduct routeids operating -+30 min of user's date/time input
         df_date_time_adjust = pd.read_sql("SELECT ROUTEID, TIME_OF_DAY FROM static_tables.timetables where "
-                                          + routeid_query_str + " AND STOPPOINTID = "+self.beginning_stop +
+                                          + routeid_query_str + " AND STOPPOINTID = "+"'395'" +
                                           " AND DAY_OF_WEEK= '"+self.day_of_week+"' AND TIME_OF_DAY between " +
                                           "SUBTIME('"+str(self.date.hour)+":00:00', '0:30:00') and " +
                                           " ADDTIME('"+str(self.date.hour)+":00:00', '0:30:00')", self.engine_static)
@@ -104,7 +104,7 @@ class ModelQuerries(Parse_arguments):
         if var == "Beginning_stop":
             df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
                              "static_tables.timetables where " + routeid_query_str + " AND STOPPOINTID = " +
-                             self.beginning_stop + " AND DAY_OF_WEEK= '"+self.day_of_week +
+                             "'395'" + " AND DAY_OF_WEEK= '"+self.day_of_week +
                              "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
             df.rename(columns={
                       "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
@@ -285,7 +285,7 @@ class ModelQuerries(Parse_arguments):
         routeid_query_str = ModelQuerries.route_id_query_string(route_id_list)
         # query for desired output
         df = pd.read_sql("SELECT * FROM static_tables.STOPPOINTID_pairs_vs_ROUTEID where "
-                         "Beginning_stop = '"+self.beginning_stop +
+                         "Beginning_stop = '"+"395" +
                          "'AND Ending_stop= '"+self.ending_stop + "' AND "
                          + routeid_query_str, self.engine_static)
         return df
