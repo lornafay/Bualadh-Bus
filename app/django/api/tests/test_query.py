@@ -1,5 +1,5 @@
 import unittest
-import query as q
+from api.query import Query
 import pandas as pd
 
 
@@ -9,7 +9,7 @@ class TestQuery(unittest.TestCase):
         """checks if enginee connects to correct schema when schema name static_tables is given as argument"""
         schema="static_tables"
         #class call
-        myquery=q.Query()
+        myquery=Query()
         #create enginee method call
         engine= myquery.get_engine(schema)
         #write query to dataframe
@@ -23,7 +23,7 @@ class TestQuery(unittest.TestCase):
         """checks if enginee connects to correct schema when schema name DBus is given as argument"""
         schema="DBus"
         #class call
-        myquery=q.Query()
+        myquery=Query()
         #create enginee method call
         engine= myquery.get_engine(schema)
         #write query to dataframe
