@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import DatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
@@ -13,9 +13,9 @@ import setMilliseconds from "date-fns/setMilliseconds";
 import addWeeks from "date-fns/addWeeks";
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun } from '@fortawesome/free-solid-svg-icons';
+import { faCommentDots, faSun } from '@fortawesome/free-solid-svg-icons';
 import GoogleMaps from "simple-react-google-maps";
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 export default function Home() {
@@ -23,36 +23,47 @@ export default function Home() {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
         Axios.get('http://127.0.0.1:8000/api/current_weather/')
-        .then(res => setWeather(res.data).catch(err => console.log(err)))
+            .then(res => setWeather(res.data).catch(err => console.log(err)))
     }, [])
-    
+
     // user input
     const [time, setTime] = useState(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0));
     const [location, setLocation] = useState([]);
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
-    
+
     const postData = (e) => {
         e.preventDefault();
-        Axios.post('http://127.0.0.1:8000/api/user_input/',{
+        Axios.post('http://127.0.0.1:8000/api/user_input/', {
             time,
             location,
             destination
-        }).then(res => setReceivedData(res.data).catch(err => console.log(err)))
+        }).then(res => {
+            console.log("time: ", time);
+            console.log("location: ", location);
+            console.log("destination: ", destination);
+            setReceivedData(res.data.result);
+            console.log(receivedData)
+            console.log(weather);
+        })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (
         <div id='home'>
-            {(() => {
-                    if (receivedData.status !== undefined) {
-                        return (
-                            <>
-                            <h1>Status: {receivedData.status}</h1>
-                            </>
-                        )
-                    } 
-            })()}
-            
+            {receivedData.map(r => {
+                return <h1>line: {r.line}</h1>
+            })}
+            {receivedData.map(r => {
+                return <h1>hours: {r.hours}</h1>
+            })}
+            {receivedData.map(r => {
+                return <h1>mins: {r.mins}</h1>
+            })}
+
+
             {/* print out the api data */}
             {/* {weather.map(w =>{
                 return <h1>time: {w.time}</h1>
@@ -69,7 +80,7 @@ export default function Home() {
             {weather.map(w =>{
                 return <h1>wind cloud: {w.clouds}</h1>
             })} */}
-        
+
             <Container>
                 <Row>
                     <Col>
@@ -77,20 +88,20 @@ export default function Home() {
                             <h3 id='home-section-title'>Container</h3>
                             <Form>
                                 <DatePicker
-                                selected={time}
-                                onChange={(date) => setTime(date)}
-                                showTimeSelect
-                                minDate={new Date()}
-                                maxDate={addWeeks(new Date(), 1)}
-                                timeFormat="HH:mm"
-                                dateFormat="MMMM d, yyyy h:mm aa"
+                                    selected={time}
+                                    onChange={(date) => setTime(date)}
+                                    showTimeSelect
+                                    minDate={new Date()}
+                                    maxDate={addWeeks(new Date(), 1)}
+                                    timeFormat="HH:mm"
+                                    dateFormat="MMMM d, yyyy h:mm aa"
                                 />
-                                <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)}/>
-                                <Form.Control placeholder="Destination" name='destination' id='home-section1-input' onChange={(e) => setDestination(e.target.value)}/>
+                                <Form.Control placeholder="Your Location" name='location' id='home-section1-input' onChange={(e) => setLocation(e.target.value)} />
+                                <Form.Control placeholder="Destination" name='destination' id='home-section1-input' onChange={(e) => setDestination(e.target.value)} />
                                 <Button variant="primary" type="submit" onClick={postData} disabled={time.length === 0 || location.length === 0 || destination.length === 0}>
                                     Submit
                                 </Button>
-                            </Form> 
+                            </Form>
                             <p id='home-section1-error'>Error message</p>
                             <table>
                                 <tr>
@@ -108,7 +119,7 @@ export default function Home() {
                             <table id='home-section2-table'>
                                 <tr>
                                     <td>
-                                        <FontAwesomeIcon icon={faSun} id='home-section2-weathericon'/>
+                                        <FontAwesomeIcon icon={faSun} id='home-section2-weathericon' />
                                     </td>
                                     <td>
                                         <tr>
@@ -127,13 +138,13 @@ export default function Home() {
                     </Col>
                     <Col>
                         <section id='home-section3'>
-                            <GoogleMaps 
+                            <GoogleMaps
                                 apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
-                                style={{ height: "550px", width: "600px"}}
+                                style={{ height: "550px", width: "600px" }}
                                 zoom={12}
                                 center={{
-                                lat: 53.350140,
-                                lng: -6.266155
+                                    lat: 53.350140,
+                                    lng: -6.266155
                                 }}
                             />
                             <table id='map-table'>

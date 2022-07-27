@@ -185,19 +185,22 @@ class JourneyTimes(ModelQuerries):
         # call get_user_journey_time_lineID
         line_time_df = self.get_user_journey_time_lineID()  
 
-        options_dict = {}
+        options_arr = []
 
         # for each travel option convert the seconds count to hours and mins
         for row in line_time_df.index:
             secs = line_time_df['weighted_time'][row]
             mins = round(secs / 60)
             hours = round(mins / 60)
+            res_dict = {
+                        'line': list(line_time_df['LINEID'])[row],
+                        'hours': hours,
+                        'mins': mins
+                        }
 
-            options_dict[line_time_df['LINEID'][row]] = {
-                                            'hours': hours,
-                                            'mins': mins
-                                            }
-        return options_dict
+            options_arr.append(res_dict)
+            
+        return options_arr
 
 
 #obj = JourneyTimes()
