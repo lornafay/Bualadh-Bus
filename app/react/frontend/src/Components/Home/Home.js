@@ -53,34 +53,6 @@ export default function Home() {
 
     return (
         <div id='home'>
-            {receivedData.map(r => {
-                return <h1>line: {r.line}</h1>
-            })}
-            {receivedData.map(r => {
-                return <h1>hours: {r.hours}</h1>
-            })}
-            {receivedData.map(r => {
-                return <h1>mins: {r.mins}</h1>
-            })}
-
-
-            {/* print out the api data */}
-            {/* {weather.map(w =>{
-                return <h1>time: {w.time}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>temp: {w.temperature}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind speed: {w.wind_speed}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind dir: {w.wind_dir}</h1>
-            })}
-            {weather.map(w =>{
-                return <h1>wind cloud: {w.clouds}</h1>
-            })} */}
-
             <Container>
                 <Row>
                     <Col>
@@ -110,30 +82,32 @@ export default function Home() {
                                     <td id='home-section1-tableitem'>Wheelchair Accessible</td>
                                 </tr>
                             </table>
-                            <p id='home-section1-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <p id='home-section1-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                            <p id='home-section1-content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            {receivedData.map(r =>{
+                                    return <>
+                                        <p>
+                                            Line: {r.line}<br/>
+                                            Hours: {r.hours}<br/>
+                                            Minutes: {r.mins}<br/>
+                                        </p>
+                                    </>
+                                })
+                            }
                         </section>
                         <section id='home-section2'>
                             <h3 id='home-section-title'>Current Weather</h3>
-                            <table id='home-section2-table'>
-                                <tr>
-                                    <td>
-                                        <FontAwesomeIcon icon={faSun} id='home-section2-weathericon' />
-                                    </td>
-                                    <td>
-                                        <tr>
-                                            Sunny
-                                        </tr>
-                                        <tr>
-                                            Current 16°
-                                        </tr>
-                                        <tr>
-                                            H:17° L:13°
-                                        </tr>
-                                    </td>
-                                </tr>
-                            </table>
+                            {weather.map(w =>{
+                                return <>
+                                <p>
+                                    Temp: {w.temp} <br/>
+                                    Wind Speed: {w.wind_speed} <br/>
+                                    Clouds: {w.clouds} <br/>
+                                    Rain: {w.rain} <br/>
+                                    Sea Level Pressure: {w.sea_lvl_pressure} <br/>
+                                    Humidity: {w.humidity} <br/>
+                                    Dew Point Temp: {w.dew_pt_temp}<br/>
+                                </p>
+                                </>
+                            })}
                         </section>
                     </Col>
                     <Col>
