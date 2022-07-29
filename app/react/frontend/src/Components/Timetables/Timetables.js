@@ -46,23 +46,22 @@ export default function Timetables() {
     return (
         <div id='timetables'>
             <h1 id='timetables-title'>Timetables</h1>
+            <br></br>
             <form>
-                <label>Bus Stop ID</label>
-                <input type="text" value={stopID} onChange={(e) => setStopID(e.target.value)}/>
-                <label>Day of Travel</label>
-                <input type="text" value={day} onChange={(e) => setDay(e.target.value)}/>
-                <button onClick={postData} >POST</button>
+                <label>Bus Stop ID: </label>
+                <input type="text" value={stopID} onChange={(e) => setStopID(e.target.value)}/><br></br><br></br>
+                <label>Day of Travel:</label>
+                <input type="text" value={day} onChange={(e) => setDay(e.target.value)}/><br></br><br></br>
+                <button onClick={postData} >Search</button>
             </form>
-            {/* <Form.Select size="sm" id='timetables-select'>
-                <option>Select Bus Route</option>
-            </Form.Select> */}
-            <div id='table-scroll'>
+            <br></br>
+            <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
             <table>
-                <tr>
-                    <th>Line</th>
-                    <th>Time</th>
-                    <th>Direction</th>
-                    <th>Last Stop</th>
+                <tr align>
+                    <th width="50px">Line</th>
+                    <th width="80px">Time</th>
+                    <th width="80px">Direction</th>
+                    <th width="80px">Last Stop</th>
                 </tr>
                 <tr>
                     <td></td>

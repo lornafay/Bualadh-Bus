@@ -1,16 +1,15 @@
 #aboutus {
     background-color: #B8F1B0;
     color: #535353;
-    /* height: 700px; */
     padding-top: 25px;
     padding-bottom: 1rem;
     border-radius: 5px;
     box-shadow: 0 1px 8px;
     margin: .5rem auto;
     padding-top: 1rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
-    max-width: 95%;
+    padding-left: 10%;
+    padding-right: 10%;
+    max-width: 90%;
 }
 
 #aboutus-title {
@@ -27,22 +26,9 @@
 
 #person1 {
     text-align: left;
-    /* margin-left: 50px;
-    margin-right: 600px; */
 }
 
 #person1-info {
     padding-left: 30px;
-    padding-bottom: 130px;
-}
-
-#person2 {
-    text-align: right;
-    /* margin-left: 600px;
-    margin-right: 50px; */
-}
-
-#person2-info {
-    padding-right: 30px;
     padding-bottom: 130px;
 }
