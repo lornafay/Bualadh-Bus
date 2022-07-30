@@ -23,8 +23,8 @@ export default function Home() {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
         /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) => */
-        Axios.get("http://127.0.0.1/api/current_weather/").then((res) =>
+        /* Axios.get("http://127.0.0.1/api/current_weather/").then((res) => */
+        Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) =>
             setWeather(res.data).catch((err) => console.log(err))
         );
     }, []);
@@ -39,8 +39,8 @@ export default function Home() {
 
     const postData = (e) => {
         e.preventDefault();
-        /* Axios.post('http://127.0.0.1:8000/api/user_input/', { */
-        Axios.post('http://127.0.0.1/api/user_input/', {
+        /* Axios.post('http://127.0.0.1/api/user_input/', { */
+        Axios.post('http://127.0.0.1:8000/api/user_input/', {
             time,
             location,
             destination,

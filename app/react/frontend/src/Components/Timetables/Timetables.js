@@ -16,8 +16,8 @@ export default function Timetables() {
 
     useEffect(() => {
         /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get('http://127.0.0.1:8000/api/timetable/') */
-        Axios.get('http://127.0.0.1/api/timetable/')
+        /* Axios.get('http://127.0.0.1/api/timetable/') */
+        Axios.get('http://127.0.0.1:8000/api/timetable/')
             .then(res => {
                 console.log("Getting from server ::::", res.data)
                 setDate(res.data)
@@ -26,8 +26,8 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
-        /* Axios.post('http://127.0.0.1:8000/api/timetable/', { */
-        Axios.post('http://127.0.0.1/api/timetable/', {
+        /* Axios.post('http://127.0.0.1/api/timetable/', { */
+        Axios.post('http://127.0.0.1:8000/api/timetable/', {
             stopID, day, direction, lastStop
         }).then(res => {
             console.log('Posting data', res.data)
