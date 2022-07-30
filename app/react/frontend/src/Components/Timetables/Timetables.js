@@ -11,7 +11,7 @@ export default function Timetables() {
     const[data, setDate] = useState([])
     const[stopID, setStopID] = useState('')
     const[day, setDay] = useState('')
-    const[direction, setDirection] = useState('')
+    const[destination, setDestination] = useState('')
     const[lastStop, setLastStop] = useState('')
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function Timetables() {
     const postData = (e) => {
         e.preventDefault();
         Axios.post('http://127.0.0.1:8000/api/timetable/', {
-            stopID, day, direction, lastStop
+            stopID, day, destination, lastStop
         }).then(res => {
             console.log('Posting data', res.data)
             setDate(res.data)
@@ -37,7 +37,7 @@ export default function Timetables() {
             <tr>
                 <td>{data.LINEID}</td>
                 <td>{data.TIME_OF_DAY}</td>
-                <td>{data.DIRECTION}</td>
+                <td>{data.destination}</td>
                 <td>{data.last_stop}</td>
             </tr>
         )
@@ -60,7 +60,7 @@ export default function Timetables() {
                 <tr align>
                     <th width="50px">Line</th>
                     <th width="80px">Time</th>
-                    <th width="80px">Direction</th>
+                    <th width="80px">Destination</th>
                     <th width="80px">Last Stop</th>
                 </tr>
                 <tr>
