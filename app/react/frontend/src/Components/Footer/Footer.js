@@ -10,7 +10,7 @@ export default function Footer() {
                 <FontAwesomeIcon icon={faTwitter} id='footer-icon' />
                 <FontAwesomeIcon icon={faInstagram} id='footer-icon' />
                 <FontAwesomeIcon icon={faFacebook} id='footer-icon' />
-                <span id='footer-text'>© 2022 mockup</span>
+                <span id='footer-text'>© 2022 Bualadh Bus</span>
             </p>
         </footer>
     )

@@ -1,14 +1,11 @@
 #faq {
     background-color: #B8F1B0;
     color: #535353;
-    /* height: 500px; */
-    padding-top: 25px;
-    padding-bottom: 25px;
     border-radius: 5px;
     box-shadow: 0 1px 8px;
     margin: .5rem auto;
     padding: 1rem;
-    max-width: 95%
+    max-width: 90%
 }
 
 #faq-title {
@@ -17,11 +14,11 @@
 }
 
 #faq-accordion {
-    padding-left: 250px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 #faq-collapse {
-    width: 80%;
     margin-top: 30px;
     margin-bottom: 30px;
 }

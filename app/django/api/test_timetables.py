@@ -19,15 +19,14 @@ class TestQuery(unittest.TestCase):
 
         stopID = '395'
         day = 'Saturday'
-        df_request = pd.read_sql("SELECT ROUTEID, TIME_OF_DAY FROM static_tables.timetables Where STOPPOINTID = '{0}' and DAY_OF_WEEK = '{1}' order by ROUTEID, TIME_OF_DAY".format(stopID, day), retreive_DB);
+        day = day.lower()
+        df_request = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, DIRECTION, last_stop FROM static_tables.{0}_timetable where STOPPOINTID = {1} order by LINEID, TIME_OF_DAY".format(day, stopID), retreive_DB);
 
         df_clean = df_request
-        df_clean[['LINEID', 'ROUTEID']] = df_clean['ROUTEID'].str.split('_', expand=True)
-        df_clean = df_request.drop('ROUTEID', axis=1)
-        df_clean = df_clean.drop_duplicates(subset=['LINEID','TIME_OF_DAY'])
+        df_clean = df_clean.drop_duplicates(subset=['ROUTEID', 'LINEID','TIME_OF_DAY', 'DIRECTION', 'last_stop'])
     
         self.assertTrue(type(df_request)) == pd.core.frame.DataFrame
-        self.assertTrue(list(df_clean.keys()) == ['TIME_OF_DAY', 'LINEID'])
+        self.assertTrue(list(df_clean.keys()) == ['ROUTEID', 'LINEID','TIME_OF_DAY', 'DIRECTION', 'last_stop'])
         self.assertTrue(type(method)) == dict
 
 if __name__== '__main__':
