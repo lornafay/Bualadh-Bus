@@ -15,6 +15,7 @@ export default function Timetables() {
     const [lastStop, setLastStop] = useState('')
 
     useEffect(() => {
+        /* WITH PORT == local; WITHOUT PORT == Docker */
         /* Axios.get('http://127.0.0.1:8000/api/timetable/') */
         Axios.get('http://127.0.0.1/api/timetable/')
             .then(res => {
