@@ -22,7 +22,8 @@ export default function Home() {
     // receive the current_weather from django
     const [weather, setWeather] = useState([]);
     useEffect(() => {
-        Axios.get('http://127.0.0.1:8000/api/current_weather/')
+        /* Axios.get('http://127.0.0.1:8000/api/current_weather/') */
+        Axios.get('http://127.0.0.1/api/current_weather/')
             .then(res => setWeather(res.data).catch(err => console.log(err)))
     }, [])
 
@@ -34,7 +35,8 @@ export default function Home() {
 
     const postData = (e) => {
         e.preventDefault();
-        Axios.post('http://127.0.0.1:8000/api/user_input/', {
+        /* Axios.post('http://127.0.0.1:8000/api/user_input/', { */
+        Axios.post('http://127.0.0.1/api/user_input/', {
             time,
             location,
             destination
@@ -82,30 +84,30 @@ export default function Home() {
                                     <td id='home-section1-tableitem'>Wheelchair Accessible</td>
                                 </tr>
                             </table>
-                            {receivedData.map(r =>{
-                                    return <>
-                                        <p>
-                                            Line: {r.line}<br/>
-                                            Hours: {r.hours}<br/>
-                                            Minutes: {r.mins}<br/>
-                                        </p>
-                                    </>
-                                })
+                            {receivedData.map(r => {
+                                return <>
+                                    <p>
+                                        Line: {r.line}<br />
+                                        Hours: {r.hours}<br />
+                                        Minutes: {r.mins}<br />
+                                    </p>
+                                </>
+                            })
                             }
                         </section>
                         <section id='home-section2'>
                             <h3 id='home-section-title'>Current Weather</h3>
-                            {weather.map(w =>{
+                            {weather.map(w => {
                                 return <>
-                                <p>
-                                    Temp: {w.temp} <br/>
-                                    Wind Speed: {w.wind_speed} <br/>
-                                    Clouds: {w.clouds} <br/>
-                                    Rain: {w.rain} <br/>
-                                    Sea Level Pressure: {w.sea_lvl_pressure} <br/>
-                                    Humidity: {w.humidity} <br/>
-                                    Dew Point Temp: {w.dew_pt_temp}<br/>
-                                </p>
+                                    <p>
+                                        Temp: {w.temp} <br />
+                                        Wind Speed: {w.wind_speed} <br />
+                                        Clouds: {w.clouds} <br />
+                                        Rain: {w.rain} <br />
+                                        Sea Level Pressure: {w.sea_lvl_pressure} <br />
+                                        Humidity: {w.humidity} <br />
+                                        Dew Point Temp: {w.dew_pt_temp}<br />
+                                    </p>
                                 </>
                             })}
                         </section>
