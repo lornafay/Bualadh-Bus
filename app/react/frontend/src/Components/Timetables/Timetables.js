@@ -11,6 +11,8 @@ export default function Timetables() {
     const [data, setDate] = useState([])
     const [stopID, setStopID] = useState('')
     const [day, setDay] = useState('')
+    const [direction, setDirection] = useState('')
+    const [lastStop, setLastStop] = useState('')
 
     useEffect(() => {
         /* Axios.get('http://127.0.0.1:8000/api/timetable/') */
@@ -25,7 +27,7 @@ export default function Timetables() {
         e.preventDefault();
         /* Axios.post('http://127.0.0.1:8000/api/timetable/', { */
         Axios.post('http://127.0.0.1/api/timetable/', {
-            stopID, day
+            stopID, day, direction, lastStop
         }).then(res => {
             console.log('Posting data', res.data)
             setDate(res.data)
@@ -37,6 +39,8 @@ export default function Timetables() {
             <tr>
                 <td>{data.LINEID}</td>
                 <td>{data.TIME_OF_DAY}</td>
+                <td>{data.DIRECTION}</td>
+                <td>{data.last_stop}</td>
             </tr>
         )
     })
@@ -44,21 +48,22 @@ export default function Timetables() {
     return (
         <div id='timetables'>
             <h1 id='timetables-title'>Timetables</h1>
+            <br></br>
             <form>
-                <label>Bus Stop ID</label>
-                <input type="text" value={stopID} onChange={(e) => setStopID(e.target.value)} />
-                <label>Day of Travel</label>
-                <input type="text" value={day} onChange={(e) => setDay(e.target.value)} />
-                <button onClick={postData} >POST</button>
+                <label>Bus Stop ID: </label>
+                <input type="text" value={stopID} onChange={(e) => setStopID(e.target.value)} /><br></br><br></br>
+                <label>Day of Travel:</label>
+                <input type="text" value={day} onChange={(e) => setDay(e.target.value)} /><br></br><br></br>
+                <button onClick={postData} >Search</button>
             </form>
-            {/* <Form.Select size="sm" id='timetables-select'>
-                <option>Select Bus Route</option>
-            </Form.Select> */}
-            <div id='table-scroll'>
+            <br></br>
+            <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
                 <table>
-                    <tr>
-                        <th>Line</th>
-                        <th>Time</th>
+                    <tr align>
+                        <th width="50px">Line</th>
+                        <th width="80px">Time</th>
+                        <th width="80px">Direction</th>
+                        <th width="80px">Last Stop</th>
                     </tr>
                     <tr>
                         <td></td>

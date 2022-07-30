@@ -1,20 +1,17 @@
 #home {
-    height: 800px;
     background-color: #FFFFFF;
-    max-width: 95%;
-    border-radius: 5px;
+    max-width: 90%;
     box-shadow: 0 1px 8px;
     margin: .5rem auto;
-    padding: 1rem;
+    padding: .5%;
 }
 
 #home-section1 {
     background-color: #DCDCDC;
-    height: 75%;
-    width: 450px;
     margin-top: 50px;
     margin-bottom: 20px;
     border-style: solid;
+    max-width: 95%;
 }
 
 #home-section-title {
@@ -34,14 +31,15 @@
 }
 
 #home-section1-input{
-    width:400px;
     margin: 10px 10px;
+    max-width: 90%;
 }
 
 #home-section1-error {
     background-color: #FBC5C5;
     margin-left: 5px;
     margin-right: 5px;
+    max-width: 90%;
 }
 
 #home-section1-tableitem {
@@ -56,27 +54,24 @@
 
 #home-section2 {
     background-color: #DCDCDC;
-    width: 450px;
-    height: 20%;
-    /* font-size: 25px; */
+    font-size: 15px;
     border-style: solid;
     text-align: center;
+    max-width: 95%;
 }
 
 #home-section2-table {
-    margin-left: 125px;
+    max-width: 95%;
 }
 
 #home-section2-weathericon {
     font-size: 5em;
+    max-width: 95%;
 }
 
 #home-section3 {
-    background-color: #FFFFFF;
-    height: 650px;
-    width: 600px;
-    font-size: 15px;
     margin-top: 50px;
+    max-width: 95%;
 }
 
 #map-table {
@@ -84,12 +79,17 @@
 }
 
 #map-table-col {
-    width: 200px;
-    height: 80px;
+    margin-bottom: 50px;
 }
 
 #map-check {
     padding-left: 0px;
     margin-left: 0px;
     margin-right: 15px;
+}
+
+#map {
+    height: 500px;
+    width: 95%;
+    margin-bottom: 10px;
 }

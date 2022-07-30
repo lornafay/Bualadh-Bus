@@ -1,10 +1,9 @@
 #timetables {
     background-color: #FFFFFF;
-    /* height: 650px; */
     text-align: center;
     padding-top: 25px;
     padding-bottom: 25px;
-    max-width: 95%;
+    max-width: 90%;
     border-radius: 5px;
     box-shadow: 0 1px 8px;
     margin: .5rem auto;
@@ -31,9 +30,17 @@
 #table-scroll {
     margin:4px, 4px;
     padding:4px;
-    width: 500px;
-    height: 300px;
+    width: 425px;
+    height: 350px;
     overflow-x: hidden;
     overflow-y: auto;
-    text-align:justify;
+    text-align:center;
+}
+
+th {
+    text-align: center;
+}
+
+tr {
+    text-align: center;
 }
