@@ -58,6 +58,12 @@ export default function Home() {
             });
     };
 
+    const displayRoute = (receivedData) => {
+        console.log("1 line: ", receivedData.line);
+        console.log("1 mins: ", receivedData.hours);
+        console.log("1 hours: ", receivedData.mins);
+    }
+
     return (
         <div id="home">
             <div class="container-fluid">
@@ -112,14 +118,14 @@ export default function Home() {
                                 {receivedData.map((r) => {
                                     return (
                                         <>
-                                            <p>
-                                                Line: {r.line}
-                                                <br />
-                                                Hours: {r.hours}
-                                                <br />
-                                                Minutes: {r.mins}
-                                                <br />
-                                            </p>
+                                            <div class='line-result-box'>
+                                                <p>
+                                                    <span class='r-line'>{r.line}</span>
+                                                    <br />
+                                                    <span class='r-time'>{r.hours}hrs {r.mins}mins</span>
+                                                </p>
+                                                <button class='show-route' onClick={displayRoute}>show route</button>
+                                            </div>
                                         </>
                                     );
                                 })}

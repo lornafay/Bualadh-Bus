@@ -93,3 +93,14 @@
     width: 95%;
     margin-bottom: 10px;
 }
+
+.line-result-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.show-route{
+    border: solid ;
+    height: 50%;
+}
