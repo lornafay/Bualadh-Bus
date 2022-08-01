@@ -12,7 +12,7 @@ tomorrow = today + timedelta(days=1)
 
 def param_check_set1():
     """function to set instance variables to test parameters and avoid code repeat"""
-    today = datetime.now() - timedelta(hours=5)
+    today = datetime.now()
     tomorrow = today + timedelta(days=1)
     lst=[str(today),'395','4662']
     m_q = ModelQuerries(lst)

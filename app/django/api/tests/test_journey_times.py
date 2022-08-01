@@ -11,7 +11,7 @@ class TestQuery(unittest.TestCase):
 
     def test_total_jt_df(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.predict_total_journey_time()
@@ -26,7 +26,7 @@ class TestQuery(unittest.TestCase):
 
     def test_user_jt(self):
         
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.get_user_journey_time()
@@ -39,7 +39,7 @@ class TestQuery(unittest.TestCase):
         
     def test_parse_routeID_lineID(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.parse_routeID_lineID()
@@ -54,7 +54,7 @@ class TestQuery(unittest.TestCase):
 
     def test_normalise_routeID_weights(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.normalise_routeID_weights()
@@ -69,7 +69,7 @@ class TestQuery(unittest.TestCase):
 
     def test_get_user_jt_lineID(self):
         
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.get_user_journey_time_lineID()
@@ -82,7 +82,7 @@ class TestQuery(unittest.TestCase):
 
     def test_return_user_jt_lineID(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.return_user_journey_time_lineID()

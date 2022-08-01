@@ -9,7 +9,7 @@ import calendar
 class TestQuery(unittest.TestCase):
 
     def test_parse_date(self):
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         parse_arguments = Parse_arguments(lst)
         result = parse_arguments.parse_date()
@@ -20,7 +20,7 @@ class TestQuery(unittest.TestCase):
 
     def test_extract_day_of_week(self):
         
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         parse_arguments = Parse_arguments(lst)
         result = parse_arguments.extract_day_of_week()
@@ -29,7 +29,7 @@ class TestQuery(unittest.TestCase):
         self.assertEquals(result, calendar.day_name[today.weekday()])
 
         
-    '''def test_transform_to_forecast_date(self):
+    def test_transform_to_forecast_date(self):
 
         tomorrow = datetime.now() + timedelta(days=1)
         lst = [str(tomorrow), '395', '4662']
@@ -37,12 +37,12 @@ class TestQuery(unittest.TestCase):
         result = parse_arguments.transform_to_forecast_date()
         
         self.assertTrue(type(result) == pd._libs.tslibs.timestamps.Timestamp)
-        self.assertEquals(result, tomorrow)'''
+        self.assertEquals(result, tomorrow)
 
 
     def test_get_beginningstop(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         parse_arguments = Parse_arguments(lst)
         result = parse_arguments.get_beginningstop()
@@ -53,7 +53,7 @@ class TestQuery(unittest.TestCase):
 
     def test_get_endingstop(self):
         
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         parse_arguments = Parse_arguments(lst)
         result = parse_arguments.get_endingstop()
@@ -64,7 +64,7 @@ class TestQuery(unittest.TestCase):
 
     def test_get_lineid(self):
 
-        today = datetime.now() - timedelta(hours=5)
+        today = datetime.now()
         lst = [str(today), '395', '4662']
         parse_arguments = Parse_arguments(lst)
         result = parse_arguments.get_lineid('77A')

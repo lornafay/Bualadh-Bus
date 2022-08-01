@@ -9,9 +9,6 @@ from pandas.testing import assert_frame_equal
 def param_check_set1():
     """function to set instance variables to test parameters and avoid code repeat"""
     lst=['2022-07-23T12:00:00.000Z','395','4662']
-    #today = datetime.now()
-    #tomorrow = today + timedelta(days=1)
-    #lst=[str(today),'395','4662']
     m_q = ModelQuerries(lst)
     m_q.__set_beginning_stop__('395')
     m_q.__set_endingstop__('4662')
@@ -103,7 +100,7 @@ print('='*66)
 print("TESTING get_pmodel_values FOR DICTIONARY VALUE(DATAFRAME) EQUALITY ")
 
 
-'''def test_get_pmodel_values2():
+def test_get_pmodel_values2():
     """testing if get_pmodel_values method of TestModel class gets correct dataframes
     up to 6 figure precision and add them to dictionary"""
 
@@ -142,7 +139,7 @@ print("test result get_pmodel_values dataframe equality error: ",
       test_get_pmodel_values2())
 
 print('='*66)
-print("TESTING routeid_weights ")'''
+print("TESTING routeid_weights ")
 
 
 def test_routeid_weights():
