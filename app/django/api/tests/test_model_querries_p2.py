@@ -96,7 +96,7 @@ def test_get_pmodel_values1():
 print("test result for get_pmodel_values key equality error: ",
       test_get_pmodel_values1())
 
-print('='*66)
+'''print('='*66)
 print("TESTING get_pmodel_values FOR DICTIONARY VALUE(DATAFRAME) EQUALITY ")
 
 
@@ -136,7 +136,7 @@ def test_get_pmodel_values2():
 
 # method call
 print("test result get_pmodel_values dataframe equality error: ",
-      test_get_pmodel_values2())
+      test_get_pmodel_values2())'''
 
 print('='*66)
 print("TESTING routeid_weights ")
