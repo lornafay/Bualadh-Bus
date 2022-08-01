@@ -2,10 +2,10 @@ from cgitb import reset
 from time import time
 import unittest
 from unittest import result
-import timetables as tb
+import api.timetables as tb
 import pandas as pd
 import numpy as np
-from query import Query
+from api.query import Query
 
 class TestQuery(unittest.TestCase):
 
