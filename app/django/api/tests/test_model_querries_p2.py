@@ -3,14 +3,15 @@ from api.model_querries import ModelQuerries
 import random
 from random import randint
 import datetime as dt
-from datetime import datetime
 from pandas.testing import assert_frame_equal
-import pytest
 
 
 def param_check_set1():
     """function to set instance variables to test parameters and avoid code repeat"""
     lst=['2022-07-23T12:00:00.000Z','395','4662']
+    #today = datetime.now()
+    #tomorrow = today + timedelta(days=1)
+    #lst=[str(today),'395','4662']
     m_q = ModelQuerries(lst)
     m_q.__set_beginning_stop__('395')
     m_q.__set_endingstop__('4662')
@@ -18,7 +19,6 @@ def param_check_set1():
     m_q.day_of_week = pd.to_datetime('2022-07-23T12:00:00.000Z').strftime('%A')
     m_q. __set_forecast_date__(pd.to_datetime('2022-07-23T12:00:00.000Z'))
     return m_q
-
 
 print('='*66)
 print("TESTING get_time_percent_AT BEGINNING STOP")
@@ -103,7 +103,7 @@ print('='*66)
 print("TESTING get_pmodel_values FOR DICTIONARY VALUE(DATAFRAME) EQUALITY ")
 
 
-def test_get_pmodel_values2():
+'''def test_get_pmodel_values2():
     """testing if get_pmodel_values method of TestModel class gets correct dataframes
     up to 6 figure precision and add them to dictionary"""
 
@@ -134,7 +134,7 @@ def test_get_pmodel_values2():
         print("dresult value: ", dresult[key])
         print()
         print(key, " df test result get_pmodel_values error: ",
-              pd.testing.assert_frame_equal(cresult[key], dresult[key], check_less_precise=6))
+              pd.testing.assert_frame_equal(cresult[key].reset_index(drop=True), dresult[key].reset_index(drop=True), check_less_precise=6))
 
 
 # method call
@@ -142,7 +142,7 @@ print("test result get_pmodel_values dataframe equality error: ",
       test_get_pmodel_values2())
 
 print('='*66)
-print("TESTING routeid_weights ")
+print("TESTING routeid_weights ")'''
 
 
 def test_routeid_weights():
