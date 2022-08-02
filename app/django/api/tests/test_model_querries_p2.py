@@ -3,6 +3,7 @@ from api.model_querries import ModelQuerries
 import random
 from random import randint
 import datetime as dt
+from datetime import datetime
 from pandas.testing import assert_frame_equal
 
 
@@ -16,6 +17,7 @@ def param_check_set1():
     m_q.day_of_week = pd.to_datetime('2022-07-23T12:00:00.000Z').strftime('%A')
     m_q. __set_forecast_date__(pd.to_datetime('2022-07-23T12:00:00.000Z'))
     return m_q
+
 
 print('='*66)
 print("TESTING get_time_percent_AT BEGINNING STOP")
@@ -96,7 +98,7 @@ def test_get_pmodel_values1():
 print("test result for get_pmodel_values key equality error: ",
       test_get_pmodel_values1())
 
-'''print('='*66)
+print('='*66)
 print("TESTING get_pmodel_values FOR DICTIONARY VALUE(DATAFRAME) EQUALITY ")
 
 
@@ -131,12 +133,12 @@ def test_get_pmodel_values2():
         print("dresult value: ", dresult[key])
         print()
         print(key, " df test result get_pmodel_values error: ",
-              pd.testing.assert_frame_equal(cresult[key].reset_index(drop=True), dresult[key].reset_index(drop=True), check_less_precise=6))
+              pd.testing.assert_frame_equal(cresult[key], dresult[key], check_less_precise=6))
 
 
 # method call
 print("test result get_pmodel_values dataframe equality error: ",
-      test_get_pmodel_values2())'''
+      test_get_pmodel_values2())
 
 print('='*66)
 print("TESTING routeid_weights ")

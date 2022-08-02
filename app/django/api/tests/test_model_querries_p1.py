@@ -4,23 +4,18 @@ from api.model_querries import ModelQuerries
 import random
 from random import randint
 import datetime as dt
-from datetime import datetime, timedelta
-
-today = datetime.now().date()
-tomorrow = today + timedelta(days=1)
+from datetime import datetime
 
 
 def param_check_set1():
     """function to set instance variables to test parameters and avoid code repeat"""
-    today = datetime.now()
-    tomorrow = today + timedelta(days=1)
-    lst=[str(today),'395','4662']
+    lst=['2022-07-23T12:00:00.000Z','395','4662']
     m_q = ModelQuerries(lst)
     m_q.__set_beginning_stop__('395')
     m_q.__set_endingstop__('4662')
-    m_q.__set_date__(today)
-    m_q.day_of_week = today.strftime('%A')
-    m_q. __set_forecast_date__(tomorrow)
+    m_q.__set_date__(pd.to_datetime('2022-07-23T12:00:00.000Z'))
+    m_q.day_of_week = pd.to_datetime('2022-07-23T12:00:00.000Z').strftime('%A')
+    m_q. __set_forecast_date__(pd.to_datetime('2022-07-23T12:00:00.000Z'))
     return m_q
 
 
@@ -29,8 +24,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__get_beginning_stop__(self):
         """testing if get method of TestModel class gets beginning_stop value initialized"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         dresult = m_q.beginning_stop
         cresult = m_q.__get_beginning_stop__()
@@ -38,8 +32,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__set_beginning_stop__(self):
         """testing if set method of TestModel class sets initialized beginning_stop value to a new value"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         set_value = str(random.randint(10, 4000))
         dresult = set_value
@@ -49,8 +42,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__get_ending_stop__(self):
         """testing if get method of TestModel class gets ending_stop value initialized"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         dresult = m_q.ending_stop
         cresult = m_q.__get_ending_stop__()
@@ -58,8 +50,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__set_endingstop__(self):
         """testing if set method of TestModel class sets initialized ending_stop value to a new value"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         set_value = str(random.randint(10, 4000))
         dresult = set_value
@@ -69,8 +60,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__get_date__(self):
         """testing if get method of TestModel class gets date value initialized"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         dresult = m_q.date
         cresult = m_q.__get_date__()
@@ -78,8 +68,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__set_date__(self):
         """testing if set method of TestModel class sets initialized date value to a new value"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         today = datetime.now()
         testd = today + dt.timedelta(randint(1, 7))
@@ -91,8 +80,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__get_forecast_date__(self):
         """testing if get method of TestModel class gets date value initialized"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         dresult = m_q.forecast_date
         cresult = m_q.__get_forecast_date__()
@@ -100,8 +88,7 @@ class TestModelQueries(unittest.TestCase):
 
     def test__set_forecast_date__(self):
         """testing if set method of TestModel class sets initialized date value to a new value"""
-        today = str(datetime.now())
-        lst=[today,'395','4662']
+        lst=['2022-07-23T12:00:00.000Z','395','4662']
         m_q = ModelQuerries(lst)
         today = datetime.now()
         testd = today + dt.timedelta(randint(1, 7))
