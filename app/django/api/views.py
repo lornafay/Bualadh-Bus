@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
 from django.shortcuts import render
-from bus.models import current_weather
-from .serializers import Weather_Serializer, TimetableSerializer
+from bus.models import current_weather, stop_locations, Timetables
+from .serializers import Weather_Serializer, TimetableSerializer, StopLocationSerializer
 from .parse_arguments import Parse_arguments
 from .journey_times import JourneyTimes
 from .timetables import DisplayTimetables
@@ -26,6 +26,24 @@ def user_input(request):
     print('request: ', lst[0], lst[1], lst[2])
     j = JourneyTimes(lst)
     p=j.return_user_journey_time_lineID()
+    print(p)
+    return Response({'result': p})
+
+@api_view(['POST'])
+def stop_location(request):
+    print(request.data)
+    line = request.data['line']
+    start = request.data['location']
+    end = request.data['destination']
+    day = request.data['day']
+    lst = [line, start, end, day]
+    print('request: ', lst[0], lst[1], lst[2], lst[3])
+
+    # put timetable stuff here
+
+    # read in stop_locations table
+    stops = stop_locations.objects.all()
+    serializer = StopLocationSerializer(stops, many=True)
     print(p)
     return Response({'result': p})
 
