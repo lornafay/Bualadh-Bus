@@ -62,7 +62,7 @@ export default function Home() {
         <div class="d-sm-flex">
           <div class="col-lg-4 p-2">
             <div id="home-section1">
-              <h3 id="home-section-title">Route Planner</h3>
+              <h3 title='Header' id="home-section-title">Route Planner</h3>
               <Form>
                 <DatePicker
                   selected={time}

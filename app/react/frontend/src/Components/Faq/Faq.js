@@ -6,7 +6,7 @@ import Accordion from 'react-bootstrap/Accordion'
 export default function Faq() {
     return (
         <div id='faq'>
-            <h1 id='faq-title'>FAQ</h1>
+            <h1 title = 'Header' id='faq-title'>FAQ</h1>
             <Accordion id='faq-accordion'>
               <Accordion.Item eventKey="0" id='faq-collapse'>
                 <Accordion.Header>How do passengers pay for bus fare on Dublin Bus?</Accordion.Header>

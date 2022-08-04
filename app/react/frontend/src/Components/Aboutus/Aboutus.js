@@ -8,7 +8,7 @@ import Lexie from './Lexie.png';
 export default function Aboutus() {
     return (
         <div id='aboutus'>
-            <h1 id='aboutus-title'>About Us</h1>
+            <h1 title = 'Header' id='aboutus-title'>About Us</h1>
             <table id='person1'>
                 <tr>
                     <td>

@@ -5,7 +5,7 @@ import { faTwitter, faInstagram, faFacebook } from '@fortawesome/free-brands-svg
 
 export default function Footer() {
     return (
-        <footer id='footer'>
+        <footer title='Footer' id='footer'>
             <p id='footer-icon-group'>
                 <FontAwesomeIcon icon={faTwitter} id='footer-icon' />
                 <FontAwesomeIcon icon={faInstagram} id='footer-icon' />
