@@ -49,17 +49,17 @@ export default function Timetables() {
             <br></br>
             <form>
                 <label>Bus Stop ID: </label>
-                <input type="text" value={stopID} onChange={(e) => setStopID(e.target.value)}/><br></br><br></br>
+                <input placeholder="Enter Bus Stop" type="text" value={stopID} onChange={(e) => setStopID(e.target.value)}/><br></br><br></br>
                 <label>Day of Travel:</label>
-                <input type="text" value={day} onChange={(e) => setDay(e.target.value)}/><br></br><br></br>
+                <input placeholder="Enter day of week" type="text" value={day} onChange={(e) => setDay(e.target.value)}/><br></br><br></br>
                 <button onClick={postData} >Search</button>
             </form>
             <br></br>
             <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
-            <table>
+            <table data-testid='timetable'>
                 <tr align>
                     <th width="50px">Line</th>
-                    <th width="80px">Time</th>
+                    <th title = "Time" width="80px">Time</th>
                     <th width="80px">Destination</th>
                     <th width="80px">Last Stop</th>
                 </tr>
