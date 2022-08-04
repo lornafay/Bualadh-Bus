@@ -1,4 +1,3 @@
-from pymysql import ProgrammingError
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -6,7 +5,6 @@ from rest_framework.views import APIView
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
-from .parse_arguments import Parse_arguments
 from .journey_times import JourneyTimes
 
 @api_view(['GET'])
@@ -29,8 +27,7 @@ def user_input(request):
         p=j.return_user_journey_time_lineID()
     
     except:
-        p=[{'error':'no according route'}]
-    print(p)
+        return Response({'error': 'error'})
     return Response({'result': p})
 
 
