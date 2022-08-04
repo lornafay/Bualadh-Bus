@@ -26,17 +26,14 @@ class DisplayTimetables:
         day = day.lower()
 
         # Queries the DB timetables table for routeID and departure time from user's stopID/day inputs.
-        df = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, DIRECTION, last_stop FROM static_tables.{0}_timetable where STOPPOINTID = {1} order by LINEID, TIME_OF_DAY".format(day, stopID), retreive_DB);
+        df = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, destination, last_stop FROM static_tables.{0}_timetable_V2 where STOPPOINTID = {1} order by LINEID, TIME_OF_DAY".format(day, stopID), retreive_DB);
 
         # Drop duplicates
-        df = df.drop_duplicates(subset=['ROUTEID', 'LINEID','TIME_OF_DAY', 'DIRECTION', 'last_stop'])
+        df = df.drop_duplicates(subset=['ROUTEID', 'LINEID','TIME_OF_DAY', 'destination', 'last_stop'])
         
         # Prep time display
         df['TIME_OF_DAY'] = df['TIME_OF_DAY'].astype(str)
         df['TIME_OF_DAY'] = df['TIME_OF_DAY'].str[7:-3]
-
-        # Add direction notice for user to see
-        df['DIRECTION'] = np.where(df['DIRECTION']>=1, 'Inbound', 'Outbound')
 
         # Format last stop for user
         df['last_stop'] = df['last_stop'].astype('string')
