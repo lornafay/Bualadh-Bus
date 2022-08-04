@@ -6,6 +6,7 @@ from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
 from .journey_times import JourneyTimes
+from .timetables import DisplayTimetables
 
 @api_view(['GET'])
 def get_current_weather(request):

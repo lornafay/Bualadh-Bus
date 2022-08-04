@@ -25,9 +25,12 @@ export default function Aboutus() {
                     </td>
                 </tr>
             </table>
-            <table id='person2'>
+            <table id='person1'>
                 <tr>
-                    <td id='person2-info'>
+                <td>
+                    <img src={ Lorna } id='person-img'></img>
+                    </td>
+                    <td id='person1-info'>
                         <tr>
                             <h3>Lorna</h3>
                         </tr>
@@ -36,9 +39,6 @@ export default function Aboutus() {
                             Her strengths include backend development is her forte, and she's now assisting testing research in UCD’s Complex Software Lab.
 
                         </tr>
-                    </td>
-                    <td>
-                    <img src={ Lorna } id='person-img'></img>
                     </td>
                 </tr>
             </table>
@@ -58,9 +58,12 @@ export default function Aboutus() {
                     </td>
                 </tr>
             </table>
-            <table id='person2'>
+            <table id='person1'>
                 <tr>
-                    <td id='person2-info'>
+                <td>
+                    <img src={ Lexie } id='person-img'></img>
+                    </td>
+                    <td id='person1-info'>
                         <tr>
                             <h3>Lexie</h3>
                         </tr>
@@ -68,9 +71,6 @@ export default function Aboutus() {
                             Lexie is responsible for user evaluation and stories, and facilitates the user interface.
                             Her strengths include: data analysis and database management, as well as report writing.
                         </tr>
-                    </td>
-                    <td>
-                    <img src={ Lexie } id='person-img'></img>
                     </td>
                 </tr>
             </table>
