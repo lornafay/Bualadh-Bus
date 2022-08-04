@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from django.shortcuts import render
 from bus.models import current_weather
 from .serializers import Weather_Serializer, TimetableSerializer
-from .parse_arguments import Parse_arguments
 from .journey_times import JourneyTimes
 from .timetables import DisplayTimetables
 
@@ -24,9 +23,12 @@ def user_input(request):
     end = request.data['destination']
     lst = [time, start, end]
     print('request: ', lst[0], lst[1], lst[2])
-    j = JourneyTimes(lst)
-    p=j.return_user_journey_time_lineID()
-    print(p)
+    try:
+        j = JourneyTimes(lst)
+        p=j.return_user_journey_time_lineID()
+    
+    except:
+        return Response({'error': 'error'})
     return Response({'result': p})
 
 

@@ -34,8 +34,11 @@ export default function Home() {
   const [location, setLocation] = useState([]);
   const [destination, setDestination] = useState([]);
   const [receivedData, setReceivedData] = useState([]);
+  const [error, setError] = useState(false);
 
   const postData = (e) => {
+    setReceivedData([]);
+    setError(false);
     e.preventDefault();
     Axios.post("http://127.0.0.1:8000/api/user_input/", {
       time,
@@ -43,12 +46,16 @@ export default function Home() {
       destination,
     })
       .then((res) => {
-        console.log("time: ", time);
-        console.log("location: ", location);
-        console.log("destination: ", destination);
-        setReceivedData(res.data.result);
-        console.log(receivedData);
-        console.log(weather);
+        if(res.data.error == 'error'){
+          setError(true);
+        }else{
+          console.log("time: ", time);
+          console.log("location: ", location);
+          console.log("destination: ", destination);
+          setReceivedData(res.data.result);
+          console.log(receivedData);
+          console.log(weather);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +105,7 @@ export default function Home() {
                   Submit
                 </Button>
               </Form>
-              <p id="home-section1-error">Error message</p>
+              {error && <p id="home-section1-error">Error message</p>}
               {/* <table>
                                 <tr>
                                     <td id='home-section1-tableitem'>Font Size</td>
