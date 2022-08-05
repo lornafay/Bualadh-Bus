@@ -5,14 +5,14 @@ from unittest import result
 import api.journey_times as jt
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
 
 class TestQuery(unittest.TestCase):
 
-    
-
     def test_total_jt_df(self):
 
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.predict_total_journey_time()
 
@@ -26,7 +26,8 @@ class TestQuery(unittest.TestCase):
 
     def test_user_jt(self):
         
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.get_user_journey_time()
  
@@ -38,7 +39,8 @@ class TestQuery(unittest.TestCase):
         
     def test_parse_routeID_lineID(self):
 
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.parse_routeID_lineID()
         
@@ -52,7 +54,8 @@ class TestQuery(unittest.TestCase):
 
     def test_normalise_routeID_weights(self):
 
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.normalise_routeID_weights()
         
@@ -66,7 +69,8 @@ class TestQuery(unittest.TestCase):
 
     def test_get_user_jt_lineID(self):
         
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.get_user_journey_time_lineID()
  
@@ -78,16 +82,20 @@ class TestQuery(unittest.TestCase):
 
     def test_return_user_jt_lineID(self):
 
-        lst = ["2022-07-30T12:00:00.000Z", "395", "4662"]
+        today = datetime.now()
+        lst = [str(today), '395', '4662']
         journey = jt.JourneyTimes(lst)
         result = journey.return_user_journey_time_lineID()
-        lineID = list(result.keys())[0]
+        lineID = result[0]['line']
+        hours = result[0]['hours']
+        mins = result[0]['mins']
 
-        self.assertTrue(type(result) == dict)
-        self.assertTrue(type(list(result.keys())[0]) == str)
-        self.assertTrue(list(result[lineID].keys()) == ['hours', 'mins'])
-        self.assertTrue(type(result[lineID]['hours']) == int)
-        self.assertTrue(type(result[lineID]['mins']) == int)
+        self.assertTrue(type(result) == list)
+        self.assertTrue(type(result[0]) == dict)
+        self.assertTrue(type(lineID) == str)
+        self.assertTrue(list(result[0].keys()) == ['line', 'hours', 'mins'])
+        self.assertTrue(type(hours) == int)
+        self.assertTrue(type(mins) == int)
 
 
 

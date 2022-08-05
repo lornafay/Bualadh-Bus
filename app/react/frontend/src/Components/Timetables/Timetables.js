@@ -8,12 +8,11 @@ import { useState } from 'react';
 
 export default function Timetables() {
 
-
-    const[data, setDate] = useState([])
-    const[stopID, setStopID] = useState('')
-    const[day, setDay] = useState('')
-    const[destination, setDestination] = useState('')
-    const[lastStop, setLastStop] = useState('')
+    const [data, setDate] = useState([])
+    const [stopID, setStopID] = useState('')
+    const [day, setDay] = useState('')
+    const [destination, setDestination] = useState('')
+    const [lastStop, setLastStop] = useState('')
 
 
     useEffect(() => {
@@ -61,18 +60,18 @@ export default function Timetables() {
             <br></br>
             <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
 
-            <table>
-                <tr align>
-                    <th width="50px">Line</th>
-                    <th width="80px">Time</th>
-                    <th width="80px">Destination</th>
-                    <th width="80px">Last Stop</th>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                {array}
-            </table>
+                <table>
+                    <tr align>
+                        <th width="50px">Line</th>
+                        <th width="80px">Time</th>
+                        <th width="80px">Destination</th>
+                        <th width="80px">Last Stop</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    {array}
+                </table>
 
             </div>
         </div>
