@@ -14,7 +14,9 @@ export default function Timetables() {
     const [destination, setDestination] = useState('')
     const [lastStop, setLastStop] = useState('')
 
+
     useEffect(() => {
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.get('http://127.0.0.1:8000/api/timetable/')
             .then(res => {
                 console.log("Getting from server ::::", res.data)
@@ -24,6 +26,7 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.post('http://127.0.0.1:8000/api/timetable/', {
             stopID, day, destination, lastStop
         }).then(res => {
@@ -56,6 +59,7 @@ export default function Timetables() {
             </form>
             <br></br>
             <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
+
                 <table>
                     <tr align>
                         <th width="50px">Line</th>
@@ -68,6 +72,7 @@ export default function Timetables() {
                     </tr>
                     {array}
                 </table>
+
             </div>
         </div>
     )
