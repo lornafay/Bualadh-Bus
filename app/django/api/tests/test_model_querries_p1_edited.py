@@ -98,15 +98,6 @@ class TestModelQueries(unittest.TestCase):
         cresult = m_q.forecast_date
         self.assertEqual(dresult, cresult)
 
-    def test_set_route_id(self):
-        """testing if set_route_id method of TestModel class gets correct list
-         based on test params setted to instace variables """
-        m_q = param_check_set1()
-        cresult = m_q.set_route_id()
-
-        dresult = ['77A_29', '77A_30']
-        self.assertEqual(dresult, cresult)
-
     def test_get_pmodel_features(self):
         """testing if get_pmodel_features method of TestModel class gets correct values to dataframes 
         and appends to dictionary and also if dictionary keys are correct

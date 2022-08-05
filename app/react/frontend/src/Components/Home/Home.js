@@ -22,87 +22,94 @@ export default function Home() {
     // receive the current_weather from django
     const [weather, setWeather] = useState([]);
     useEffect(() => {
-        /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get("http://127.0.0.1/api/current_weather/").then((res) => */
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) =>
             setWeather(res.data).catch((err) => console.log(err))
         );
     }, []);
 
-    // user input
-    const [time, setTime] = useState(
-        setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
-    );
-    const [location, setLocation] = useState([]);
-    const [destination, setDestination] = useState([]);
-    const [receivedData, setReceivedData] = useState([]);
 
-    const postData = (e) => {
-        e.preventDefault();
-        /* Axios.post('http://127.0.0.1/api/user_input/', { */
-        Axios.post('http://127.0.0.1:8000/api/user_input/', {
-            time,
-            location,
-            destination,
-        })
-            .then((res) => {
-                console.log("time: ", time);
-                console.log("location: ", location);
-                console.log("destination: ", destination);
-                setReceivedData(res.data.result);
-                console.log(receivedData);
-                console.log(weather);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+  // user input
+  const [time, setTime] = useState(
+    setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
+  );
+  const [location, setLocation] = useState([]);
+  const [destination, setDestination] = useState([]);
+  const [receivedData, setReceivedData] = useState([]);
+  const [error, setError] = useState(false);
 
-    return (
-        <div id="home">
-            <div class="container-fluid">
-                <section>
-                    <div class="d-sm-flex">
-                        <div class="col-lg-4 p-2">
-                            <div id="home-section1">
-                                <h3 id="home-section-title">Route Planner</h3>
-                                <Form>
-                                    <DatePicker
-                                        selected={time}
-                                        onChange={(date) => setTime(date)}
-                                        showTimeSelect
-                                        minDate={new Date()}
-                                        maxDate={addWeeks(new Date(), 1)}
-                                        timeFormat="HH:mm"
-                                        dateFormat="MMMM d, yyyy h:mm aa"
-                                    />
-                                    <Form.Control
-                                        placeholder="Your Location"
-                                        name="location"
-                                        id="home-section1-input"
-                                        onChange={(e) => setLocation(e.target.value)}
-                                    />
-                                    <Form.Control
-                                        placeholder="Destination"
-                                        name="destination"
-                                        id="home-section1-input"
-                                        onChange={(e) => setDestination(e.target.value)}
-                                    />
-                                    <Button
-                                        variant="primary"
-                                        type="submit"
-                                        onClick={postData}
-                                        disabled={
-                                            time.length === 0 ||
-                                            location.length === 0 ||
-                                            destination.length === 0
-                                        }
-                                    >
-                                        Submit
-                                    </Button>
-                                </Form>
-                                <p id="home-section1-error">Error message</p>
-                                {/* <table>
+  const postData = (e) => {
+    setReceivedData([]);
+    setError(false);
+    e.preventDefault();
+    /* REMOVE PORT FROM URL TO USE WITH DOCKER */
+    Axios.post("http://127.0.0.1:8000/api/user_input/", {
+      time,
+      location,
+      destination,
+    })
+      .then((res) => {
+        if(res.data.error == 'error'){
+          setError(true);
+        }else{
+          console.log("time: ", time);
+          console.log("location: ", location);
+          console.log("destination: ", destination);
+          setReceivedData(res.data.result);
+          console.log(receivedData);
+          console.log(weather);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div id="home">
+      <div class="container-fluid">
+        <section>
+        <div class="d-sm-flex">
+          <div class="col-lg-4 p-2">
+            <div id="home-section1">
+              <h3 id="home-section-title">Route Planner</h3>
+              <Form>
+                <DatePicker
+                  selected={time}
+                  onChange={(date) => setTime(date)}
+                  showTimeSelect
+                  minDate={new Date()}
+                  maxDate={addWeeks(new Date(), 1)}
+                  timeFormat="HH:mm"
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                />
+                <Form.Control
+                  placeholder="Your Location"
+                  name="location"
+                  id="home-section1-input"
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+                <Form.Control
+                  placeholder="Destination"
+                  name="destination"
+                  id="home-section1-input"
+                  onChange={(e) => setDestination(e.target.value)}
+                />
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={postData}
+                  disabled={
+                    time.length === 0 ||
+                    location.length === 0 ||
+                    destination.length === 0
+                  }
+                >
+                  Submit
+                </Button>
+              </Form>
+              {error && <p id="home-section1-error">Error message</p>}
+              {/* <table>
                                 <tr>
                                     <td id='home-section1-tableitem'>Font Size</td>
                                     <td id='home-section1-tableitem'>Audio</td>
