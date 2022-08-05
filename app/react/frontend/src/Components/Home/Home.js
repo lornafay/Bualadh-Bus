@@ -139,7 +139,7 @@ export default function Home() {
               })}
             </div>
           </div>
-          <div className="col-lg-8" id="home-section3">
+          <div className="col-lg-8" data-testid='map' id="home-section3">
             <GoogleMaps
               apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
               style={{ }}

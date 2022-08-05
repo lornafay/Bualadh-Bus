@@ -1,67 +1,88 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Home from '../Home'
 import * as axios from "axios";
 import React from "react";
 import axiosMock from "axios";
 
-test('Header', () => {
-    render(<Home title="Route Planner"/>);
-    const headingElement = screen.getByTitle("Header");
-    expect(headingElement).toBeInTheDocument();
+// test route planner container
+describe("Route Planner", () => {
+
+    test('Header', () => {
+        render(<Home title="Route Planner"/>);
+        const headingElement = screen.getByTitle("Header");
+        expect(headingElement).toBeInTheDocument();
+    })
+    
+    const mockTime = jest.fn()
+    const mockLocation = jest.fn()
+    const mockDestination = jest.fn()
+    
+    test("should take user input for route planner when submit button is clicked", async () => {
+        render(
+            <Home
+                time = {''}
+                setTime = {mockTime}
+                location = {''}
+                setLocation = {mockLocation}
+                destination = {''}
+                setDestination = {mockDestination}
+            />);
+        
+        const month = ["January","February","March","April","May","June","July","August",
+            "September","October","November","December"];
+        const date = new Date();
+        let m = month[date.getMonth()];
+        let d = date.getDay();
+        let y = date.getFullYear();
+    
+        const timeElement = screen.getByDisplayValue(m + " " + d + ", " + y + " 12:00 AM")
+        const locationElement = screen.getByPlaceholderText(/Your Location/i)
+        const destinationElement = screen.getByPlaceholderText(/Destination/i)
+        const buttonElement = screen.getByRole("button", { name: /Submit/ })
+    
+        fireEvent.change(timeElement, { target: { value: "15:00:00" }})
+        fireEvent.change(locationElement, { target: { value: "395" } })
+        fireEvent.change(destinationElement, { target: { value: "4662" } })
+        fireEvent.click(buttonElement)
+    
+        expect(timeElement.value).toBe("15:00:00");
+        expect(locationElement.value).toBe("395");
+        expect(destinationElement.value).toBe("4662");
+    })
+    
+    // test show route on map
+    
+    // test error output
+    test('should return weather information in display for user', async () => {
+        render(<Home />);
+        const weatherElement = screen.getByText(/Error Message/i);
+        expect(weatherElement).toBeInTheDocument();
+    })
+
 })
 
-// DESCRIBE BLOCK AXIOS (video 9)
-
-// test axios user_input for 200 response code
-// jest.mock("axios");
-// const testData = [
-//     {
-//         "time": "2022-08-04 18:00:00",
-//         "temp": 16.4,
-//         "wind_speed": 4.7,
-//         "clouds": 53.1,
-//         "rain": 0.0,
-//         "sea_lvl_pressure": 1019.8,
-//         "humidity": 46.8,
-//         "dew_pt_temp": 5.1
-//     }
-// ];
-
-// test("good response", async () => {
-//     axios.mockResolvedValue({ data: testData });
-// })
-
-// test axios current_weather for 200 response code
-
-// test any other axios to be added (route map? departure times?) for 200 response code
 
 
 
-// DESCRIBE BLOCK ROUTE PLANNER
 
-// test Route Planner Form inputs
-
-// test Route Planner submit button
-
-// test Journey Time return variables (video 10, fire elements)
-
-// est Journey Time is visible to user (toBeVisible expect, video 9)
-
-// test show route on map
-
-// test departure times (video 10, fire elements)
-
-// test error output
-
-
-
-// DESCRIBE BLOCK WEATHER
-
-// test Current Weather output variables (video 10, fire elements)
-
+// test current weather container
+describe("Weather", () => {
+    test('should return weather information in display for user', async () => {
+        render(<Home />);
+        const weatherElement = screen.getByText(/Current Weather/i);
+        expect(weatherElement).toBeInTheDocument();
+    })
+})
 
 
 // DESCRIBE BLOCK GOOGLE MAP
 
-// test google map
+// test google map is visible to user
+describe("Google map", () => {
+    test("should render a visible Google map to user", () => {
+        render(<Home />);
+        const tableElement = screen.getByTestId('map')
+        expect(tableElement).toBeVisible();
+    })
+})
