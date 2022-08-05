@@ -213,19 +213,23 @@ class ModelQuerries(Parse_arguments):
                 else:
                     weather_feature_query_str += 'sea_lvl_pressure '
 
-            # If hour of user's time input matches current hour query current weather table
-            # If not query feature weather table.
-            if current_time == self.date.hour and current_date == self.date.date():
-                print("model_querries: get_pmodel_values() current_time: ", current_time)
-                df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
-                                         self.engine_dynamic)
-                df = pd.concat([df, df_weather], axis=1)
-            else:
-                print("model_querries: get_pmodel_values() self.forecast_date: ", self.forecast_date)
-                date = self.forecast_date
-                df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
-                                         " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
-                df = pd.concat([df, df_weather], axis=1)
+            
+            # don't query the weather tables if no weather features were selected for this model
+            if weather_feature_query_str != "":
+
+                # If hour of user's time input matches current hour query current weather table
+                # If not query feature weather table.
+                if current_time == self.date.hour and current_date == self.date.date():
+                    print("model_querries: get_pmodel_values() current_time: ", current_time)
+                    df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
+                                            self.engine_dynamic)
+                    df = pd.concat([df, df_weather], axis=1)
+                else:
+                    print("model_querries: get_pmodel_values() self.forecast_date: ", self.forecast_date)
+                    date = self.forecast_date
+                    df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
+                                            " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
+                    df = pd.concat([df, df_weather], axis=1)
 
             # applying cyclical encoding with sine/cosine transformation for hour of day
             hour_sin_val = np.sin(np.deg2rad((self.date.hour/24)*360))

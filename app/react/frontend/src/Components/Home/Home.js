@@ -14,13 +14,18 @@ import addWeeks from "date-fns/addWeeks";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faSun } from "@fortawesome/free-solid-svg-icons";
-import GoogleMaps from "simple-react-google-maps";
+import GoogleMap from "./GoogleMap";
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import axios from "axios";
 
 export default function Home() {
+
+    // ********** WEATHER RELATED CODE **********
+
     // receive the current_weather from django
     const [weather, setWeather] = useState([]);
+
     useEffect(() => {
         /* WITH PORT == local; WITHOUT PORT == Docker */
         /* Axios.get("http://127.0.0.1/api/current_weather/").then((res) => */
@@ -29,13 +34,17 @@ export default function Home() {
         );
     }, []);
 
-    // user input
+
+    // ********** USER INPUT RELATED CODE **********
+
     const [time, setTime] = useState(
         setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
     );
+
     const [location, setLocation] = useState([]);
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
+    const [stopArray, setStopArray] = useState([]);
 
     const postData = (e) => {
         e.preventDefault();
@@ -58,10 +67,31 @@ export default function Home() {
             });
     };
 
-    const displayRoute = (receivedData) => {
-        console.log("1 line: ", receivedData.line);
-        console.log("1 mins: ", receivedData.hours);
-        console.log("1 hours: ", receivedData.mins);
+
+    const clickHandlerDisplayRoute = (event, line) => {
+        // displays the user's route when selected
+        event.preventDefault();
+
+        // method to get textual day from W3Schools https://www.w3schools.com/jsref/jsref_getday.asp
+        const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        let day = weekday[time.getDay()];
+        console.log("param: ", line);
+        console.log("param: ", location);
+        console.log("param: ", destination);
+        console.log("param: ", day);
+
+        /* WITH PORT == local; WITHOUT PORT == Docker */
+        /* Axios.get('http://127.0.0.1/api/stop_location/') */
+        Axios.get('http://127.0.0.1:8000/api/stop_location/' + line + '/' + location + '/' + destination + '/' + day + '/')
+            .then((res) => {
+                console.log('Stop locations', res.data);
+
+                // update the stop array with results obtained
+                setStopArray(res.data['result']);
+
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 
     return (
@@ -124,7 +154,7 @@ export default function Home() {
                                                     <br />
                                                     <span class='r-time'>{r.hours}hrs {r.mins}mins</span>
                                                 </p>
-                                                <button class='show-route' onClick={displayRoute}>show route</button>
+                                                <button class='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>show route</button>
                                             </div>
                                         </>
                                     );
@@ -136,11 +166,11 @@ export default function Home() {
                                     return (
                                         <>
                                             <p>
-                                                Temp: {w.temp} <br />
+                                                Temp: {w.temp} C <br />
                                                 Wind Speed: {w.wind_speed} <br />
-                                                Clouds: {w.clouds} <br />
-                                                Rain: {w.rain} <br />
-                                                Humidity: {w.humidity} <br />
+                                                Clouds: {w.clouds}% <br />
+                                                Rain: {w.rain} mm<br />
+                                                Humidity: {w.humidity} %<br />
                                                 <br />
                                             </p>
                                         </>
@@ -149,15 +179,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div class="col-lg-8" id="home-section3">
-                            <GoogleMaps
-                                apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
-                                zoom={12}
-                                center={{
-                                    lat: 53.35014,
-                                    lng: -6.266155,
-                                }}
-                                class="map"
-                            />
+                            <GoogleMap items={stopArray} />
                             <table id="map-table">
                                 <tr>
                                     <td id="map-table-col">
@@ -194,3 +216,4 @@ export default function Home() {
         </div>
     );
 }
+
