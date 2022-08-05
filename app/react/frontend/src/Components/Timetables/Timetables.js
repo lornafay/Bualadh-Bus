@@ -55,18 +55,20 @@ export default function Timetables() {
                 <button onClick={postData} >Search</button>
             </form>
             <br></br>
-            <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
+            <div id='table-scroll' className='d-sm-flex col-lg-4 offset-lg-4'>
             <table data-testid='timetable'>
-                <tr align>
-                    <th width="50px">Line</th>
-                    <th title = "Time" width="80px">Time</th>
-                    <th width="80px">Destination</th>
-                    <th width="80px">Last Stop</th>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                {array}
+                <tbody>
+                    <tr>
+                        <th width="50px">Line</th>
+                        <th title = "Time" width="80px">Time</th>
+                        <th width="80px">Destination</th>
+                        <th width="80px">Last Stop</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    {array}
+                </tbody>
             </table>
             </div>
         </div>

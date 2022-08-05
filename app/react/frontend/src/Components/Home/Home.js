@@ -57,10 +57,10 @@ export default function Home() {
 
   return (
     <div id="home">
-      <div class="container-fluid">
+      <div className="container-fluid">
         <section>
-        <div class="d-sm-flex">
-          <div class="col-lg-4 p-2">
+        <div className="d-sm-flex">
+          <div className="col-lg-4 p-2">
             <div id="home-section1">
               <h3 title='Header' id="home-section-title">Route Planner</h3>
               <Form>
@@ -139,44 +139,46 @@ export default function Home() {
               })}
             </div>
           </div>
-          <div class="col-lg-8" id="home-section3">
+          <div className="col-lg-8" id="home-section3">
             <GoogleMaps
               apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
+              style={{ }}
               zoom={12}
               center={{
                 lat: 53.35014,
                 lng: -6.266155,
               }}
-              class="map"
+              className="map"
             />
             <table id="map-table">
-              <tr>
-                <td id="map-table-col">
-                  <Form.Check
-                    reverse
-                    label="Attractions"
-                    name="group"
-                    type="radio"
-                    id="map-check"
-                  />
-                </td>
-                <td id="map-table-col">
-                  <Form.Check
-                    label="Activities"
-                    name="group"
-                    type="radio"
-                    id="map-check"
-                  />
-                </td>
-                <td id="map-table-col">
-                  <Form.Check
-                    label="Accomodation"
-                    name="group"
-                    type="radio"
-                    id="map-check"
-                  />
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td id="map-table-col">
+                    <Form.Check
+                      label="Attractions"
+                      name="group"
+                      type="radio"
+                      id="map-check"
+                    />
+                  </td>
+                  <td id="map-table-col">
+                    <Form.Check
+                      label="Activities"
+                      name="group"
+                      type="radio"
+                      id="map-check"
+                    />
+                  </td>
+                  <td id="map-table-col">
+                    <Form.Check
+                      label="Accomodation"
+                      name="group"
+                      type="radio"
+                      id="map-check"
+                    />
+                  </td>
+                </tr>
+              </tbody>
             </table>
             </div>
           </div>
