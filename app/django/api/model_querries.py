@@ -213,7 +213,6 @@ class ModelQuerries(Parse_arguments):
                 else:
                     weather_feature_query_str += 'sea_lvl_pressure '
 
-            
             # don't query the weather tables if no weather features were selected for this model
             if weather_feature_query_str != "":
 
