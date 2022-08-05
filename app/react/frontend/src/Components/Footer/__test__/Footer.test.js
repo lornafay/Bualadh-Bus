@@ -9,5 +9,8 @@ test('Header', () => {
 })
 
 // test Bualadh Bus company name
-
-// test copy right year
+test('should render the company name', () => {
+    render(<Footer />);
+    const companyElement = screen.getByText("© 2022 Bualadh Bus");
+    expect(companyElement).toBeInTheDocument();
+})
