@@ -4,8 +4,7 @@ COPY . /react
 
 WORKDIR /react
 
-RUN npm install
-RUN npm i @react-google-maps/api
+RUN npm install --save @react-google-maps/api
 
 RUN npm run build --verbose
 
