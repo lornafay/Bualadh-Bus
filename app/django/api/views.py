@@ -24,9 +24,12 @@ def user_input(request):
     end = request.data['destination']
     lst = [time, start, end]
     print('request: ', lst[0], lst[1], lst[2])
-    j = JourneyTimes(lst)
-    p=j.return_user_journey_time_lineID()
-    print(p)
+    try:
+        j = JourneyTimes(lst)
+        p=j.return_user_journey_time_lineID()
+    
+    except:
+        return Response({'error': 'error'})
     return Response({'result': p})
 
 @api_view(['GET'])

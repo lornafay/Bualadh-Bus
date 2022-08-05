@@ -11,12 +11,12 @@ export default function Timetables() {
     const [data, setDate] = useState([])
     const [stopID, setStopID] = useState('')
     const [day, setDay] = useState('')
-    const [direction, setDirection] = useState('')
+    const [destination, setDestination] = useState('')
     const [lastStop, setLastStop] = useState('')
 
+
     useEffect(() => {
-        /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get('http://127.0.0.1/api/timetable/') */
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.get('http://127.0.0.1:8000/api/timetable/')
             .then(res => {
                 console.log("Getting from server ::::", res.data)
@@ -26,9 +26,9 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
-        /* Axios.post('http://127.0.0.1/api/timetable/', { */
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.post('http://127.0.0.1:8000/api/timetable/', {
-            stopID, day, direction, lastStop
+            stopID, day, destination, lastStop
         }).then(res => {
             console.log('Posting data', res.data)
             setDate(res.data)
@@ -40,7 +40,7 @@ export default function Timetables() {
             <tr>
                 <td>{data.LINEID}</td>
                 <td>{data.TIME_OF_DAY}</td>
-                <td>{data.DIRECTION}</td>
+                <td>{data.destination}</td>
                 <td>{data.last_stop}</td>
             </tr>
         )
@@ -59,11 +59,12 @@ export default function Timetables() {
             </form>
             <br></br>
             <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
+
                 <table>
                     <tr align>
                         <th width="50px">Line</th>
                         <th width="80px">Time</th>
-                        <th width="80px">Direction</th>
+                        <th width="80px">Destination</th>
                         <th width="80px">Last Stop</th>
                     </tr>
                     <tr>
@@ -71,6 +72,7 @@ export default function Timetables() {
                     </tr>
                     {array}
                 </table>
+
             </div>
         </div>
     )

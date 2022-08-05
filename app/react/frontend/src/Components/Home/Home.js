@@ -27,40 +27,43 @@ export default function Home() {
     const [weather, setWeather] = useState([]);
 
     useEffect(() => {
-        /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get("http://127.0.0.1/api/current_weather/").then((res) => */
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) =>
             setWeather(res.data).catch((err) => console.log(err))
         );
     }, []);
 
 
-    // ********** USER INPUT RELATED CODE **********
-
+    // user input
     const [time, setTime] = useState(
         setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
     );
-
     const [location, setLocation] = useState([]);
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
-    const [stopArray, setStopArray] = useState([]);
+    const [error, setError] = useState(false);
 
     const postData = (e) => {
+        setReceivedData([]);
+        setError(false);
         e.preventDefault();
-        /* Axios.post('http://127.0.0.1/api/user_input/', { */
-        Axios.post('http://127.0.0.1:8000/api/user_input/', {
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
+        Axios.post("http://127.0.0.1:8000/api/user_input/", {
             time,
             location,
             destination,
         })
             .then((res) => {
-                console.log("time: ", time);
-                console.log("location: ", location);
-                console.log("destination: ", destination);
-                setReceivedData(res.data.result);
-                console.log(receivedData);
-                console.log(weather);
+                if (res.data.error == 'error') {
+                    setError(true);
+                } else {
+                    console.log("time: ", time);
+                    console.log("location: ", location);
+                    console.log("destination: ", destination);
+                    setReceivedData(res.data.result);
+                    console.log(receivedData);
+                    console.log(weather);
+                }
             })
             .catch((err) => {
                 console.log(err);
