@@ -20,12 +20,8 @@ class RouteMap():
         df = pd.read_sql("SELECT DISTINCT STOPPOINTID FROM static_tables.{0}_timetable_V2 WHERE ROUTEID IN (SELECT DISTINCT ROUTEID FROM static_tables.{0}_timetable_V2 WHERE LINEID = '{1}' AND STOPPOINTID = {2}) ORDER BY TRIPS_TIME_PROPORTION_v2;".format(self.day, self.line, self.start), static_tables)
 
         stop_sequence = list(df['STOPPOINTID'].astype(int))
-        
-        start_ind = stop_sequence.index(self.start)
-        end_ind = stop_sequence.index(self.end)
-        user_journey_stops = stop_sequence[start_ind:end_ind+1]
 
-        return user_journey_stops
+        return stop_sequence
 
         
     def get_intermediate_stop_locations(self):

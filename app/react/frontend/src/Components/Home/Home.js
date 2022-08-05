@@ -70,7 +70,7 @@ export default function Home() {
             });
     };
 
-
+    const [stopArray, setStopArray] = useState([]);
     const clickHandlerDisplayRoute = (event, line) => {
         // displays the user's route when selected
         event.preventDefault();

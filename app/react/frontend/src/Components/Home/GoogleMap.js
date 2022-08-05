@@ -33,14 +33,11 @@ const MyComponent = (props) => {
             zoom={12}
         >
 
-
-            {/*this.state.props.items.map(item => {
-                return (
-                    <Marker
-                        position={item.latlng}
-                    />
-                );
-            })*/}
+            {route.length != 0 && (route.map((item) => (
+                <Marker
+                    position={item.latlng}
+                />
+            )))}
         </GoogleMap>
     ) : <></>
 }
