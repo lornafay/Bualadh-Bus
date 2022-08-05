@@ -26,10 +26,11 @@ class TestQuery(unittest.TestCase):
 
         self.assertTrue(type(result) == list)
         self.assertTrue(type(result[0]) == dict)
-        self.assertTrue(list(result[0].keys()) == ['stop', 'lat', 'lng', 'loc'])
+        self.assertTrue(list(result[0].keys()) == ['stop', 'latlng', 'loc'])
         self.assertTrue(type(result[0]['stop']) == int)
-        self.assertTrue(type(result[0]['lat']) == float)
-        self.assertTrue(type(result[0]['lng']) == float)
+        self.assertTrue(type(result[0]['latlng']) == dict)
+        self.assertTrue(type(result[0]['latlng']['lat']) == float)
+        self.assertTrue(type(result[0]['latlng']['lng']) == float)
         self.assertTrue(type(result[0]['loc']) == str)
 
 
