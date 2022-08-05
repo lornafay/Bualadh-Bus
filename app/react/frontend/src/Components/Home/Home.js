@@ -140,7 +140,7 @@ export default function Home() {
                                         Submit
                                     </Button>
                                 </Form>
-                                <p id="home-section1-error">Error message</p>
+                                {error && <p id="home-section1-error">Error message</p>}
                                 {/* <table>
                                 <tr>
                                     <td id='home-section1-tableitem'>Font Size</td>
