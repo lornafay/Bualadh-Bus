@@ -19,13 +19,15 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 
 export default function Home() {
-  // receive the current_weather from django
-  const [weather, setWeather] = useState([]);
-  useEffect(() => {
-    Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) =>
-      setWeather(res.data).catch((err) => console.log(err))
-    );
-  }, []);
+    // receive the current_weather from django
+    const [weather, setWeather] = useState([]);
+    useEffect(() => {
+        /* REMOVE PORT FROM URL TO USE WITH DOCKER */
+        Axios.get("http://127.0.0.1:8000/api/current_weather/").then((res) =>
+            setWeather(res.data).catch((err) => console.log(err))
+        );
+    }, []);
+
 
   // user input
   const [time, setTime] = useState(
@@ -34,21 +36,29 @@ export default function Home() {
   const [location, setLocation] = useState([]);
   const [destination, setDestination] = useState([]);
   const [receivedData, setReceivedData] = useState([]);
+  const [error, setError] = useState(false);
 
   const postData = (e) => {
+    setReceivedData([]);
+    setError(false);
     e.preventDefault();
+    /* REMOVE PORT FROM URL TO USE WITH DOCKER */
     Axios.post("http://127.0.0.1:8000/api/user_input/", {
       time,
       location,
       destination,
     })
       .then((res) => {
-        console.log("time: ", time);
-        console.log("location: ", location);
-        console.log("destination: ", destination);
-        setReceivedData(res.data.result);
-        console.log(receivedData);
-        console.log(weather);
+        if(res.data.error == 'error'){
+          setError(true);
+        }else{
+          console.log("time: ", time);
+          console.log("location: ", location);
+          console.log("destination: ", destination);
+          setReceivedData(res.data.result);
+          console.log(receivedData);
+          console.log(weather);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +108,7 @@ export default function Home() {
                   Submit
                 </Button>
               </Form>
-              <p id="home-section1-error">Error message</p>
+              {error && <p id="home-section1-error">Error message</p>}
               {/* <table>
                                 <tr>
                                     <td id='home-section1-tableitem'>Font Size</td>
@@ -106,84 +116,82 @@ export default function Home() {
                                     <td id='home-section1-tableitem'>Wheelchair Accessible</td>
                                 </tr>
                             </table> */}
-              {receivedData.map((r) => {
-                return (
-                  <>
-                    <p>
-                      Line: {r.line}
-                      <br />
-                      Hours: {r.hours}
-                      <br />
-                      Minutes: {r.mins}
-                      <br />
-                    </p>
-                  </>
-                );
-              })}
+                                {receivedData.map((r) => {
+                                    return (
+                                        <>
+                                            <p>
+                                                Line: {r.line}
+                                                <br />
+                                                Hours: {r.hours}
+                                                <br />
+                                                Minutes: {r.mins}
+                                                <br />
+                                            </p>
+                                        </>
+                                    );
+                                })}
+                            </div>
+                            <div id="home-section2">
+                                <h3 id="home-section-title">Current Weather</h3>
+                                {weather.map((w) => {
+                                    return (
+                                        <>
+                                            <p>
+                                                Temp: {w.temp} <br />
+                                                Wind Speed: {w.wind_speed} <br />
+                                                Clouds: {w.clouds} <br />
+                                                Rain: {w.rain} <br />
+                                                Humidity: {w.humidity} <br />
+                                                <br />
+                                            </p>
+                                        </>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div class="col-lg-8" id="home-section3">
+                            <GoogleMaps
+                                apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
+                                zoom={12}
+                                center={{
+                                    lat: 53.35014,
+                                    lng: -6.266155,
+                                }}
+                                class="map"
+                            />
+                            <table id="map-table">
+                                <tr>
+                                    <td id="map-table-col">
+                                        <Form.Check
+                                            reverse
+                                            label="Attractions"
+                                            name="group"
+                                            type="radio"
+                                            id="map-check"
+                                        />
+                                    </td>
+                                    <td id="map-table-col">
+                                        <Form.Check
+                                            label="Activities"
+                                            name="group"
+                                            type="radio"
+                                            id="map-check"
+                                        />
+                                    </td>
+                                    <td id="map-table-col">
+                                        <Form.Check
+                                            label="Accomodation"
+                                            name="group"
+                                            type="radio"
+                                            id="map-check"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div id="home-section2">
-              <h3 id="home-section-title">Current Weather</h3>
-              {weather.map((w) => {
-                return (
-                  <>
-                    <p>
-                      Temp: {w.temp} <br />
-                      Wind Speed: {w.wind_speed} <br />
-                      Clouds: {w.clouds} <br />
-                      Rain: {w.rain} <br />
-                      Humidity: {w.humidity} <br />
-                      <br />
-                    </p>
-                  </>
-                );
-              })}
-            </div>
-          </div>
-          <div className="col-lg-8" data-testid='map' id="home-section3">
-            <GoogleMaps
-              apiKey={"AIzaSyC0205U55u3k8w274zxOl0h5Fr15D7Nc1U"}
-              style={{ }}
-              zoom={12}
-              center={{
-                lat: 53.35014,
-                lng: -6.266155,
-              }}
-              className="map"
-            />
-            <table id="map-table">
-              <tbody>
-                <tr>
-                  <td id="map-table-col">
-                    <Form.Check
-                      label="Attractions"
-                      name="group"
-                      type="radio"
-                      id="map-check"
-                    />
-                  </td>
-                  <td id="map-table-col">
-                    <Form.Check
-                      label="Activities"
-                      name="group"
-                      type="radio"
-                      id="map-check"
-                    />
-                  </td>
-                  <td id="map-table-col">
-                    <Form.Check
-                      label="Accomodation"
-                      name="group"
-                      type="radio"
-                      id="map-check"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  );
+        </div>
+    );
 }

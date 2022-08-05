@@ -6,4 +6,5 @@ COPY . .
 
 RUN npm install --force
 
-CMD ["npm", "start"]
+RUN npm run build --verbose
+
