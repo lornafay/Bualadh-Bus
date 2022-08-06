@@ -26,7 +26,7 @@ class RouteMap():
         #start_ind = stop_sequence.index(self.start)
         #end_ind = stop_sequence.index(self.end)
         #user_journey_stops = stop_sequence[start_ind:end_ind+1]
-
+        print("stop sequence: ", stop_sequence)
         return stop_sequence
 
         
