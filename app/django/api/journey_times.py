@@ -201,7 +201,3 @@ class JourneyTimes(ModelQuerries):
             options_arr.append(res_dict)
             
         return options_arr
-
-
-#obj = JourneyTimes()
-#print(obj.return_user_journey_time_lineID())

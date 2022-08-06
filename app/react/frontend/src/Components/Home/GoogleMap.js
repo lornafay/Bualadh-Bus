@@ -1,5 +1,5 @@
 import React from 'react'
-import { GoogleMap, Polyline, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Marker } from '@react-google-maps/api';
 
 // MAP RELATED CODE
@@ -7,8 +7,8 @@ import { Marker } from '@react-google-maps/api';
 
 
 const containerStyle = {
-    width: '95%',
-    height: '500px'
+    width: '100%',
+    height: '100%'
 };
 
 const center = {
@@ -32,10 +32,16 @@ const MyComponent = (props) => {
             center={center}
             zoom={12}
         >
-
-            {route.length != 0 && (route.map((item) => (
+            {route.length !== 0 && (route.map((item) => (
                 <Marker
                     position={item.latlng}
+                    // icon made by <a href="https://www.flaticon.com/authors/kmg-design"
+                    icon={{
+                        path: "M 10 10 L 30 10 L 20 30 z",
+                        scale: 0.8,
+                        fillColor: "#6a38c7",
+                        fillOpacity: 0.9
+                    }}
                 />
             )))}
         </GoogleMap>

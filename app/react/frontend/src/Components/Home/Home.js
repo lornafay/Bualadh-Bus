@@ -18,6 +18,7 @@ import GoogleMap from "./GoogleMap";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import axios from "axios";
+import { Oval } from 'react-loader-spinner'
 
 export default function Home() {
 
@@ -42,8 +43,13 @@ export default function Home() {
     const [destination, setDestination] = useState([]);
     const [receivedData, setReceivedData] = useState([]);
     const [error, setError] = useState(false);
+    const [waitingPrediction, setWaitingPrediction] = useState(false);
+    const [waitingRoute, setWaitingRoute] = useState(false);
+
 
     const postData = (e) => {
+        setWaitingPrediction(true);
+        setStopArray([]);
         setReceivedData([]);
         setError(false);
         e.preventDefault();
@@ -54,6 +60,7 @@ export default function Home() {
             destination,
         })
             .then((res) => {
+                setWaitingPrediction(false);
                 if (res.data.error == 'error') {
                     setError(true);
                 } else {
@@ -74,6 +81,7 @@ export default function Home() {
     const clickHandlerDisplayRoute = (event, line) => {
         // displays the user's route when selected
         event.preventDefault();
+        setWaitingRoute(true);
 
         // method to get textual day from W3Schools https://www.w3schools.com/jsref/jsref_getday.asp
         const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -83,12 +91,11 @@ export default function Home() {
         console.log("param: ", destination);
         console.log("param: ", day);
 
-        /* WITH PORT == local; WITHOUT PORT == Docker */
-        /* Axios.get('http://127.0.0.1/api/stop_location/') */
+        /* REMOVE PORT TO USE WITH DOCKER */
         Axios.get('http://127.0.0.1:8000/api/stop_location/' + line + '/' + location + '/' + destination + '/' + day + '/')
             .then((res) => {
                 console.log('Stop locations', res.data);
-
+                setWaitingRoute(false);
                 // update the stop array with results obtained
                 setStopArray(res.data['result']);
 
@@ -105,8 +112,9 @@ export default function Home() {
                         <div class="col-lg-4 p-2">
                             <div id="home-section1">
                                 <h3 id="home-section-title">Route Planner</h3>
-                                <Form>
+                                <Form className="user-input-form">
                                     <DatePicker
+                                        className="date-picker"
                                         selected={time}
                                         onChange={(date) => setTime(date)}
                                         showTimeSelect
@@ -116,18 +124,19 @@ export default function Home() {
                                         dateFormat="MMMM d, yyyy h:mm aa"
                                     />
                                     <Form.Control
-                                        placeholder="Your Location"
+                                        placeholder="Beginning stop ID"
                                         name="location"
                                         id="home-section1-input"
                                         onChange={(e) => setLocation(e.target.value)}
                                     />
                                     <Form.Control
-                                        placeholder="Destination"
+                                        placeholder="Ending stop ID"
                                         name="destination"
                                         id="home-section1-input"
                                         onChange={(e) => setDestination(e.target.value)}
                                     />
                                     <Button
+                                        className="submit-button"
                                         variant="primary"
                                         type="submit"
                                         onClick={postData}
@@ -140,28 +149,41 @@ export default function Home() {
                                         Submit
                                     </Button>
                                 </Form>
-                                {error && <p id="home-section1-error">Error message</p>}
-                                {/* <table>
-                                <tr>
-                                    <td id='home-section1-tableitem'>Font Size</td>
-                                    <td id='home-section1-tableitem'>Audio</td>
-                                    <td id='home-section1-tableitem'>Wheelchair Accessible</td>
-                                </tr>
-                            </table> */}
-                                {receivedData.map((r) => {
-                                    return (
-                                        <>
-                                            <div class='line-result-box'>
-                                                <p>
-                                                    <span class='r-line'>{r.line}</span>
-                                                    <br />
-                                                    <span class='r-time'>{r.hours}hrs {r.mins}mins</span>
-                                                </p>
-                                                <button class='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>show route</button>
-                                            </div>
-                                        </>
-                                    );
-                                })}
+                                <div id='prediction-results'>
+                                    {waitingPrediction && <Oval
+                                        className="prediction-loader"
+                                        height="60"
+                                        width="60"
+                                        radius="9"
+                                        color='green'
+                                    />
+                                    }
+                                    {error && <p id="home-section1-error">Error message</p>}
+                                    {receivedData.map((r) => {
+                                        return (
+                                            <>
+                                                <div class='line-result-box'>
+                                                    <table>
+                                                        <tr>
+                                                            <td class='result-table-item'><span id='r-line'>{r.line}</span></td>
+                                                            <td class='result-table-item'><span id='r-time'>{r.hours}hr {r.mins}min</span></td>
+                                                        </tr>
+                                                    </table>
+
+                                                    {!waitingRoute && <button class='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>display route</button>}
+                                                    {waitingRoute && <Oval
+                                                        className='route-loader'
+                                                        height="45"
+                                                        width="45"
+                                                        radius="20"
+                                                        color='green'
+                                                    />
+                                                    }
+                                                </div>
+                                            </>
+                                        );
+                                    })}
+                                </div>
                             </div>
                             <div id="home-section2">
                                 <h3 id="home-section-title">Current Weather</h3>
@@ -183,35 +205,6 @@ export default function Home() {
                         </div>
                         <div class="col-lg-8" id="home-section3">
                             <GoogleMap items={stopArray} />
-                            <table id="map-table">
-                                <tr>
-                                    <td id="map-table-col">
-                                        <Form.Check
-                                            reverse
-                                            label="Attractions"
-                                            name="group"
-                                            type="radio"
-                                            id="map-check"
-                                        />
-                                    </td>
-                                    <td id="map-table-col">
-                                        <Form.Check
-                                            label="Activities"
-                                            name="group"
-                                            type="radio"
-                                            id="map-check"
-                                        />
-                                    </td>
-                                    <td id="map-table-col">
-                                        <Form.Check
-                                            label="Accomodation"
-                                            name="group"
-                                            type="radio"
-                                            id="map-check"
-                                        />
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                     </div>
                 </section>
