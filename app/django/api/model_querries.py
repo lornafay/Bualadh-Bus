@@ -78,9 +78,9 @@ class ModelQuerries(Parse_arguments):
         routeid_query_str = ModelQuerries.route_id_query_string(
             raw_routeid_list)
         # filtering all routeid's matching stoppair to deduct routeids operating -+30 min of user's date/time input
-        df_date_time_adjust = pd.read_sql("SELECT ROUTEID, TIME_OF_DAY FROM static_tables.timetables where "
+        df_date_time_adjust = pd.read_sql("SELECT ROUTEID FROM static_tables."+self.day_of_week+" where "
                                           + routeid_query_str + " AND STOPPOINTID = "+self.beginning_stop +
-                                          " AND DAY_OF_WEEK= '"+self.day_of_week+"' AND TIME_OF_DAY between " +
+                                          " AND TIME_OF_DAY between " +
                                           "SUBTIME('"+str(self.date.hour)+":00:00', '0:30:00') and " +
                                           " ADDTIME('"+str(self.date.hour)+":00:00', '0:30:00')", self.engine_static)
         print("set_route_id df_date_time_adjust: " , df_date_time_adjust)
@@ -92,7 +92,7 @@ class ModelQuerries(Parse_arguments):
         return date_time_adjusted_list
 
     def get_time_percent(self, var):
-        """Query timetables table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for 
+        """Query timetables(day of week) table at static_tables schema to get TRIPS_TIME_PROPORTION_v2 for 
             user's chosen stop at user's chosen day of week of each route,
             return a ROUTEID stop TRIPS_TIME_PROPORTION_v2 dataframe. Takes one 
             required argument which can be Beginning_stop or Ending_stop
@@ -103,9 +103,9 @@ class ModelQuerries(Parse_arguments):
         # query for desired output by taking average of trips time proportion.
         if var == "Beginning_stop":
             df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
-                             "static_tables.timetables where " + routeid_query_str + " AND STOPPOINTID = " +
-                             self.beginning_stop + " AND DAY_OF_WEEK= '"+self.day_of_week +
-                             "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
+                             "static_tables."+self.day_of_week+" where " + routeid_query_str + " AND STOPPOINTID = " +
+                             self.beginning_stop + 
+                             " GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
             df.rename(columns={
                       "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
             print("="*66)
@@ -113,9 +113,9 @@ class ModelQuerries(Parse_arguments):
             return df
         elif var == "Ending_stop":
             df = pd.read_sql("SELECT ROUTEID, STOPPOINTID, AVG(TRIPS_TIME_PROPORTION_v2) FROM " +
-                             "static_tables.timetables where " + routeid_query_str + " AND STOPPOINTID = " +
-                             self.ending_stop + " AND DAY_OF_WEEK= '"+self.day_of_week +
-                             "' GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
+                             "static_tables."+self.day_of_week+" where " + routeid_query_str + " AND STOPPOINTID = " +
+                             self.ending_stop + 
+                             " GROUP BY ROUTEID, STOPPOINTID", self.engine_static)
             df.rename(columns={
                       "AVG(TRIPS_TIME_PROPORTION_v2)": 'TRIPS_TIME_PROPORTION_v2'}, inplace=True)
             print("="*66)
@@ -150,7 +150,7 @@ class ModelQuerries(Parse_arguments):
     def get_pmodel_values(self):
         """Method to feed features for prediction to predictive models in pickle files:
         Depending on the condition that PLANNEDTIME_DEP is in ROUTEID(key)'s feature_list(value);
-        query timetables table at static_tables schema to get values for PLANNEDTIME_DEP,
+        query timetables(day of week) table at static_tables schema to get values for PLANNEDTIME_DEP,
         depending on the condition that date is current date;
         querry current_weather at DBus schema, depending on the condition that feature is in
         ROUTEID(key)'s feature_list(value) to  get values for  feature.
@@ -176,8 +176,8 @@ class ModelQuerries(Parse_arguments):
             # where time is closests to user's time input for hour of day.
             if 'PLANNEDTIME_DEP' in value:
                 #changed TRIPS_TIME_PROPORTION_v2 >0.89 to cover for cases where 
-                df_plannedtime_dep = pd.read_sql("SELECT PLANNEDTIME_DEP FROM static_tables.timetables " +
-                                                 "where  ROUTEID = '"+key+"'  AND DAY_OF_WEEK= '"+self.day_of_week +
+                df_plannedtime_dep = pd.read_sql("SELECT PLANNEDTIME_DEP FROM static_tables."+self.day_of_week+ 
+                                                 " where  ROUTEID = '"+key+
                                                  "' AND TRIPS_TIME_PROPORTION_v2 >0.89 " +
                                                  "ORDER BY ABS(TIME_TO_SEC(TIMEDIFF(TIME_OF_DAY, '" +
                                                  str(self.date.hour)+":00:00'))) LIMIT 1", self.engine_static)
@@ -213,19 +213,22 @@ class ModelQuerries(Parse_arguments):
                 else:
                     weather_feature_query_str += 'sea_lvl_pressure '
 
-            # If hour of user's time input matches current hour query current weather table
-            # If not query feature weather table.
-            if current_time == self.date.hour and current_date == self.date.date():
-                print("model_querries: get_pmodel_values() current_time: ", current_time)
-                df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
-                                         self.engine_dynamic)
-                df = pd.concat([df, df_weather], axis=1)
-            else:
-                print("model_querries: get_pmodel_values() self.forecast_date: ", self.forecast_date)
-                date = self.forecast_date
-                df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
-                                         " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
-                df = pd.concat([df, df_weather], axis=1)
+            # don't query the weather tables if no weather features were selected for this model
+            if weather_feature_query_str != "":
+
+                # If hour of user's time input matches current hour query current weather table
+                # If not query feature weather table.
+                if current_time == self.date.hour and current_date == self.date.date():
+                    print("model_querries: get_pmodel_values() current_time: ", current_time)
+                    df_weather = pd.read_sql("SELECT " + weather_feature_query_str + " FROM  DBus.current_weather",
+                                            self.engine_dynamic)
+                    df = pd.concat([df, df_weather], axis=1)
+                else:
+                    print("model_querries: get_pmodel_values() self.forecast_date: ", self.forecast_date)
+                    date = self.forecast_date
+                    df_weather = pd.read_sql("SELECT " + weather_feature_query_str +
+                                            " FROM  DBus.weather_forecast where time ='"+str(date)+"'", self.engine_dynamic)
+                    df = pd.concat([df, df_weather], axis=1)
 
             # applying cyclical encoding with sine/cosine transformation for hour of day
             hour_sin_val = np.sin(np.deg2rad((self.date.hour/24)*360))

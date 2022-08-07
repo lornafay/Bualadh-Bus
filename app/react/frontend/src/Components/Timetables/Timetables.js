@@ -5,15 +5,16 @@ import example from './example.jpg';
 import Axios from 'axios';
 import { useState } from 'react';
 // import {userState} from 'react';
+import { Oval } from 'react-loader-spinner';
 
 export default function Timetables() {
 
-
-    const[data, setDate] = useState([])
-    const[stopID, setStopID] = useState('')
-    const[day, setDay] = useState('')
-    const[destination, setDestination] = useState('')
-    const[lastStop, setLastStop] = useState('')
+    const [data, setDate] = useState([])
+    const [stopID, setStopID] = useState('')
+    const [day, setDay] = useState('')
+    const [destination, setDestination] = useState('')
+    const [lastStop, setLastStop] = useState('')
+    const [waitingTimetable, setWaitingTimetable] = useState(false)
 
 
     useEffect(() => {
@@ -27,10 +28,12 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
+        setWaitingTimetable(true)
         /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.post('http://127.0.0.1:8000/api/timetable/', {
             stopID, day, destination, lastStop
         }).then(res => {
+            setWaitingTimetable(false)
             console.log('Posting data', res.data)
             setDate(res.data)
         }).catch(err => console.log(err))
@@ -61,18 +64,28 @@ export default function Timetables() {
             <br></br>
             <div id='table-scroll' class='d-sm-flex col-lg-4 offset-lg-4'>
 
-            <table>
-                <tr align>
-                    <th width="50px">Line</th>
-                    <th width="80px">Time</th>
-                    <th width="80px">Destination</th>
-                    <th width="80px">Last Stop</th>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                {array}
-            </table>
+                {!waitingTimetable && <table>
+                    <tr align>
+                        <th width="50px">Line</th>
+                        <th width="80px">Time</th>
+                        <th width="80px">Destination</th>
+                        <th width="80px">Last Stop</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    {array}
+                </table>
+                }
+
+                {waitingTimetable && <Oval
+                    className='route-loader'
+                    height="45"
+                    width="45"
+                    radius="20"
+                    color='green'
+                />
+                }
 
             </div>
         </div>

@@ -23,11 +23,10 @@ class DisplayTimetables:
         DBs = ("static_tables")
         retreive_DB = query.get_engine(DBs)
 
-        day = day.lower()
-        print(day)
+        day = day
 
         # Queries the DB timetables table for routeID and departure time from user's stopID/day inputs.
-        df = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, destination, last_stop FROM static_tables.{0}_timetable_V2 where STOPPOINTID = {1} order by LINEID, TIME_OF_DAY".format(day, stopID), retreive_DB);
+        df = pd.read_sql("SELECT ROUTEID, LINEID, TIME_OF_DAY, destination, last_stop FROM static_tables.{0} where STOPPOINTID = {1} order by LINEID, TIME_OF_DAY".format(day, stopID), retreive_DB);
 
         # Drop duplicates
         df = df.drop_duplicates(subset=['ROUTEID', 'LINEID','TIME_OF_DAY', 'destination', 'last_stop'])

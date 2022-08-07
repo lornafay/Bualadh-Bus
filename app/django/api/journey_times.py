@@ -8,14 +8,7 @@ import numpy as np
 class JourneyTimes(ModelQuerries):
 
     def __init__(self, lst):
-        super(Parse_arguments, self).__init__()
-        time = lst[0]
-        start = lst[1]
-        end = lst[2]
-        self.parse_arguments = super(ModelQuerries, self)
-        self.date = self.parse_arguments.__set_date_time__(time)
-        self.beginning_stop = self.parse_arguments.__set_beginningstop__(start)
-        self.ending_stop = self.parse_arguments.__set_endingstop__(end)
+        # inherit methods from super classes
         super(JourneyTimes, self).__init__(lst)
 
 
@@ -201,7 +194,3 @@ class JourneyTimes(ModelQuerries):
             options_arr.append(res_dict)
             
         return options_arr
-
-
-#obj = JourneyTimes()
-#print(obj.return_user_journey_time_lineID())

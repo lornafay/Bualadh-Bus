@@ -27,3 +27,10 @@ yarn-debug.log*
 yarn-error.log*
 node_modules/
 node/
+
+*.log
+*.pot
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
