@@ -18,4 +18,5 @@ end = time.perf_counter()
 result = end - start
 
 with open('timings.csv', 'a') as file:
+  inputs = str(inputs).replace(",", "")
   file.write(f"\ntimetable,{inputs},{result}")
