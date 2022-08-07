@@ -51,8 +51,6 @@ describe("Route Planner", () => {
         expect(destinationElement.value).toBe("4662");
     })
     
-    // test show route on map
-    
     // test prediction result exists
     test('should return weather information in display for user', async () => {
         render(<Home />);
@@ -60,10 +58,6 @@ describe("Route Planner", () => {
         expect(weatherElement).toBeVisible();
     })
 })
-
-
-
-
 
 // test current weather container
 describe("Weather", () => {
@@ -73,9 +67,6 @@ describe("Weather", () => {
         expect(weatherElement).toBeInTheDocument();
     })
 })
-
-
-// DESCRIBE BLOCK GOOGLE MAP
 
 // test google map is visible to user
 describe("Google map", () => {
