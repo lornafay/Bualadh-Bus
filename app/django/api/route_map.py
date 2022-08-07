@@ -19,7 +19,7 @@ class RouteMap():
         # query timetables table for the user's chosen line stop sequence
         
         #df = pd.read_sql("SELECT DISTINCT STOPPOINTID FROM static_tables.{0}_timetable_V2 WHERE ROUTEID IN (SELECT DISTINCT ROUTEID FROM static_tables.{0}_timetable_V2 WHERE LINEID = '{1}' AND STOPPOINTID = {2}) ORDER BY TRIPS_TIME_PROPORTION_v2;".format(self.day, self.line, self.start), static_tables)
-        df = pd.read_sql("SELECT DISTINCT STOPPOINTID FROM static_tables.{0}_timetable_V2 WHERE ROUTEID IN (SELECT DISTINCT ROUTEID FROM static_tables.{0}_timetable_V2 WHERE ROUTEID IN (SELECT ROUTEID FROM static_tables.{0}_timetable_V2 WHERE LINEID = '{1}' AND STOPPOINTID = {2}) AND ROUTEID IN (SELECT ROUTEID FROM static_tables.{0}_timetable_V2 WHERE LINEID = '{1}' AND STOPPOINTID = {3})) ORDER BY TRIPS_TIME_PROPORTION_v2;".format(self.day, self.line, self.start, self.end), static_tables)
+        df = pd.read_sql("SELECT DISTINCT STOPPOINTID FROM static_tables.{0} WHERE ROUTEID IN (SELECT DISTINCT ROUTEID FROM static_tables.{0} WHERE ROUTEID IN (SELECT ROUTEID FROM static_tables.{0} WHERE LINEID = '{1}' AND STOPPOINTID = {2}) AND ROUTEID IN (SELECT ROUTEID FROM static_tables.{0} WHERE LINEID = '{1}' AND STOPPOINTID = {3})) ORDER BY TRIPS_TIME_PROPORTION_v2;".format(self.day, self.line, self.start, self.end), static_tables)
 
         stop_sequence = list(df['STOPPOINTID'].astype(int))
         # code to narrow route down to user's segment only, does not work very well in practice

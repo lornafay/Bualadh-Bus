@@ -33,12 +33,12 @@ describe("Route Planner", () => {
             "September","October","November","December"];
         const date = new Date();
         let m = month[date.getMonth()];
-        let d = date.getDay();
+        let d = date.getDate();
         let y = date.getFullYear();
     
         const timeElement = screen.getByDisplayValue(m + " " + d + ", " + y + " 12:00 AM")
-        const locationElement = screen.getByPlaceholderText(/Your Location/i)
-        const destinationElement = screen.getByPlaceholderText(/Destination/i)
+        const locationElement = screen.getByPlaceholderText(/Beginning stop ID/i)
+        const destinationElement = screen.getByPlaceholderText(/Ending stop ID/i)
         const buttonElement = screen.getByRole("button", { name: /Submit/ })
     
         fireEvent.change(timeElement, { target: { value: "15:00:00" }})
@@ -53,13 +53,12 @@ describe("Route Planner", () => {
     
     // test show route on map
     
-    // test error output
+    // test prediction result exists
     test('should return weather information in display for user', async () => {
         render(<Home />);
-        const weatherElement = screen.getByText(/Error Message/i);
-        expect(weatherElement).toBeInTheDocument();
+        const weatherElement = screen.getByTestId('prediction');
+        expect(weatherElement).toBeVisible();
     })
-
 })
 
 

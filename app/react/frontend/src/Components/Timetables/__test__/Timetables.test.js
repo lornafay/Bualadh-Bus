@@ -49,7 +49,7 @@ describe("Stop Timetable Form", () => {
     const mockDay = jest.fn()
     
     // test form input
-    test("should input when search button is clicked", async () => {
+    test("should input when search button is clicked", () => {
         render(
             <Timetables 
                 day = {''}

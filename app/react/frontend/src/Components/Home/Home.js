@@ -84,7 +84,7 @@ export default function Home() {
         setWaitingRoute(true);
 
         // method to get textual day from W3Schools https://www.w3schools.com/jsref/jsref_getday.asp
-        const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         let day = weekday[time.getDay()];
         console.log("param: ", line);
         console.log("param: ", location);
@@ -106,12 +106,12 @@ export default function Home() {
 
     return (
         <div id="home">
-            <div class="container-fluid">
+            <div className="container-fluid">
                 <section>
-                    <div class="d-sm-flex">
-                        <div class="col-lg-4 p-2">
+                    <div className="d-sm-flex">
+                        <div className="col-lg-4 p-2">
                             <div id="home-section1">
-                                <h3 id="home-section-title">Route Planner</h3>
+                                <h3 id="home-section-title" title="Header">Route Planner</h3>
                                 <Form className="user-input-form">
                                     <DatePicker
                                         className="date-picker"
@@ -149,7 +149,7 @@ export default function Home() {
                                         Submit
                                     </Button>
                                 </Form>
-                                <div id='prediction-results'>
+                                <div id='prediction-results' data-testid="prediction">
                                     {waitingPrediction && <Oval
                                         className="prediction-loader"
                                         height="60"
@@ -158,19 +158,19 @@ export default function Home() {
                                         color='green'
                                     />
                                     }
-                                    {error && <p id="home-section1-error">Error message</p>}
+                                    {error && <p id="home-section1-error">Error. Please try again or pick a different route.</p>}
                                     {receivedData.map((r) => {
                                         return (
                                             <>
-                                                <div class='line-result-box'>
+                                                <div className='line-result-box'>
                                                     <table>
                                                         <tr>
-                                                            <td class='result-table-item'><span id='r-line'>{r.line}</span></td>
-                                                            <td class='result-table-item'><span id='r-time'>{r.hours}hr {r.mins}min</span></td>
+                                                            <td className='result-table-item'><span id='r-line'>{r.line}</span></td>
+                                                            <td className='result-table-item'><span id='r-time'>{r.hours}hr {r.mins}min</span></td>
                                                         </tr>
                                                     </table>
 
-                                                    {!waitingRoute && <button class='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>display route</button>}
+                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>display route</button>}
                                                     {waitingRoute && <Oval
                                                         className='route-loader'
                                                         height="45"
@@ -186,7 +186,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div id="home-section2">
-                                <h3 id="home-section-title">Current Weather</h3>
+                                <h3 id="home-section-title" >Current Weather</h3>
                                 {weather.map((w) => {
                                     return (
                                         <>
@@ -203,7 +203,7 @@ export default function Home() {
                                 })}
                             </div>
                         </div>
-                        <div class="col-lg-8" id="home-section3">
+                        <div className="col-lg-8" id="home-section3" data-testid="map">
                             <GoogleMap items={stopArray} />
                         </div>
                     </div>
