@@ -1,26 +1,25 @@
 from memory_profiler import profile
 from datetime import datetime as dt
-from api.journey_times import JourneyTimes
+from api.route_map import RouteMap
 import time
 
-today = str(dt.now())
-inputs = [today, '288', '7602']
+inputs = ['288', '7602', "Sunday"]
 
 @profile
-def get_JT(inputs):
-  j = JourneyTimes(inputs)
-  res = j.return_user_journey_time_lineID()
+def get_RM(inputs):
+  rm = RouteMap(inputs)
+  res = rm.get_intermediate_stop_locations()
   return res
 
 start = time.perf_counter()
-get_JT(inputs)
+get_RM(inputs)
 end = time.perf_counter()
 
 result = end - start
 
 with open('timings.csv', 'a') as file:
-  outcome = "journey time prediction"
-  code_modification = "redundant objects removed from JT init method"
+  outcome = "route stop map"
+  code_modification = "original"
   inputs = str(inputs).replace(",", "")
   
   file.write(f"\n{outcome},{code_modification},{inputs},{result}")

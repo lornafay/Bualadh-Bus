@@ -18,5 +18,7 @@ end = time.perf_counter()
 result = end - start
 
 with open('timings.csv', 'a') as file:
+  outcome = "timetable"
+  code_modification = "original"
   inputs = str(inputs).replace(",", "")
-  file.write(f"\ntimetable,{inputs},{result}")
+  file.write(f"\n{outcome},{code_modification},{inputs},{result}")
