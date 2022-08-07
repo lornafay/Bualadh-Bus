@@ -1,0 +1,4 @@
+outcome,code modification,inputs,time(s)
+journey time prediction,original,['2022-08-07 18:11:48.381576' '288' '7602'],59.775823916
+timetable,original,['288' 'Sunday'],2.542376667
+journey time prediction,redundant objects removed from JT init method,['2022-08-07 19:17:39.751996' '288' '7602'],56.121680708
