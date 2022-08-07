@@ -8,8 +8,8 @@
 
 #home-section1 {
     background-color: #DCDCDC;
-    margin-top: 50px;
-    margin-bottom: 20px;
+    margin-top: 5%;
+    margin-bottom: 5%;
     border-style: solid;
     max-width: 95%;
 }
@@ -69,11 +69,14 @@
     max-width: 95%;
 }
 
+
 #home-section3 {
-    margin-top: 50px;
+    margin: 1% 0%;
     max-width: 95%;
+    height: 500px;
 }
 
+/*
 #map-table {
     margin-top: 5px;
 }
@@ -86,10 +89,54 @@
     padding-left: 0px;
     margin-left: 0px;
     margin-right: 15px;
+}*/
+
+.user-input-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#map {
-    height: 500px;
-    width: 95%;
-    margin-bottom: 10px;
+.date-picker{
+    margin-left: 5%;
+    width: 65%;
+}
+
+.line-result-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.prediction-loader{
+    margin-left: 40%;
+}
+
+#prediction-results {
+    margin: 20px 20px;
+    background-color: #f1f5ed;
+}
+
+.result-table-item{
+    padding: 15px 15px;
+}
+
+#r-line{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.show-route{
+    height: 50%;
+    border: solid #b1b5ae;
+    border-radius: 20%;
+    align-self: center;
+}
+
+.show-route:hover{
+    box-shadow: 1px 1px 5px #b5b8b2;
+}
+
+.route-loader{
+    align-self: center;
 }

@@ -17,3 +17,15 @@ class current_weather(models.Model):
 class Timetables(models.Model):
     stopID_request = models.CharField(max_length=10, primary_key=True)
     day_request = models.CharField(max_length=10)
+
+class stop_locations(models.Model):
+    STOPPOINTID = models.IntegerField(primary_key=True)
+    LAT = models.FloatField()
+    LNG = models.FloatField()
+    LOCATION = models.CharField(max_length=45)
+    
+    class Meta:
+        db_table = "stop_locations"
+
+    def __str__(self):
+        return '%s %s %s %s' % (self.STOPPOINTID, self.LAT, self.LNG, self.LOCATION)
