@@ -56,8 +56,16 @@ export default function Timetables() {
             <form>
                 <label>Bus Stop ID: </label>
                 <input placeholder="Enter Bus Stop" type="text" value={stopID} onChange={(e) => setStopID(e.target.value)} /><br></br><br></br>
-                <label>Day of Travel:</label>
-                <input placeholder="Enter day of week" type="text" value={day} onChange={(e) => setDay(e.target.value)} /><br></br><br></br>
+                <label htmlFor="days">Day of Travel:</label>
+                <select placeholder="Enter day of week" id="days" name="days" value={day} onChange={(e) => setDay(e.target.value)}>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select><br></br><br></br>
                 <button onClick={postData} >Search</button>
             </form>
             <br></br>
