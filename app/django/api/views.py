@@ -9,6 +9,7 @@ from .parse_arguments import Parse_arguments
 from .journey_times import JourneyTimes
 from .timetables import DisplayTimetables
 from .route_map import RouteMap
+import time as t
 
 @api_view(['GET'])
 def get_current_weather(request):
@@ -27,9 +28,9 @@ def user_input(request):
     try:
         j = JourneyTimes(lst)
         p=j.return_user_journey_time_lineID()
-    
     except:
         return Response({'error': 'error'})
+    
     return Response({'result': p})
 
 @api_view(['GET'])
@@ -45,8 +46,12 @@ def stop_location(request, line, location, destination, day):
     print('request: ', lst[0], lst[1], lst[2], lst[3])
 
     # use RouteMap class to get the stops along user's journey
+
+    start = t.perf_counter()
     route = RouteMap(lst)
     p = route.get_intermediate_stop_locations()
+    end = t.perf_counter()
+    print(f"time taken: {end-start} seconds")
 
     serializer = StopLocationSerializer(p, many=True)
     return Response({'result': p})
