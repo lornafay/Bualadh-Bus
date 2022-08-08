@@ -66,7 +66,6 @@ export default function Timetables() {
                     <option value="Saturday">Saturday</option>
                     <option value="Sunday">Sunday</option>
                 </select><br></br><br></br>
-                {/* <input placeholder="Enter day of week" type="submit" value={day} onChange={(e) => setDay(e.target.value)} /><br></br><br></br> */}
                 <button onClick={postData} >Search</button>
             </form>
             <br></br>
