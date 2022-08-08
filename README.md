@@ -16,7 +16,7 @@ A collaborative project to provide travel time information via a public transpor
 
 Once the instructions in the above are initialized, the application for development is ready to run.
 
-## How to deploy our application
+## Run this app using docker
 1. cd to app
 2. run command "docker-compose up" to build the required images and modules
 
