@@ -8,39 +8,30 @@ test('Header', () => {
     expect(headingElement).toBeInTheDocument();
 })
 
-// test array that there are 4 developers
-test('should render same number as how many developers there are', () => {
-    render(<Aboutus />);
-    const table = screen.getAllByRole('table');
-    // const row = screen.getAllByRole('tr');
-    expect(table).toHaveLength(4);
-    // expect(row).toHaveLength(4);
-})
-
 // test Pelin
 test('should confirm that developer Pelin is in About Us', () => {
     render(<Aboutus />);
-    const developerElement = screen.getAllByText(/Pelin/i);
-    expect(developerElement).toHaveLength(2);
+    const table = screen.getByText('Pelin - Our Coordination Lead');
+    expect(table).toBeInTheDocument();
 })
 
 // test Allen
 test('should confirm that developer Allen is in About Us', () => {
     render(<Aboutus />);
-    const developerElement = screen.getAllByText(/Allen/i);
-    expect(developerElement).toHaveLength(2);
+    const table = screen.getByText('Allen - Our Maintenance Lead');
+    expect(table).toBeInTheDocument();
 })
 
 // test Lorna
 test('should confirm that developer Lorna is in About Us', () => {
     render(<Aboutus />);
-    const developerElement = screen.getAllByText(/Lorna/i);
-    expect(developerElement).toHaveLength(2);
+    const table = screen.getByText('Lorna - Our Code Lead');
+    expect(table).toBeInTheDocument();
 })
 
 // test Lexie
 test('should confirm that developer Lexie is in About Us', () => {
     render(<Aboutus />);
-    const developerElement = screen.getAllByText(/Lexie/i);
-    expect(developerElement).toHaveLength(2);
+    const table = screen.getByText('Lexie - Our Customer Lead');
+    expect(table).toBeInTheDocument();
 })

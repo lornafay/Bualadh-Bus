@@ -1,5 +1,5 @@
 .bg-backgroundcolor {
-    background-color: #B8F1B0;
+    background-color: #c5e7c1;
     max-width: 90%;
     border-radius: 5px;
     box-shadow: 0 1px 8px;
@@ -17,4 +17,9 @@
 
 nav {
     display:none
+}
+
+#cover-img {
+    width: 4%;
+    height: auto;
 }

@@ -51,7 +51,7 @@ export default function Timetables() {
 
     return (
         <div id='timetables'>
-            <h1 title="Header" id='timetables-title'>Timetables</h1>
+            <h1 title="Header" id='timetables-title'>Bus Stop Timetables</h1>
             <br></br>
             <form>
                 <label>Bus Stop ID: </label>
