@@ -15,8 +15,14 @@ function App() {
       <Navigation />
       <Home />
       <Timetables />
-      <Faq />
-      <Aboutus />
+      <div className="d-sm-flex">
+        <div className="col-lg-6">
+          <Faq />
+        </div>
+        <div className="col-lg-6">
+          <Aboutus />
+        </div>
+      </div>
       <Footer />
     </div>
   );
