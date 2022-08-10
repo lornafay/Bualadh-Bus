@@ -1,5 +1,5 @@
 #aboutus {
-    background-color: #B8F1B0;
+    background-color: #c5e7c1;
     color: #535353;
     padding-top: 25px;
     padding-bottom: 1rem;
@@ -13,9 +13,11 @@
 }
 
 #aboutus-title {
-    color: #363062;
+    color: black;
     text-align: center;
     margin-bottom: 30px;
+    font-family: Verdana, sans-serif;
+    font-size: 34px;
 }
 
 #person-img {
