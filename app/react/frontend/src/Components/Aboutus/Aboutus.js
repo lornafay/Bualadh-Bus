@@ -36,9 +36,9 @@ export default function Aboutus() {
             <Accordion.Body>
                 <img src={ Lorna } id='person-img'></img>
                 <p>Lorna maintains and simplifies our codebase, and leads testing 
-                    + integration. Her strengths include backend development (her 
-                    forte) and she's now assisting testing research in UCD’s 
-                    Complex Software Lab.</p>
+                    + integration. Her strengths include development operations, 
+                    backend development, and she's now assisting testing research in
+                    UCD’s Complex Software Lab.</p>
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="3" id='about-collapse'>
