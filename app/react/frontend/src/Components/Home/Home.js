@@ -109,7 +109,7 @@ export default function Home() {
             <div className="container-fluid">
                 <section>
                     <div className="d-sm-flex">
-                        <div className="col-lg-4 p-2">
+                        <div className="col-lg-3 p-2">
                             <div id="home-section1">
                                 <h3 id="home-section-title" title="Header">Route Planner</h3>
                                 <Form className="user-input-form">
@@ -170,7 +170,7 @@ export default function Home() {
                                                         </tr>
                                                     </table>
 
-                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>display route</button>}
+                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>Show</button>}
                                                     {waitingRoute && <Oval
                                                         className='route-loader'
                                                         height="45"
@@ -185,25 +185,16 @@ export default function Home() {
                                     })}
                                 </div>
                             </div>
-                            <div id="home-section2">
-                                <h3 id="home-section-title" >Current Weather</h3>
+                            <div id="home-section2" data-testid="weather">
                                 {weather.map((w) => {
                                     return (
-                                        <>
-                                            <p>
-                                                Temp: {w.temp} C <br />
-                                                Wind Speed: {w.wind_speed} <br />
-                                                Clouds: {w.clouds}% <br />
-                                                Rain: {w.rain} mm<br />
-                                                Humidity: {w.humidity} %<br />
-                                                <br />
-                                            </p>
-                                        </>
+                                        <p>Just so you know, current temp is {w.temp} C, clouds are 
+                                        at {w.clouds}%, humidity is {w.humidity}%, and rainfall is {w.rain}mm.</p>
                                     );
                                 })}
                             </div>
                         </div>
-                        <div className="col-lg-8" id="home-section3" data-testid="map">
+                        <div className="col-lg-9" id="home-section3" data-testid="map">
                             <GoogleMap items={stopArray} />
                         </div>
                     </div>

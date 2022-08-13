@@ -52,7 +52,7 @@ describe("Route Planner", () => {
     })
     
     // test prediction result exists
-    test('should return weather information in display for user', async () => {
+    test('should return a prediction to the user', async () => {
         render(<Home />);
         const weatherElement = screen.getByTestId('prediction');
         expect(weatherElement).toBeVisible();
@@ -63,7 +63,7 @@ describe("Route Planner", () => {
 describe("Weather", () => {
     test('should return weather information in display for user', async () => {
         render(<Home />);
-        const weatherElement = screen.getByText(/Current Weather/i);
+        const weatherElement = screen.getByTestId("weather");
         expect(weatherElement).toBeInTheDocument();
     })
 })
