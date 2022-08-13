@@ -1,0 +1,1022 @@
+{
+	"info": {
+		"_postman_id": "e006efd1-7b50-4e20-9a14-a6779065b86f",
+		"name": "Bualadh-Bus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21127227"
+	},
+	"item": [
+		{
+			"name": "predictions",
+			"item": [
+				{
+					"name": "predictionPOST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test for status code 200 OK",
+									"pm.test(\"status 200 test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"    pm.response.to.not.have.jsonBody(\"error\");",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"result\");",
+									"    pm.expect(pm.response.text()).to.include(\"line\");",
+									"    pm.expect(pm.response.text()).to.include(\"hours\");",
+									"    pm.expect(pm.response.text()).to.include(\"mins\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"time\":\"2022-08-10T12:00:00.000Z\",\n\"location\":\"395\",\n\"destination\":\"4662\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "predictionGET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"GET\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "predictionPUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"PUT\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "predictionDEL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"DELETE\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "predictionNOCONTENT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500\", function () {",
+									"    pm.response.to.have.status(500);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "predictionWRONGCONTENTTYPE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 415\", function () {",
+									"    pm.response.to.have.status(415);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<root>\n  <time>2022-08-10T12:00:00.000Z</time>\n  <location>395</location>\n  <destination>4662</destination>\n</root>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user_input/",
+							"host": [
+								"{{base_url}}user_input"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "current_weather",
+			"item": [
+				{
+					"name": "current-weatherGET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test for status code 200 OK",
+									"pm.test(\"status 200 test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"    pm.response.to.not.have.jsonBody(\"error\");",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"time\");",
+									"    pm.expect(pm.response.text()).to.include(\"temp\");",
+									"    pm.expect(pm.response.text()).to.include(\"wind_speed\");",
+									"    pm.expect(pm.response.text()).to.include(\"clouds\");",
+									"    pm.expect(pm.response.text()).to.include(\"sea_lvl_pressure\");",
+									"    pm.expect(pm.response.text()).to.include(\"humidity\");",
+									"    pm.expect(pm.response.text()).to.include(\"dew_pt_temp\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}current_weather",
+							"host": [
+								"{{base_url}}current_weather"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current-weatherPOST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"POST\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}current_weather/",
+							"host": [
+								"{{base_url}}current_weather"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current-weatherPUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"PUT\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}current_weather/",
+							"host": [
+								"{{base_url}}current_weather"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current-weatherDEL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"DELETE\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}current_weather/",
+							"host": [
+								"{{base_url}}current_weather"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stop_locations",
+			"item": [
+				{
+					"name": "stop_locationsGET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test for status code 200 OK",
+									"pm.test(\"status 200 test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"    pm.response.to.not.have.jsonBody(\"error\");",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"result\");",
+									"    pm.expect(pm.response.text()).to.include(\"stop\");",
+									"    pm.expect(pm.response.text()).to.include(\"latlng\");",
+									"    pm.expect(pm.response.text()).to.include(\"lat\");",
+									"    pm.expect(pm.response.text()).to.include(\"lng\");",
+									"    pm.expect(pm.response.text()).to.include(\"loc\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}stop_location/77A/395/4662/Tuesday",
+							"host": [
+								"{{base_url}}stop_location"
+							],
+							"path": [
+								"77A",
+								"395",
+								"4662",
+								"Tuesday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stop_locationsPOST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"POST\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}stop_location/77A/395/4662/Tuesday/",
+							"host": [
+								"{{base_url}}stop_location"
+							],
+							"path": [
+								"77A",
+								"395",
+								"4662",
+								"Tuesday",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stop_locationsPUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"PUT\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}stop_location/77A/395/4662/Tuesday/",
+							"host": [
+								"{{base_url}}stop_location"
+							],
+							"path": [
+								"77A",
+								"395",
+								"4662",
+								"Tuesday",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stop_locationsDEL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"DELETE\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}stop_location/77A/395/4662/Tuesday/",
+							"host": [
+								"{{base_url}}stop_location"
+							],
+							"path": [
+								"77A",
+								"395",
+								"4662",
+								"Tuesday",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "timetables",
+			"item": [
+				{
+					"name": "timetableGET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test for status code 200 OK",
+									"pm.test(\"status 200 test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"    pm.response.to.not.have.jsonBody(\"error\");",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"ROUTEID\");",
+									"    pm.expect(pm.response.text()).to.include(\"LINEID\");",
+									"    pm.expect(pm.response.text()).to.include(\"TIME_OF_DAY\");",
+									"    pm.expect(pm.response.text()).to.include(\"destination\");",
+									"    pm.expect(pm.response.text()).to.include(\"last_stop\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}timetable/",
+							"host": [
+								"{{base_url}}timetable"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "timetablePOST",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"day\");",
+									"    pm.expect(pm.response.text()).to.include('This field is required.');",
+									"    pm.expect(pm.response.text()).to.include('stopID');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}timetable/",
+							"host": [
+								"{{base_url}}timetable"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "timetablePUT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"PUT\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}timetable/",
+							"host": [
+								"{{base_url}}timetable"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "timetableDEL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {",
+									"    pm.response.to.have.status(405);",
+									"});",
+									"",
+									"// response to contain an object",
+									"pm.test(\"response should be okay to process\", function () {",
+									"    pm.response.to.be.error;",
+									"    pm.response.to.have.jsonBody({});",
+									"});",
+									"",
+									"// valid response with body",
+									"pm.test(\"response must be valid and have a body\", function () {",
+									"     pm.response.to.not.be.ok;",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json;",
+									"});",
+									"",
+									"// content-type header in response",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"detail\");",
+									"    pm.expect(pm.response.text()).to.include('Method \\\\\"DELETE\\\\\" not allowed.');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}timetable/",
+							"host": [
+								"{{base_url}}timetable"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
