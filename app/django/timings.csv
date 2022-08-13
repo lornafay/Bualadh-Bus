@@ -1,4 +1,9 @@
 outcome,code modification,inputs,time(s)
 journey time prediction,original,['2022-08-07 18:11:48.381576' '288' '7602'],59.775823916
-timetable,original,['288' 'Sunday'],2.542376667
+timetable,original,['288' 'Sunday'],19.283929466968402
+timetable,search narrowed to weekday timetable,['288' 'Sunday'],2.542376667
 journey time prediction,redundant objects removed from JT init method,['2022-08-07 19:17:39.751996' '288' '7602'],56.121680708
+journey time prediction,search narrowed to weekday timetable,['2022-08-07 23:43:11.405794' '288' '7602'],12.601617833
+route stop map,search narrowed to weekday timetable,['41C' '288' '7602' 'Sunday'],6.701798667000001
+route stop map,search narrowed to weekday timetable,['77A' '395' '4662' 'Wednesday'],47.05650275000001
+route stop map,improved query structure,['77A' '395' '4662' 'Wednesday'],4.50

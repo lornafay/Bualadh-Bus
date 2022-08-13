@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from api.route_map import RouteMap
 import time
 
-inputs = ['288', '7602', "Sunday"]
+inputs = ['77A', '395', '4662', "Wednesday"]
 
 @profile
 def get_RM(inputs):
@@ -19,7 +19,7 @@ result = end - start
 
 with open('timings.csv', 'a') as file:
   outcome = "route stop map"
-  code_modification = "original"
+  code_modification = "reduced query statement complexity"
   inputs = str(inputs).replace(",", "")
   
   file.write(f"\n{outcome},{code_modification},{inputs},{result}")

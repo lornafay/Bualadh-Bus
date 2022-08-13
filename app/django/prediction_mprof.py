@@ -20,7 +20,7 @@ result = end - start
 
 with open('timings.csv', 'a') as file:
   outcome = "journey time prediction"
-  code_modification = "redundant objects removed from JT init method"
+  code_modification = "model_queries class search narrowed by day"
   inputs = str(inputs).replace(",", "")
   
   file.write(f"\n{outcome},{code_modification},{inputs},{result}")
