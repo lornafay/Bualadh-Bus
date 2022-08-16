@@ -1,12 +1,14 @@
-import './Timetables.css'
+import './Timetables.css';
 import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Axios from 'axios';
 import { useState } from 'react';
 // import {userState} from 'react';
 import { Oval } from 'react-loader-spinner';
+import SearchBarDropDown from '../Home/SearchBarDropDown';
+import defaultStops from '../Home/stops';
 
-export default function Timetables() {
+const Timetables = () => {
 
     const [data, setDate] = useState([])
     const [stopID, setStopID] = useState('')
@@ -27,7 +29,8 @@ export default function Timetables() {
 
     const postData = (e) => {
         e.preventDefault();
-        setWaitingTimetable(true)
+        setWaitingTimetable(true);
+        console.log(stopID);
         /* REMOVE PORT FROM URL TO USE WITH DOCKER */
         Axios.post('http://127.0.0.1:8000/api/timetable/', {
             stopID, day, destination, lastStop
@@ -49,14 +52,28 @@ export default function Timetables() {
         )
     })
 
+    const [stops, setStops] = useState(defaultStops);
+
+    const onInputChange = (event) => {
+        console.log(event.target.value);
+        setStops(
+            // toLowerCase makes it case insensitive
+            defaultStops.filter(stop => stop.toLowerCase().includes(event.target.value.toLowerCase()))
+        );
+    }
+
     return (
         <div id='timetables'>
             <h1 title="Header" id='timetables-title'>Bus Stop Timetables</h1>
             <br></br>
             <form>
-                <label>Bus Stop ID: </label>
-                <input placeholder="Enter Bus Stop" type="text" value={stopID} onChange={(e) => setStopID(e.target.value)} /><br></br><br></br>
-                <label htmlFor="days">Day of Travel:</label>
+                <SearchBarDropDown
+                    inputID={"timetable-input"}
+                    stops={stops}
+                    onInputChange={onInputChange}
+                    method={setStopID}
+                    compID="timetable"
+                />
                 <select placeholder="Enter day of week" id="days" name="days" value={day} onChange={(e) => setDay(e.target.value)}>
                     <option value="Monday">Monday</option>
                     <option value="Tuesday">Tuesday</option>
@@ -99,4 +116,6 @@ export default function Timetables() {
             </div>
         </div>
     )
-}
+};
+
+export default Timetables;

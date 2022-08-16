@@ -15,12 +15,15 @@ import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faSun } from "@fortawesome/free-solid-svg-icons";
 import GoogleMap from "./GoogleMap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallBack } from "react";
 import Axios from "axios";
 import axios from "axios";
 import { Oval } from 'react-loader-spinner';
+import defaultStops from "./stops";
+import SearchBarDropDown from "./SearchBarDropDown";
 
-export default function Home() {
+
+const Home = () => {
 
     // ********** WEATHER RELATED CODE **********
 
@@ -39,8 +42,8 @@ export default function Home() {
     const [time, setTime] = useState(
         setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
     );
-    const [location, setLocation] = useState([]);
-    const [destination, setDestination] = useState([]);
+    const [location, setLocation] = useState("");
+    const [destination, setDestination] = useState("");
     const [receivedData, setReceivedData] = useState([]);
     const [error, setError] = useState(false);
     const [waitingPrediction, setWaitingPrediction] = useState(false);
@@ -91,8 +94,14 @@ export default function Home() {
         console.log("param: ", destination);
         console.log("param: ", day);
 
+        let locationArr = location.split(" ");
+        let locationNum = locationArr[locationArr.length - 1];
+
+        let destinationArr = destination.split(" ");
+        let destinationNum = destinationArr[destinationArr.length - 1];
+
         /* REMOVE PORT TO USE WITH DOCKER */
-        Axios.get('http://127.0.0.1:8000/api/stop_location/' + line + '/' + location + '/' + destination + '/' + day + '/')
+        Axios.get('http://127.0.0.1:8000/api/stop_location/' + line + '/' + locationNum + '/' + destinationNum + '/' + day + '/')
             .then((res) => {
                 console.log('Stop locations', res.data);
                 setWaitingRoute(false);
@@ -103,6 +112,17 @@ export default function Home() {
                 console.log(err);
             });
     }
+
+    const [stops, setStops] = useState(defaultStops);
+
+    const onInputChange = (event) => {
+        console.log(event.target.value);
+        setStops(
+            // toLowerCase makes it case insensitive
+            defaultStops.filter(stop => stop.toLowerCase().includes(event.target.value.toLowerCase()))
+        );
+    }
+
 
     return (
         <div id="home">
@@ -123,17 +143,20 @@ export default function Home() {
                                         timeFormat="HH:mm"
                                         dateFormat="MMMM d, yyyy h:mm aa"
                                     />
-                                    <Form.Control
-                                        placeholder="Beginning stop ID"
-                                        name="location"
-                                        id="home-section1-input"
-                                        onChange={(e) => setLocation(e.target.value)}
+
+                                    <SearchBarDropDown
+                                        inputID={"location-input"}
+                                        stops={stops}
+                                        onInputChange={onInputChange}
+                                        method={setLocation}
+                                        compID={"input"}
                                     />
-                                    <Form.Control
-                                        placeholder="Ending stop ID"
-                                        name="destination"
-                                        id="home-section1-input"
-                                        onChange={(e) => setDestination(e.target.value)}
+                                    <SearchBarDropDown
+                                        inputID={"destination-input"}
+                                        stops={stops}
+                                        onInputChange={onInputChange}
+                                        method={setDestination}
+                                        compID={"input"}
                                     />
                                     <Button
                                         className="submit-button"
@@ -170,7 +193,7 @@ export default function Home() {
                                                         </tr>
                                                     </table>
 
-                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>Show</button>}
+                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>Show Route</button>}
                                                     {waitingRoute && <Oval
                                                         className='route-loader'
                                                         height="45"
@@ -188,8 +211,8 @@ export default function Home() {
                             <div id="home-section2" data-testid="weather">
                                 {weather.map((w) => {
                                     return (
-                                        <p>Just so you know, current temp is {w.temp} C, clouds are 
-                                        at {w.clouds}%, humidity is {w.humidity}%, and rainfall is {w.rain}mm.</p>
+                                        <p>Just so you know, current temp is {w.temp} C, clouds are
+                                            at {w.clouds}%, humidity is {w.humidity}%, and rainfall is {w.rain}mm.</p>
                                     );
                                 })}
                             </div>
@@ -204,3 +227,4 @@ export default function Home() {
     );
 }
 
+export default Home;

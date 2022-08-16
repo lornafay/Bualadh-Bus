@@ -46,3 +46,30 @@ th {
 tr {
     text-align: center;
 }
+
+#timetable-input {
+    width: 20%;
+    align-self: center;
+    margin-left: 25%;
+    margin-bottom: 2%;
+}
+
+#timetablesuggestions{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    align-self: center;
+    left: 10%;
+}
+
+#timetablesuggestions button{
+    background-color: #FFFFFF;
+    z-index: 1000;
+    width: 100%;
+    border: none;
+    border-bottom: #b1b5ae 1px solid;
+}
+
+#timetablesuggestions button:hover{
+    background-color: #edf8ec;
+}

@@ -5,7 +5,7 @@ import React from "react";
 
 describe("Header", () => {
     test('should render the header for timetables', () => {
-        render(<Timetables title="Timetables"/>);
+        render(<Timetables title="Timetables" />);
         const headingElement = screen.getByTitle("Header");
         expect(headingElement).toBeInTheDocument();
     })
@@ -47,29 +47,29 @@ describe("Checks table columns", () => {
 describe("Stop Timetable Form", () => {
     const mockStopID = jest.fn()
     const mockDay = jest.fn()
-    
+
     // test form input
     test("should input when search button is clicked", () => {
         render(
-            <Timetables 
-                day = {''}
+            <Timetables
+                day={''}
                 setDay={mockDay}
-                stopID = {''}
+                stopID={''}
                 setStopID={mockStopID}
             />);
-        
-        const dayElement = screen.getByPlaceholderText(/Enter day of week/i );
+
+        const dayElement = screen.getByPlaceholderText(/Enter day of week/i);
         const buttonElement = screen.getByRole("button", { name: /Search/ })
-        const stopElement = screen.getByPlaceholderText(/Enter Bus Stop/i );
-    
+        const stopElement = screen.getByPlaceholderText(/stop ID or address/i);
+
         fireEvent.change(stopElement, { target: { value: "395" } })
         fireEvent.change(dayElement, { target: { value: "Sunday" } })
         fireEvent.click(buttonElement)
-        
+
         expect(dayElement.value).toBe("Sunday");
         expect(stopElement.value).toBe("395")
     })
-    
+
     // test table is visible to user (expect toBeVisible)
     test("should render a visible table to user", () => {
         render(<Timetables />);
