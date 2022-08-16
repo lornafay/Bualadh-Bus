@@ -193,7 +193,7 @@ const Home = () => {
                                                         </tr>
                                                     </table>
 
-                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>Show Route</button>}
+                                                    {!waitingRoute && <button className='show-route' onClick={event => clickHandlerDisplayRoute(event, r.line)}>Show</button>}
                                                     {waitingRoute && <Oval
                                                         className='route-loader'
                                                         height="45"
