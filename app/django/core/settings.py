@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'bus',
+    'api',
     'corsheaders',
 ]
 
@@ -65,6 +66,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://ipa-009.ucd.ie"
 ]
 
 ROOT_URLCONF = 'core.urls'
