@@ -44,9 +44,9 @@
     padding-right: 10px;
 }
 
-#home-section1-content{
+#home-section1-content {
     margin-top: 10px;
-    padding-left:10px;
+    padding-left: 10px;
 }
 
 #home-section2 {
@@ -76,24 +76,24 @@
     height: 500px;
 }
 
-.user-input-form{
+.user-input-form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.date-picker{
+.date-picker {
     margin-left: 5%;
     width: 65%;
 }
 
-.line-result-box{
+.line-result-box {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.prediction-loader{
+.prediction-loader {
     margin-left: 40%;
 }
 
@@ -102,16 +102,16 @@
     background-color: #FFFFFF;
 }
 
-.result-table-item{
+.result-table-item {
     padding: 15px 15px;
 }
 
-#r-line{
+#r-line {
     font-weight: 600;
     font-size: 20px;
 }
 
-.show-route{
+.show-route {
     height: 50%;
     border: ridge #b1b5ae;
     border-radius: 4px;
@@ -122,15 +122,15 @@
     right: 0%;
 }
 
-.show-route:hover{
+.show-route:hover {
     box-shadow: 1px 1px 5px #b5b8b2;
 }
 
-.route-loader{
+.route-loader {
     align-self: center;
 }
 
-.submit-button{
+.submit-button {
     height: 50%;
     border: ridge #b1b5ae;
     border-radius: 4px;
@@ -138,35 +138,36 @@
     font-family: Verdana, sans-serif;
     font-size: 14px;
     background-color: #e2f1e1;
-    color:black;
+    color: black;
 }
 
-.search-bar-container{
+.search-bar-container {
     max-width: 80%;
     display: flex;
     flex-direction: column;
     align-items: left;
 }
 
-#location-input, #destination-input{
+#location-input,
+#destination-input {
     margin: 10px 10px;
     max-width: 80%;
 }
 
-.stop-list{
+.stop-list {
     max-height: 300px;
     overflow: auto;
     position: relative;
 }
 
-#inputsuggestions{
+#inputsuggestions {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
 
-#inputsuggestions button{
+#inputsuggestions button {
     background-color: #FFFFFF;
     z-index: 1000;
     width: 100%;
@@ -174,6 +175,6 @@
     border-bottom: #b1b5ae 1px solid;
 }
 
-#inputsuggestions button:hover{
+#inputsuggestions button:hover {
     background-color: #edf8ec;
 }
